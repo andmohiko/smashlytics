@@ -1,6 +1,12 @@
 <template>
   <div class="header">
     <p class="title">すましす</p>
+    <nav class="nav">
+      <nuxt-link to="/">top</nuxt-link>
+      <nuxt-link to="/mypage">mypage</nuxt-link>
+      <nuxt-link to="/login">login</nuxt-link>
+      <nuxt-link to="/signup">signup</nuxt-link>
+    </nav>
   </div>
 </template>
 
@@ -22,11 +28,19 @@ export default {
   position: fixed;
   top: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  .title {
-    font-size: 24px;
-    color: black;
-  }
+}
+.title {
+  font-size: 24px;
+  color: black;
+  margin-left: 40px;
+}
+.nav {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 40px;
 }
 </style>
