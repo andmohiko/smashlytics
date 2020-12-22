@@ -28,6 +28,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/firebase'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -41,6 +42,9 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
   ],
+  // router: {
+  //   middleware: 'auth'
+  // },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
