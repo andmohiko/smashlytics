@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <h2>sign up</h2>
+    <div class="title">
+      <h2>sign up</h2>
+    </div>
     <div class="form">
       <div class="input">
+        <p class="error">{{ error }}</p>
         <p>userId</p>
         <input v-model="newUser.userId" type="text">
         <p>username</p>
@@ -39,7 +42,8 @@ export default {
         email: '',
         password: ''
       },
-      uid: ''
+      uid: '',
+      error: ''
     }
   },
   // async fetch ({ store, params }) {
@@ -75,9 +79,12 @@ export default {
       //     })(error.code);
       //   });
       console.log('submit')
-      // const uid = this.$store.state.uid
-      const uid = 'yEGvP90uYMfFlzqjEknNrBkjjsw2'
+      const uid = this.$store.state.uid
       console.log('uid')
+      if (!uid || this.newUser.userId === '' || this.newUser.username === '') {
+        this.error = 'ユーザIDとユーザ名を入力してください'
+        return
+      }
       const db = firebase.firestore()
       console.log('db')
       const createdUser = db.collection('users').doc(uid).set({
@@ -114,3 +121,20 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.title {
+  font-size: 24px;
+  margin: 40px 0;
+}
+.error {
+  color: red;
+}
+</style>
