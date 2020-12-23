@@ -14,7 +14,8 @@ const state = {
     main: '',
   },
   uid: '',
-  records: []
+  records: [],
+  fighters: {}
 }
 
 
@@ -80,6 +81,22 @@ const actions = {
         console.log("Error getting document:", error);
       })
     commit('setRecords', records)
+  },
+  async getFighters ({ commit }) {
+    const db = firebase.firestore()
+    const fighters = await db
+      .collection('fighters')
+      .get()
+      .then(querySnapshot => {
+        let fighters = {}
+        querySnapshot.forEach(doc => {
+          fighters[doc.id] = doc.data()
+        })
+        return fighters
+      }).catch(function(error) {
+        console.log("Error getting document:", error);
+      })
+    commit('setFighters', fighters)
   }
 }
 
@@ -92,6 +109,9 @@ const mutations = {
   },
   setUid(state, payload) {
     state.uid = payload
+  },
+  setFighters(state, payload) {
+    state.fighters = payload
   }
 }
 
