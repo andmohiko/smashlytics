@@ -15,7 +15,7 @@
               v-model="record.result"
               type="radio"
               name="win"
-              :value="'win'"
+              :value="true"
             />
             <label for="result-win">勝ち</label>
             <input
@@ -23,18 +23,9 @@
               v-model="record.result"
               type="radio"
               name="lose"
-              :value="'lose'"
+              :value="false"
             />
             <label for="result-lose">負け</label>
-            <!-- <input
-              id="result-other"
-              v-model="record.result"
-              type="radio"
-              name="other"
-              :value="'other'"
-            />
-            <label for="result-other">その他</label> -->
-          <input v-model="record.result" type="text">
           <p>世界戦闘力(万)</p>
           <input v-model="record.globalSmashPower" type="text">
           <p>ステージ</p>
@@ -96,21 +87,25 @@ export default {
   data() {
     return {
       record: {
-        fighter: 'ロイ',
+        fighter: 'Roy',
         opponent: '',
-        result: 'win',
-        globalSmashPower: '',
-        stage: ''
+        result: true,
+        globalSmashPower: null,
+        stage: null
       },
       error: '',
       userId: 'andmohiko',
-      records: []
+      records: [],
+      fighters: {}
     }
+  },
+  async fetch ({ store, params }) {
+    await store.dispatch('getFighters')
   },
   mounted() {
     this.records = this.$store.state.records
-    // this.user = this.$store.state.user
-    // console.log(this.$store.state.user)
+    this.fighters = this.$store.state.fighters
+    console.log('fighters', this.fighters)
   },
   // computed: {
   //   user() {
@@ -121,7 +116,6 @@ export default {
     async submit () {
       console.log('submit')
       this.error = ''
-      console.log('uid')
       if (
         this.record.fighter === '' ||
         this.record.opponent === '' ||
@@ -131,15 +125,16 @@ export default {
         return
       }
       const db = firebase.firestore()
-      console.log('db')
-      const sendingRecord = db.collection('records').add({
+      const sendingRecord = db
+        .collection('records')
+        .add({
           createdAt: serverTimestamp,
           updatedAt: serverTimestamp,
           userId: this.userId,
           fighter: this.record.fighter,
           opponent: this.record.opponent,
           result: this.record.result,
-          globalSmashPower: this.record.globalSmashPower,
+          globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
           stage: this.record.stage
         })
         .then(ref => {
@@ -175,11 +170,11 @@ export default {
 }
 .register {
   // width: 400px;
-  margin: 0 100px;
+  margin: 0 50px;
 }
 .records {
-  margin: 0 100px;
-  width: 300px;
+  margin: 0 50px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   // justify-content: center;
