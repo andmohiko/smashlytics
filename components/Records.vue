@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo.vue'
+import { timestamp2dateString } from '@/utils/date.js'
 
 export default {
   props: {
@@ -105,11 +105,6 @@ export default {
     bool2result(result) {
       return result ? '勝ち' : '負け'
     },
-    timestamp2dateString (timestamp) {
-      if (!timestamp) return 'N/A'
-      const date = timestamp.toDate()
-      return date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate()
-    },
     jpName(fighterE) {
       return this.fighters[fighterE].japanese
     },
@@ -119,7 +114,8 @@ export default {
     get() {
       const fightersVals = Object.values(this.fighters)
       console.log(fightersVals)
-    }
+    },
+    timestamp2dateString
   }
 }
 </script>

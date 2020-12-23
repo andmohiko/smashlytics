@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="register">
-      <div class="title">戦績を登録する</div>
+      <div class="title">
+        戦績を登録する
+        <p class="results-number">本日の戦績: {{ resultsToday }}</p>
+      </div>
       <div class="form">
         <p class="error">{{ error }}</p>
         <div class="input">
@@ -80,6 +83,7 @@
 <script>
 import firebase from '@/plugins/firebase'
 import { jp2en } from '@/utils/fighter.js'
+import { timestamp2dateString } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 import Records from '@/components/Records.vue'
@@ -91,7 +95,7 @@ export default {
   data() {
     return {
       record: {
-        fighter: 'Roy',
+        fighter: 'ロイ',
         opponent: '',
         result: true,
         globalSmashPower: null,
@@ -103,18 +107,19 @@ export default {
       fighters: {}
     }
   },
-  async fetch ({ store, params }) {
-    await store.dispatch('getFighters')
-  },
   mounted() {
     this.records = this.$store.state.records
     this.fighters = this.$store.state.fighters
   },
-  // computed: {
-  //   user() {
-  //     return this.$store.state.uid
-  //   }
-  // },
+  computed: {
+    resultsToday() {
+      const today = new Date().toISOString().slice(0,10)
+      const recordsToday = this.records.filter(record => timestamp2dateString(record.createdAt) === today)
+      const wins = recordsToday.filter(record => record.result).length
+      const loses = recordsToday.filter(record => !record.result).length
+      return wins + '勝' + loses + '敗'
+    }
+  },
   methods: {
     async submit () {
       console.log('submit')
@@ -128,23 +133,31 @@ export default {
         return
       }
       const db = firebase.firestore()
-      const sendingRecord = db
-        .collection('records')
-        .add({
-          createdAt: serverTimestamp,
-          updatedAt: serverTimestamp,
-          userId: this.userId,
-          fighter: this.record.fighter,
-          opponent: this.record.opponent,
-          result: this.record.result,
-          globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
-          stage: this.record.stage
-        })
-        .then(ref => {
-          console.log('Add ID: ', ref)
-          return ref
-        })
-      console.log('sendingRecord', sendingRecord)
+      try {
+        const sendingRecord = db
+          .collection('records')
+          .add({
+            createdAt: serverTimestamp,
+            updatedAt: serverTimestamp,
+            userId: this.userId,
+            fighter: jp2en(this.record.fighter. this.fighters),
+            opponent: jp2en(this.record.opponent. this.fighters),
+            result: this.record.result,
+            globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
+            stage: this.record.stage
+          })
+          .then(ref => {
+            console.log('Add ID: ', ref)
+            return ref
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        console.log('sendingRecord', sendingRecord)
+      } catch(error) {
+        console.log('error in sending record')
+        console.log(error)
+      }
       this.getRecords()
     },
     async getRecords() {
@@ -171,6 +184,12 @@ export default {
   color: black;
   letter-spacing: 1px;
 }
+.subtitle {
+  margin: 20px 0;
+  font-size: 18px;
+  color: black;
+  letter-spacing: 1px;
+}
 .register {
   // width: 400px;
   margin: 0 50px;
@@ -193,5 +212,15 @@ export default {
   // justify-content: center;
   align-items: center;
   text-align: center;
+}
+.results {
+  &-today {
+    margin: 10px 0;
+  }
+  &-number {
+    font-size: 16px;
+    color: black;
+    letter-spacing: 3px;
+  }
 }
 </style>
