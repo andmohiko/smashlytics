@@ -78,16 +78,7 @@
           <button @click="getRecords" type="button">更新</button>
         </div>
       </div>
-      <div class="records-table">
-        <ul class="records-list">
-          <li
-            v-for="record in records"
-            :key="record.id"
-          >
-            {{ record.fighter }}, {{ record.opponent }}, {{ record.result }}
-          </li>
-        </ul>
-      </div>
+      <Records :records="records" />
     </div>
   </div>
 </template>
@@ -96,8 +87,12 @@
 import firebase from '@/plugins/firebase'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
+import Records from '@/components/Records.vue'
+
 export default {
-  components: {},
+  components: {
+    Records
+  },
   data() {
     return {
       record: {
@@ -112,10 +107,11 @@ export default {
       records: []
     }
   },
-  // mounted() {
-  //   this.user = this.$store.state.user
-  //   console.log(this.$store.state.user)
-  // },
+  mounted() {
+    this.records = this.$store.state.records
+    // this.user = this.$store.state.user
+    // console.log(this.$store.state.user)
+  },
   // computed: {
   //   user() {
   //     return this.$store.state.uid
@@ -151,25 +147,11 @@ export default {
           return ref
         })
       console.log('sendingRecord', sendingRecord)
-      await this.getRecords()
+      this.getRecords()
     },
     async getRecords() {
-      const db = firebase.firestore()
-      this.records = await db
-        .collection('records')
-        .where("userId", "==", this.userId)
-        .get()
-        .then(querySnapshot => {
-          let recordsArray = []
-          querySnapshot.forEach(doc => {
-            recordsArray.push(doc.data())
-          })
-          return recordsArray.sort((a, b) => {
-            return a.createdAt > b.createdAt ? -1 : 1
-          })
-        }).catch(function(error) {
-          console.log("Error getting document:", error);
-        })
+      await this.$store.dispatch('getRecords', this.userId)
+      this.records = this.$store.state.records
     }
   }
 }
