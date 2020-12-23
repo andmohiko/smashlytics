@@ -14,25 +14,10 @@ const state = {
     main: '',
   },
   uid: '',
-  record: {
-    userId: '',
-    fighter: '',
-    opponent: '',
-    result: ''
-  }
+  records: []
 }
 
-const mutations = {
-  setUser(state, payload) {
-    state.user = payload
-  },
-  setRecord(state, payload) {
-    state.record = payload
-  },
-  setUid(state, payload) {
-    state.uid = payload
-  }
-}
+
 const actions = {
   loginGoogle ({ dispatch }) {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -76,7 +61,37 @@ const actions = {
     .catch(function(error) {
       console.log("Error getting document:", error)
     })
-  
+  },
+  async getRecords ({ commit }, userId) {
+    const db = firebase.firestore()
+    const records = await db
+      .collection('records')
+      .where("userId", "==", userId)
+      .get()
+      .then(querySnapshot => {
+        let recordsArray = []
+        querySnapshot.forEach(doc => {
+          recordsArray.push(doc.data())
+        })
+        return recordsArray.sort((a, b) => {
+          return a.createdAt > b.createdAt ? -1 : 1
+        })
+      }).catch(function(error) {
+        console.log("Error getting document:", error);
+      })
+    commit('setRecords', records)
+  }
+}
+
+const mutations = {
+  setUser(state, payload) {
+    state.user = payload
+  },
+  setRecords(state, payload) {
+    state.records = payload
+  },
+  setUid(state, payload) {
+    state.uid = payload
   }
 }
 
