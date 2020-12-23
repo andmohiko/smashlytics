@@ -5,7 +5,8 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    // title: process.env.npm_package_name || '',
+    title: 'smashlytics',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -28,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/firebase'
+    '~/plugins/firebase',
+    '~/plugins/setup'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -40,11 +42,12 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/tailwindcss',
     '@nuxtjs/axios',
   ],
-  // router: {
-  //   middleware: 'auth'
-  // },
+  router: {
+    middleware: 'auth'
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
