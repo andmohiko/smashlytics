@@ -2,9 +2,9 @@
   <div class="footer">
     <nav>
       <ul>
-        <li>record</li>
+        <li><nuxt-link to="/records">records</nuxt-link></li>
         <li>timeline</li>
-        <li>mypage</li>
+        <li><nuxt-link to="/mypage">mypage</nuxt-link></li>
       </ul>
     </nav>
   </div>
@@ -24,8 +24,7 @@ export default {
 .footer {
   height: 100px;
   width: 100%;
-  background-color: blue;
-  // background-color: rgba(255, 255, 80, 0.9);
+  background-color: rgba(200, 200, 20, 0.5);
   position: fixed;
   bottom: 0;
   display: flex;
