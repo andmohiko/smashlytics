@@ -38,6 +38,30 @@
           <p>世界戦闘力(万)</p>
           <input v-model="record.globalSmashPower" type="text">
           <p>ステージ</p>
+            <input
+              id="stage-finalDestination"
+              v-model="record.stage"
+              type="radio"
+              name="finalDestination"
+              :value="'finalDestination'"
+            />
+            <label for="stage-finalDestination">終点(FD)</label>
+            <input
+              id="stage-battleField"
+              v-model="record.stage"
+              type="radio"
+              name="battleField"
+              :value="'battleField'"
+            />
+            <label for="stage-battleField">戦場(BF)</label>
+            <input
+              id="stage-smallBattleField"
+              v-model="record.stage"
+              type="radio"
+              name="smallBattleField"
+              :value="'smallBattleField'"
+            />
+            <label for="stage-smallBattleField">小戦場(SBF)</label>
           <input v-model="record.stage" type="text">
         </div>
         <div class="submit">
