@@ -1,12 +1,9 @@
 <template>
   <div class="container">
-    <div class="title">
-      <h2>戦績一覧</h2>
-      <div class="get">
-        <button @click="getRecords" type="button">更新</button>
-      </div>
-    </div>
-    <Records :records="records" />
+    <!-- <div class="get">
+      <button @click="getRecords" type="button">更新</button>
+    </div> -->
+    <Records :records="records" :fighters="fighters" />
   </div>
 </template>
 
@@ -21,14 +18,13 @@ export default {
     return {
       error: '',
       userId: 'andmohiko',
-      records: []
+      records: [],
+      fighters: {}
     }
-  },
-  async fetch ({ store, params }) {
-    await store.dispatch('getRecords', 'andmohiko')
   },
   mounted() {
     this.records = this.$store.state.records
+    this.fighters = this.$store.state.fighters
   },
   methods: {
     async getRecords() {

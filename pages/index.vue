@@ -1,15 +1,20 @@
 <template>
   <div class="container">
     <div class="register">
-      <div class="title"><h2>戦績を登録する</h2></div>
+      <div class="title">戦績を登録する</div>
       <div class="form">
+        <p class="error">{{ error }}</p>
         <div class="input">
-          <p class="error">{{ error }}</p>
-          <p>自分</p>
-          <input v-model="record.fighter" type="text">
-          <p>相手</p>
-          <input v-model="record.opponent" type="text">
-          <p>勝敗</p>
+          <div class="input-text">
+            <p>自分</p>
+            <input v-model="record.fighter" type="text">
+          </div>
+          <div class="input-text">
+            <p>相手</p>
+            <input v-model="record.opponent" type="text">
+          </div>
+          <div class="input-radio">
+            <p>勝敗</p>
             <input
               id="result-win"
               v-model="record.result"
@@ -26,9 +31,13 @@
               :value="false"
             />
             <label for="result-lose">負け</label>
-          <p>世界戦闘力(万)</p>
-          <input v-model="record.globalSmashPower" type="text">
-          <p>ステージ</p>
+          </div>
+          <div class="input-text">
+            <p>世界戦闘力(万)</p>
+            <input v-model="record.globalSmashPower" type="text">
+          </div>
+          <div class="input-radio">
+            <p>ステージ</p>
             <input
               id="stage-finalDestination"
               v-model="record.stage"
@@ -53,29 +62,24 @@
               :value="'smallBattleField'"
             />
             <label for="stage-smallBattleField">小戦場(SBF)</label>
-          <input v-model="record.stage" type="text">
+          </div>
         </div>
         <div class="submit">
-          <button @click="submit" type="button">
+          <button @click="submit" type="button" class="uppercase px-8 py-2 rounded-full border border-yellow-600 text-yellow-600 max-w-max shadow-sm hover:shadow-md">
             Submit
           </button>
         </div>
       </div>
     </div>
     <div class="records">
-      <div class="title">
-        <h2>戦績一覧</h2>
-        <div class="get">
-          <button @click="getRecords" type="button">更新</button>
-        </div>
-      </div>
-      <Records :records="records" />
+      <Records :records="records" :fighters="fighters" />
     </div>
   </div>
 </template>
 
 <script>
 import firebase from '@/plugins/firebase'
+import { jp2en } from '@/utils/fighter.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 import Records from '@/components/Records.vue'
@@ -105,7 +109,6 @@ export default {
   mounted() {
     this.records = this.$store.state.records
     this.fighters = this.$store.state.fighters
-    console.log('fighters', this.fighters)
   },
   // computed: {
   //   user() {
@@ -157,13 +160,13 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  // flex-direction: column;
-  justify-content: space-between;
-  // align-items: center;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
   text-align: center;
 }
 .title {
-  margin: 40px 0;
+  margin: 20px 0;
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
@@ -171,6 +174,16 @@ export default {
 .register {
   // width: 400px;
   margin: 0 50px;
+}
+.input {
+  background-color: pink;
+  display: flex;
+  &-text {
+    width: 180px;
+  }
+  &-radio {
+    width: 140px;
+  }
 }
 .records {
   margin: 0 50px;
