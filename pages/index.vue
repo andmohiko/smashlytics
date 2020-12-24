@@ -1,24 +1,25 @@
 <template>
   <div class="container">
+    <div class="results">
+      <p class="results-number">本日の戦績: {{ resultsToday }}</p>
+    </div>
     <div class="register">
-      <div class="title">
-        <p class="results-number">本日の戦績: {{ resultsToday }}</p>
-      </div>
       <template v-if="isShowModal">
         <RecordModal :fighters="fightersArray" @close="closeModal" />
       </template>
     </div>
     <div class="records">
-      <Records :records="records" :fighters="fighters" />
+      <p class="records-title">直近10戦の戦績</p>
+      <Records :records="records.slice(0, 10)" :fighters="fighters" />
+      <Button @onClick="openModal" label="戦績を登録する" />
     </div>
-    <Button @onClick="openModal" label="戦績を登録する" />
   </div>
 </template>
 
 <script>
 import firebase from '@/plugins/firebase'
 import { jp2en } from '@/utils/fighter.js'
-import { timestamp2dateString } from '@/utils/date.js'
+import { timestamp2dateString, now } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 import Button from '@/components/Button.vue'
@@ -44,7 +45,8 @@ export default {
       isShowModal: false,
       userId: 'andmohiko',
       records: [],
-      fighters: {}
+      fighters: {},
+      now: now()
     }
   },
   mounted() {
@@ -53,7 +55,7 @@ export default {
   },
   computed: {
     resultsToday() {
-      const today = new Date().toISOString().slice(0,10)
+      const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10).replaceAll('/', '-')
       const recordsToday = this.records.filter(record => timestamp2dateString(record.createdAt) === today)
       const wins = recordsToday.filter(record => record.result).length
       const loses = recordsToday.length - wins
@@ -83,7 +85,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   // justify-content: center;
@@ -96,25 +98,17 @@ export default {
   color: black;
   letter-spacing: 1px;
 }
-.subtitle {
-  margin: 20px 0;
-  font-size: 18px;
-  color: black;
-  letter-spacing: 1px;
+.results {
+  margin: 16px 0 0 0;
+  &-number {
+    font-size: 18px;
+    color: #4a5568;
+    letter-spacing: 2px;
+  }
 }
 .register {
   // width: 400px;
   margin: 0 50px;
-}
-.input {
-  background-color: pink;
-  display: flex;
-  &-text {
-    width: 180px;
-  }
-  &-radio {
-    width: 140px;
-  }
 }
 .records {
   margin: 0 50px;
@@ -123,16 +117,15 @@ export default {
   flex-direction: column;
   // justify-content: center;
   align-items: center;
-  text-align: center;
-}
-.results {
-  &-today {
-    margin: 10px 0;
-  }
-  &-number {
-    font-size: 16px;
-    color: black;
-    letter-spacing: 3px;
+  // text-align: left;
+  &-title {
+    width: 100%;
+    display: block;
+    justify-content: left;
+    text-align: left;
+    font-size: 18px;
+    margin: 4px 0;
+    color: #4a5568;
   }
 }
 </style>
