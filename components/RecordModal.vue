@@ -9,70 +9,72 @@
     <div class="form">
       <h2 class="text-xl py-2 border-b mb-4">戦績を登録する</h2>
       <p class="error">{{ error }}</p>
-      <div class="input">
-        <label class="block">
-          <span class="text-gray-700">自分</span>
-          <input v-model="record.fighter" class="form-input mt-1 block w-full" placeholder="ロイ">
-        </label>
-        <label class="block">
-          <span class="text-gray-700">Select</span>
-          <select v-model="record.opponent" class="form-select block w-full mt-1">
-            <option v-for="fighter in fighters" :key="fighter.id">
-              {{ fighter.number }}: {{ fighter.japanese }}
-            </option>
-          </select>
-        </label>
-        <div class="input-radio">
-          <p>勝敗</p>
-          <input
-            id="result-win"
-            v-model="record.result"
-            type="radio"
-            name="win"
-            :value="true"
-          />
-          <label for="result-win">勝ち</label>
-          <input
-            id="result-lose"
-            v-model="record.result"
-            type="radio"
-            name="lose"
-            :value="false"
-          />
-          <label for="result-lose">負け</label>
+      <form class="mb-4 px-4">
+        <div class="input">
+          <label class="block">
+            <span class="text-gray-700">自分</span>
+            <input v-model="record.fighter" class="form-input mt-1 block w-full p-2 border" placeholder="ロイ">
+          </label>
+          <label class="block mt-4">
+            <span class="text-gray-700">Select</span>
+            <select v-model="record.opponent" class="form-select block w-full mt-1">
+              <option v-for="fighter in fighters" :key="fighter.id">
+                {{ fighter.number }}: {{ fighter.japanese }}
+              </option>
+            </select>
+          </label>
+          <div class="input-radio">
+            <p>勝敗</p>
+            <input
+              id="result-win"
+              v-model="record.result"
+              type="radio"
+              name="win"
+              :value="true"
+            />
+            <label for="result-win">勝ち</label>
+            <input
+              id="result-lose"
+              v-model="record.result"
+              type="radio"
+              name="lose"
+              :value="false"
+            />
+            <label for="result-lose">負け</label>
+          </div>
+          <label class="block">
+            <span class="text-gray-700">世界戦闘力(万)</span>
+            <input v-model="record.globalSmashPower" class="form-input mt-1 block w-full p-2 border" placeholder="500">
+          </label>
+          <div class="input-radio">
+            <p>ステージ</p>
+            <input
+              id="stage-finalDestination"
+              v-model="record.stage"
+              type="radio"
+              name="finalDestination"
+              :value="'finalDestination'"
+            />
+            <label for="stage-finalDestination">終点( __ )</label>
+            <input
+              id="stage-battleField"
+              v-model="record.stage"
+              type="radio"
+              name="battleField"
+              :value="'battleField'"
+            />
+            <label for="stage-battleField">戦場( -^- )</label>
+            <input
+              id="stage-smallBattleField"
+              v-model="record.stage"
+              type="radio"
+              name="smallBattleField"
+              :value="'smallBattleField'"
+            />
+            <label for="stage-smallBattleField">小戦場( - - )</label>
+          </div>
         </div>
-        <div class="input-text">
-          <p>世界戦闘力(万)</p>
-          <input v-model="record.globalSmashPower" type="text" placeholder="500">
-        </div>
-        <div class="input-radio">
-          <p>ステージ</p>
-          <input
-            id="stage-finalDestination"
-            v-model="record.stage"
-            type="radio"
-            name="finalDestination"
-            :value="'finalDestination'"
-          />
-          <label for="stage-finalDestination">終点( __ )</label>
-          <input
-            id="stage-battleField"
-            v-model="record.stage"
-            type="radio"
-            name="battleField"
-            :value="'battleField'"
-          />
-          <label for="stage-battleField">戦場( -^- )</label>
-          <input
-            id="stage-smallBattleField"
-            v-model="record.stage"
-            type="radio"
-            name="smallBattleField"
-            :value="'smallBattleField'"
-          />
-          <label for="stage-smallBattleField">小戦場( - - )</label>
-        </div>
-      </div>
+      </form>
       <div class="submit">
         <Button @onClick="submit" label="登録する" />
       </div>
@@ -94,21 +96,6 @@ export default {
       required: true,
       type: Array
     }
-  //   width: {
-  //     default: '250px',
-  //     type: String
-  //   },
-  //   buttonType: {
-  //     default: '',
-  //     type: String,
-  //     validator(value) {
-  //       return ButtonTypeList.includes(value)
-  //     }
-  //   },
-  //   isDisable: {
-  //     default: false,
-  //     type: Boolean
-  //   }
   },
   components: {
     Button
