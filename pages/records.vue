@@ -3,6 +3,7 @@
     <!-- <div class="get">
       <button @click="getRecords" type="button">更新</button>
     </div> -->
+    <h1 class="text-3xl py-4 border-b mb-10">戦績一覧</h1>
     <Records :records="records" :fighters="fighters" />
   </div>
 </template>
