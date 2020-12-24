@@ -6,14 +6,22 @@
     <div class="form">
       <div class="input">
         <p class="error">{{ error }}</p>
-        <p>en</p>
-        <input v-model="fighter.english" type="text">
-        <p>jp</p>
-        <input v-model="fighter.japanese" type="text">
-        <p>No.</p>
-        <input v-model="fighter.number" type="number">
-        <p>ダッシュ</p>
-          <input
+        <form class="mb-4 px-4">
+          <label class="block">
+            <span class="text-gray-700">english</span>
+            <input v-model="fighter.english" class="form-input mt-1 block w-full p-2 border" placeholder="Jane Doe">
+          </label>
+          <label class="block">
+            <span class="text-gray-700">japanese</span>
+            <input v-model="fighter.japanese" class="form-input mt-1 block w-full p-2 border" placeholder="Jane Doe">
+          </label>
+          <label class="block">
+            <span class="text-gray-700">number</span>
+            <input v-model="fighter.number" class="form-input mt-1 block w-full p-2 border" placeholder="Jane Doe">
+          </label>
+          <label class="block">
+            <span class="text-gray-700">ダッシュ</span>
+            <input
             id="dash-false"
             v-model="fighter.isDashFighter"
             type="radio"
@@ -29,12 +37,13 @@
             :value="true"
           />
           <label for="stage-finalDestination">ダッシュファイター</label>
+          </label>
+        </form>
       </div>
       <div class="submit">
-        <Button @onClick="submit" label="Submit" />
+        <Button @onClick="submit" label="保存する" />
       </div>
     </div>
-    
   </div>
 </template>
 
