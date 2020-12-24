@@ -2,8 +2,8 @@
   <div class="footer">
     <nav>
       <ul>
+        <li><nuxt-link to="/">top</nuxt-link></li>
         <li><nuxt-link to="/records">records</nuxt-link></li>
-        <li>timeline</li>
         <li><nuxt-link to="/mypage">mypage</nuxt-link></li>
       </ul>
     </nav>

@@ -1,9 +1,9 @@
 <template>
   <div class="header">
-    <p class="title">すましす</p>
+    <p class="title"><nuxt-link to="/">すましす</nuxt-link></p>
+    <p class="user">{{ user.username }} @{{ user.userId }}</p>
     <nav class="nav">
-      <nuxt-link to="/">top</nuxt-link>
-      <nuxt-link to="/mypage">mypage</nuxt-link>
+      <nuxt-link to="/fighters">fighters</nuxt-link>
       <nuxt-link to="/login">login</nuxt-link>
       <nuxt-link to="/signup">signup</nuxt-link>
     </nav>
@@ -11,11 +11,15 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      user: {}
+    }
+  },
+  mounted() {
+    this.user = this.$store.state.user
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div class="records-table">
     <div class="container mx-auto py-6 px-4">
-		  <h1 class="text-3xl py-4 border-b mb-10">戦績一覧</h1>
       <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 405px;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
