@@ -19,11 +19,23 @@
           <nuxt-link to="/records">
             <div class="menu-item">
               <div class="menu-icon">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 18H20M4 6H20H4ZM4 10H20H4ZM4 14H20H4Z" stroke="#4a5568d9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="menu-title">一覧</span>
+            </div>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/analytics">
+            <div class="menu-item">
+              <div class="menu-icon">
                 <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M26.6667 13.3333V26.6667V13.3333ZM20 18.3333V26.6667V18.3333ZM13.3334 23.3333V26.6667V23.3333ZM10 33.3333H30C31.841 33.3333 33.3334 31.841 33.3334 30V10C33.3334 8.15905 31.841 6.66667 30 6.66667H10C8.15907 6.66667 6.66669 8.15905 6.66669 10V30C6.66669 31.841 8.15907 33.3333 10 33.3333Z" stroke="#4a5568d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="menu-title">戦績</span>
+              <span class="menu-title">分析</span>
             </div>
           </nuxt-link>
         </li>
