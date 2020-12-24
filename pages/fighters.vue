@@ -31,9 +31,7 @@
           <label for="stage-finalDestination">ダッシュファイター</label>
       </div>
       <div class="submit">
-        <button @click="submit" type="button">
-          Submit
-        </button>
+        <Button @onClick="submit" label="Submit" />
       </div>
     </div>
     
@@ -42,8 +40,12 @@
 
 <script>
 import firebase from '@/plugins/firebase'
+import Button from '@/components/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   data () {
     return {
       fighter: {
@@ -74,6 +76,8 @@ export default {
           isDashFighter: this.fighter.isDashFighter
         })
         .then(ref => {
+          this.fighter.english = ''
+          this.fighter.japanese = ''
           console.log('Add ID: ', ref)
           return ref
         })
