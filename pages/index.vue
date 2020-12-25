@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <div class="results">
-      <p class="results-number">本日の戦績: {{ resultsToday }}</p>
-    </div>
     <div class="register">
       <template v-if="isShowModal">
         <RecordModal :fighters="fightersArray" @close="closeModal" />
       </template>
     </div>
-    <div class="records">
-      <p class="records-title">直近10戦の戦績</p>
-      <Records :records="records.slice(0, 10)" :fighters="fighters" />
+    <div class="results">
+      <p class="results-number">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openModal" label="戦績を登録する" />
+    </div>
+    <div class="records">
+      <!-- <p class="records-title">直近10戦の戦績</p> -->
+      <Records :records="records.slice(0, 10)" :fighters="fighters" />
     </div>
   </div>
 </template>
@@ -85,7 +85,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   margin: 0 auto;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
   // justify-content: center;

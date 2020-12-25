@@ -66,8 +66,9 @@ export default {
 .header {
   height: 60px;
   width: 100%;
-  background-color: rgba(255, 255, 80, 0.8);
+  background-color: #fafa7f;
   position: fixed;
+  z-index: 10;
   top: 0;
   display: flex;
   justify-content: center;
