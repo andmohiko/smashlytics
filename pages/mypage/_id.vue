@@ -39,9 +39,6 @@ export default {
     this.fighters = this.$store.state.fighters
   },
   computed: {
-    jpName(fighterE) {
-      return this.fighters[fighterE].japanese
-    },
     winningRate(fighter, opponent) {
       const fighterRecords = this.records.filter(record => record.fighter === fighter)
       const opponentRecords = this.records.filter(record => record.opponent === opponent)

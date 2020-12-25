@@ -19,7 +19,7 @@
             <span class="text-gray-700">Select</span>
             <select v-model="record.opponent" class="form-select block w-full mt-1">
               <option v-for="fighter in fighters" :key="fighter.id">
-                {{ fighter.number }}: {{ fighter.japanese }}
+                {{ fighter.number }}: {{ fighter.name }}
               </option>
             </select>
           </label>
@@ -86,7 +86,7 @@
 <script>
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
-import { jp2en } from '@/utils/fighter.js'
+import { jp2id } from '@/utils/fighter.js'
 import { timestamp2dateString } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
@@ -133,11 +133,13 @@ export default {
             createdAt: serverTimestamp,
             updatedAt: serverTimestamp,
             userId: this.userId,
-            fighter: jp2en(this.record.fighter, this.fighters),
-            opponent: jp2en(this.record.opponent.split(' ')[1], this.fighters),
+            fighter: this.record.fighter,
+            fighterId: jp2id(this.record.fighter, this.fighters),
+            opponent: this.record.opponent.split(' ')[1],
+            opponentId: jp2id(this.record.opponent.split(' ')[1], this.fighters),
             result: this.record.result,
+            stage: this.record.stage,
             globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
-            stage: this.record.stage
           })
           .then(ref => {
             // console.log('Add ID: ', ref)

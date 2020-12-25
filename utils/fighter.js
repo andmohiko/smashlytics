@@ -1,10 +1,10 @@
 export function en2jp(fighterEn, fighters) {
-  return fighters[fighterEn].japanese
+  return fighters[fighterEn].name
 }
 
-export function jp2en(fighterJp, fighters) {
-  const fighter = Object.values(fighters).filter(f => f.japanese === fighterJp)[0]
-  return fighter.english
+export function jp2id(fighterJp, fighters) {
+  const fighter = Object.values(fighters).filter(f => f.name === fighterJp)[0]
+  return fighter.fighterId
 }
 
 export function calcWinnigPercentage(records) {
