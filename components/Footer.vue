@@ -23,7 +23,7 @@
                   <path d="M4 18H20M4 6H20H4ZM4 10H20H4ZM4 14H20H4Z" stroke="#4a5568d9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="menu-title">一覧</span>
+              <span class="menu-title">戦績一覧</span>
             </div>
           </nuxt-link>
         </li>
