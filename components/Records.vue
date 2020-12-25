@@ -5,12 +5,6 @@
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
             <tr class="text-left">
-              <!-- <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
-                <label
-                  class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
-                  <input type="checkbox" class="form-checkbox focus:outline-none focus:shadow-outline" @click="selectAllCheckbox($event);">
-                </label>
-              </th> -->
               <th
                 v-for="heading in headings" :key="heading.key"
                 class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
@@ -23,10 +17,10 @@
                 <span class="text-gray-700 px-6 py-3 flex items-center">{{ timestamp2dateString(record.createdAt) }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ jpName(record.fighter) }}</span>
+                <span class="text-gray-700 px-6 py-3 flex items-center">{{ record.fighter }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ jpName(record.opponent) }}</span>
+                <span class="text-gray-700 px-6 py-3 flex items-center">{{ record.opponent }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
                 <span class="text-gray-700 px-6 py-3 flex items-center">{{ bool2result(record.result) }}</span>
@@ -103,9 +97,6 @@ export default {
   methods: {
     bool2result(result) {
       return result ? '勝ち' : '負け'
-    },
-    jpName(fighterE) {
-      return this.fighters[fighterE].japanese
     },
     jpStageName(stageE) {
       return this.stages[stageE]

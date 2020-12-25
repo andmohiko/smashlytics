@@ -18,7 +18,6 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import { jp2en } from '@/utils/fighter.js'
 import { timestamp2dateString, now } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
