@@ -22,7 +22,8 @@ export default {
 
 <style>
 .main {
-  margin-top: 80px;
+  margin-top: 60px;
+  margin-bottom: 70px;
 }
 
 html {

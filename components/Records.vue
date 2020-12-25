@@ -1,7 +1,7 @@
 <template>
   <div class="records-table">
     <div class="container mx-auto py-0 px-4">
-      <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 450px;">
+      <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
             <tr class="text-left">
