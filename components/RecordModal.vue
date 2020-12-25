@@ -11,10 +11,7 @@
       <p class="error">{{ error }}</p>
       <form class="mb-4 px-4">
         <div class="input">
-          <label class="block">
-            <span class="text-gray-700">自分</span>
-            <input v-model="record.fighter" class="form-input mt-1 block w-full p-2 border" placeholder="ロイ">
-          </label>
+          <TextField ref="fighter" :allowEmpty="false" label="自分のファイター" placeholder="ロイ" />
           <label class="block mt-4">
             <span class="text-gray-700">Select</span>
             <select v-model="record.opponent" class="form-select block w-full mt-1">
@@ -42,10 +39,7 @@
             />
             <label for="result-lose">負け</label>
           </div>
-          <label class="block">
-            <span class="text-gray-700">世界戦闘力(万)</span>
-            <input v-model="record.globalSmashPower" class="form-input mt-1 block w-full p-2 border" placeholder="500">
-          </label>
+          <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="500" />
           <div class="input-radio">
             <p>ステージ</p>
             <input
@@ -85,6 +79,7 @@
 
 <script>
 import firebase from '@/plugins/firebase'
+import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import { jp2id } from '@/utils/fighter.js'
 import { timestamp2dateString } from '@/utils/date.js'
@@ -98,7 +93,8 @@ export default {
     }
   },
   components: {
-    Button
+    Button,
+    TextField
   },
   data() {
     return {
@@ -117,6 +113,8 @@ export default {
     async submit () {
       console.log('submit')
       this.error = ''
+      this.record.fighter = this.$refs.fighter.input
+      this.record.globalSmashPower = this.$refs.globalSmashPower.input
       if (
         !this.record.fighter === '' ||
         this.record.opponent === '' ||
