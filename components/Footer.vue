@@ -66,6 +66,7 @@ export default {
 .footer {
   height: 70px;
   width: 100%;
+  padding: 0 30px;
   border-top: solid 1px #4a55683a;
   background-color: white;
   position: fixed;

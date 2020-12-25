@@ -3,7 +3,6 @@
     <p class="page-title">{{ pageTitle }}</p>
     <p class="user">{{ user.username }} @{{ user.userId }}</p>
     <nav class="nav">
-      <nuxt-link to="/fighters">fighters</nuxt-link>
       <nuxt-link to="/login">login</nuxt-link>
       <nuxt-link to="/signup">signup</nuxt-link>
     </nav>
