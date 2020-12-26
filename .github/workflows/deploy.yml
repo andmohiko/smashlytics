@@ -27,6 +27,8 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
           MESSAGEING_SENDER_ID: ${{ secrets.MESSAGE_SENDER_ID }}
+          APP_ID: ${{ secrets.APP_ID }}
+          MEASUREMENT_ID: ${{ MEASUREMENT_ID }}
         run: |
           yarn build
       - name: Setup Firebase CLI
