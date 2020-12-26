@@ -1,26 +1,29 @@
 <template>
   <div class="header">
     <p class="page-title">{{ pageTitle }}</p>
-    <p class="user">{{ user.username }} @{{ user.userId }}</p>
-    <nav class="nav">
+    <p v-if="isLogin" class="user">{{ user.username }} @{{ user.userId }}</p>
+    <nav v-else class="nav">
       <nuxt-link to="/login">login</nuxt-link>
       <nuxt-link to="/signup">signup</nuxt-link>
     </nav>
+    <!-- <p>勝率: {{ winningPercentage }} </p> -->
   </div>
 </template>
 
 <script>
+import { calcWinnigPercentage } from '@/utils/fighter.js'
 
 export default {
-  data() {
-    return {
-      user: {}
-    }
-  },
-  mounted() {
-    this.user = this.$store.state.user
-  },
   computed: {
+    user() {
+      return this.$store.state.user
+    },
+    isLogin() {
+      return Boolean(this.uid)
+    },
+    records() {
+      return this.$store.state.records
+    },
     routename() {
       return this.$route.name
     },
@@ -56,6 +59,9 @@ export default {
   methods: {
     route() {
       console.log(this.$route.name)
+    },
+    winningPercentage() {
+      return calcWinnigPercentage(this.records)
     }
   }
 }
