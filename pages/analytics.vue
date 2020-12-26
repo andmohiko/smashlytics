@@ -20,10 +20,12 @@
           </label>
         </div>
       </form>
-      {{ recordsPeriod.length }}, {{ records.length }}
+      {{ recordsByPeriod.length }}, {{ records.length }}
       <div class="winning-percentage-fighter">
-        <div v-for="opponent in fightedFighters" :key="opponent.id">
-          Roy, {{ opponent }}, {{ calcWinningPercentage(opponent) }}
+        <div v-for="fighter in usedFighters" :key="fighter.id">
+          <div v-for="opponent in fightedFighters" :key="opponent.id">
+            {{ fighter }}, {{ opponent }}, {{ winningPercentage(fighter, opponent) }}
+          </div>
         </div>
       </div>
     </div>
@@ -32,54 +34,45 @@
 
 <script>
 import { timestamp2date, now, today } from '@/utils/date.js'
-import { calcWinnigPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/fighter.js'
 
 export default {
   data() {
     return {
-      records: [],
       period: 1,
       now: now(),
       today: today()
     }
   },
-  mounted() {
-    this.records = this.$store.state.records
-  },
   computed: {
+    records() {
+      return this.$store.state.records
+    },
+    recordsByPeriod() {
+      return this.records.filter(record => this.inPeriod(record.createdAt, this.period))
+    },
     usedFighters() {
-      const used = this.recordsPeriod.map(record => {
+      const used = this.recordsByPeriod.map(record => {
         return record.fighter
       })
       return Array.from(new Set(used))
     },
     fightedFighters() {
-      const fighted = this.recordsPeriod.map(record => {
+      const fighted = this.recordsByPeriod.map(record => {
         return record.opponent
       })
       return Array.from(new Set(fighted))
-    },
-    winningPercentage(opponent) {
-      const fighter = 'Roy'
-      console.log(fighter, opponent)
-      const specificRecords = this.getRecordsByFighters(fighter, opponent)
-      console.log(specificRecords)
-      return this.calcWinningPercentage(fighter, opponent)
-    },
-    recordsPeriod() {
-      return this.$store.state.records.filter(record => this.inPeriod(record.createdAt, this.period))
     }
   },
   methods: {
     getRecordsByFighters(fighter, opponent) {
-      return this.recordsPeriod.filter(record => {
+      return this.recordsByPeriod.filter(record => {
         return record.fighter === fighter && record.opponent === opponent
       })
     },
-    calcWinningPercentage(opponent) {
-      const fighter = 'Roy'
+    winningPercentage(fighter, opponent) {
       const specificRecords = this.getRecordsByFighters(fighter, opponent)
-      return calcWinnigPercentage(specificRecords)
+      return calcWinningPercentage(specificRecords)
     },
     inPeriod(timestamp, period) {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))

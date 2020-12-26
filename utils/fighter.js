@@ -7,7 +7,7 @@ export function jp2id(fighterJp, fighters) {
   return fighter.fighterId
 }
 
-export function calcWinnigPercentage(records) {
+export function calcWinningPercentage(records) {
   const wins = records.filter(record => record.result).length
   const loses = records.length - wins
   const percentage = Math.round((wins/records.length)*100 * 10) / 10
