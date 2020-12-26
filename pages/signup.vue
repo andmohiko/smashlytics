@@ -10,6 +10,7 @@
         </form>
       </div>
       <Button @onClick="submit" label="登録する" />
+      <Button @onClick="logout" label="googleログアウト" />
     </div>
   </div>
 </template>
@@ -19,6 +20,7 @@
 import Button from '@/components/Button.vue'
 import TextField from '@/components/TextField.vue'
 import firebase from '@/plugins/firebase'
+import Cookies from "universal-cookie"
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -47,35 +49,64 @@ export default {
   // },
   methods: {
     submit () {
-      // const authId = this.$store.state.uid
-      const authId = 'yEGvP90uYMfFlzqjEknNrBkjjsw2'
+      const authId = this.$store.state.uid
+      // const authId = 'yEGvP90uYMfFlzqjEknNrBkjjsw2'
+      console.log('signup vue authid', authId)
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
       this.user.twitterId = this.$refs.username.twitterId || null
+      // console.log(this.user.twitterId)
+      // if (this.user.twitterId.slice(0,1) === '@') {
+      //   this.user.twitterId = this.user.twitterId.slice(1)
+      // }
+      // console.log(this.user.twitterId)
       if (!authId || this.user.userId === '' || this.user.username === '') {
         this.error = 'ユーザIDとユーザ名を入力してください'
         return
       }
       const db = firebase.firestore()
       console.log('db')
-      const createdUser = db
-        .collection('users')
-        .doc(this.user.userId)
-        .set({
-          createdAt: serverTimestamp,
-          updatedAt: serverTimestamp,
-          authId,
+      try {
+        db.collection('authUsers')
+          .doc(authId)
+          .set({
+            createdAt: serverTimestamp,
+            userId: this.user.userId
+          })
+        const createdUser = db
+          .collection('users')
+          .doc(this.user.userId)
+          .set({
+            createdAt: serverTimestamp,
+            updatedAt: serverTimestamp,
+            authId,
+            username: this.user.username,
+            twitterId: this.user.twitterId,
+          })
+          .then(ref => {
+            // console.log('Add ID: ', ref)
+            return ref
+          })
+          .catch(error => {
+            console.error("Error updating document: ", error);
+          })
+        this.$store.commit('setUser', {
+          userId: this.user.userId,
           username: this.user.username,
-          twitterId: this.user.twitterId,
+          twitterId: this.user.twitterId
         })
-        .then(ref => {
-          // console.log('Add ID: ', ref)
-          return ref
-        })
-        .catch(error => {
-          console.error("Error updating document: ", error);
-        })
-      // console.log('createdUser', createdUser)
+        this.$store.commit('setRecords', [])
+        this.$router.push("/")
+      } catch (error) {
+        console.log('error in setup', error)
+      }
+    },
+    logout(){
+      const cookie = new Cookies()
+      cookie.remove('smash_access_token')
+      this.$store.commit('setUser', {})
+      this.$store.commit('setRecords', {})
+      this.$router.push("/login")
     }
   }
 }

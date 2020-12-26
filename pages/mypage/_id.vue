@@ -5,12 +5,17 @@
       <p class="username">{{ user.username }}</p>
       <p class="userId">{{ user.userId }}</p>
       <p class="user-twitterId">twitter: @{{ user.twitterId }}</p>
-      <p>勝率: {{ winningPercentage }} </p>
+      <!-- <p>勝率: {{ winningPercentage }} </p> -->
       <Button @onClick="toEdit" label="編集する" />
     </div>
     <div>
       <p class="title">過去の戦績登録</p>
       <Button @onClick="toHistory" label="登録する" />
+    </div>
+    <div>
+      <p class="title">ログイン・ログアウト</p>
+      <Button @onClick="login" label="googleでログイン" />
+      <Button @onClick="logout" label="ログアウト" />
     </div>
   </div>
 </template>
@@ -20,6 +25,7 @@
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
 import { calcWinnigPercentage } from '@/utils/fighter.js'
+import Cookies from "universal-cookie"
 
 export default {
   components: {
@@ -28,18 +34,29 @@ export default {
   data() {
     return {
       error: '',
-      user: {},
-      records: [],
+      // user: {},
+      // records: [],
       fighters: {}
     }
   },
   mounted() {
-    this.user = this.$store.state.user
-    this.records = this.$store.state.records
+    // this.user = this.$store.state.user
+    // this.records = this.$store.state.records
     this.fighters = this.$store.state.fighters
+    const cookie = new Cookies()
+    const value = cookie.get('smash_access_token')
   },
   computed: {
+    user() {
+      return this.$store.state.user
+    },
+    records() {
+      return this.$store.state.records
+    },
     winningRate(fighter, opponent) {
+      console.log(this.records)
+      return
+      if (this.records === {}) return 'あああ'
       const fighterRecords = this.records.filter(record => record.fighter === fighter)
       const opponentRecords = this.records.filter(record => record.opponent === opponent)
       const wins = fighterRecords.filter(record => record.result).length
@@ -66,6 +83,15 @@ export default {
     },
     toHistory () {
       this.$router.push("/history")
+    },
+    login() {
+      this.$store.dispatch('loginGoogle')
+    },
+    logout() {
+      const cookie = new Cookies()
+      cookie.remove('smash_access_token')
+      this.$store.commit('setUser', {})
+      this.$store.commit('setRecords', {})
     }
   }
 }

@@ -30,6 +30,7 @@ export default {
   */
   plugins: [
     '~/plugins/firebase',
+    '~/plugins/cookie',
     '~/plugins/setup'
   ],
   /*
