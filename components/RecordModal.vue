@@ -11,9 +11,16 @@
       <p class="error">{{ error }}</p>
       <form class="mb-4 px-4">
         <div class="input">
-          <TextField ref="fighter" :allowEmpty="false" defaultValue="ロイ" label="自分のファイター" placeholder="ロイ" />
           <label class="block mt-4">
-            <span class="text-gray-700">Select</span>
+            <span class="text-gray-700">自分のファイター</span>
+            <select v-model="record.fighter" class="form-select block w-full mt-1">
+              <option v-for="fighter in fighters" :key="fighter.id">
+                {{ fighter.number }}: {{ fighter.name }}
+              </option>
+            </select>
+          </label>
+          <label class="block mt-4">
+            <span class="text-gray-700">相手のファイター</span>
             <select v-model="record.opponent" class="form-select block w-full mt-1">
               <option v-for="fighter in fighters" :key="fighter.id">
                 {{ fighter.number }}: {{ fighter.name }}
@@ -90,6 +97,10 @@ export default {
     fighters: {
       required: true,
       type: Array
+    },
+    lastRecord: {
+      required: true,
+      type: Object
     }
   },
   components: {
@@ -99,21 +110,24 @@ export default {
   data() {
     return {
       record: {
-        fighter: 'ロイ',
-        opponent: '',
+        fighter: this.lastRecord.fighterId + ': ' + this.lastRecord.fighter,
+        opponent: this.lastRecord.opponentId + ': ' + this.lastRecord.opponent,
         result: true,
         globalSmashPower: null,
         stage: null
       },
       error: '',
-      userId: 'andmohiko'
     }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
   },
   methods: {
     async submit () {
       console.log('submit')
       this.error = ''
-      this.record.fighter = this.$refs.fighter.input
       this.record.globalSmashPower = this.$refs.globalSmashPower.input
       if (
         !this.record.fighter === '' ||
@@ -130,9 +144,9 @@ export default {
           .add({
             createdAt: serverTimestamp,
             updatedAt: serverTimestamp,
-            userId: this.userId,
-            fighter: this.record.fighter,
-            fighterId: jp2id(this.record.fighter, this.fighters),
+            userId: this.user.userId,
+            fighter: this.record.fighter.split(' ')[1],
+            fighterId: jp2id(this.record.fighter.split(' ')[1], this.fighters),
             opponent: this.record.opponent.split(' ')[1],
             opponentId: jp2id(this.record.opponent.split(' ')[1], this.fighters),
             result: this.record.result,
@@ -147,6 +161,7 @@ export default {
             console.log(error)
           })
         // console.log('sendingRecord', sendingRecord)
+        await this.$store.dispatch('getRecords', this.user.userId)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)

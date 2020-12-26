@@ -2,7 +2,7 @@
   <div class="container">
     <div class="register">
       <template v-if="isShowModal">
-        <RecordModal :fighters="fightersArray" @close="closeModal" />
+        <RecordModal :fighters="fightersArray" :lastRecord="records[0]" @close="closeModal" />
       </template>
     </div>
     <div class="results">
@@ -43,16 +43,16 @@ export default {
       error: '',
       isShowModal: false,
       userId: 'andmohiko',
-      records: [],
-      fighters: {},
       now: now()
     }
   },
-  mounted() {
-    this.records = this.$store.state.records
-    this.fighters = this.$store.state.fighters
-  },
   computed: {
+    records() {
+      return this.$store.state.records
+    },
+    fighters() {
+      return this.$store.state.fighters
+    },
     resultsToday() {
       const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10).replaceAll('/', '-')
       const recordsToday = this.records.filter(record => timestamp2dateString(record.createdAt) === today)
@@ -69,7 +69,6 @@ export default {
   methods: {
     async getRecords() {
       await this.$store.dispatch('getRecords', this.userId)
-      this.records = this.$store.state.records
     },
     openModal() {
       this.isShowModal = true
