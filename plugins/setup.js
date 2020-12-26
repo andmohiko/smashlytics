@@ -10,7 +10,6 @@ export default async ({ store }) => {
 
     const decodedToken = jwtDecode(auth_token)
     const uid = decodedToken['user_id']
-    console.log('setupjs decoded userId', uid)
     store.commit('setUid', uid)
     store.dispatch('isUser', uid)
     

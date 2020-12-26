@@ -45,6 +45,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/tailwindcss',
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
   ],
   router: {
     middleware: 'auth'

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "dotenv": "^8.2.0",
     "firebase": "^8.2.0",
     "jwt-decode": "^3.1.2",
