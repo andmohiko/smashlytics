@@ -39,18 +39,9 @@ export default {
       error: ''
     }
   },
-  // async fetch ({ store, params }) {
-  //   const uid = this.$store.state.uid
-  //   console.log('uid', uid)    
-  // },
-  // mounted() {
-  //   firebase.auth().onAuthStateChanged(user => {
-  //   })
-  // },
   methods: {
     submit () {
       const authId = this.$store.state.uid
-      // const authId = 'yEGvP90uYMfFlzqjEknNrBkjjsw2'
       console.log('signup vue authid', authId)
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
