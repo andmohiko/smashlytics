@@ -1,4 +1,6 @@
 import firebase from '@/plugins/firebase'
+import { setCookie } from '@/plugins/cookie'
+
 const db = firebase.firestore()
 // import "firebase/auth"
 import Vue from 'vue'
@@ -18,49 +20,58 @@ const state = {
   fighters: {}
 }
 
-
 const actions = {
   loginGoogle ({ dispatch }) {
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider).then(result => {
       dispatch('checkLogin')
-      console.log('result', result)
     }).catch(error => {
       console.log(error)
     })
   },
-  checkLogin ({ commit, dispatch }) {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        commit('setUid', user.uid)
-        console.log('user', user)
-        console.log('uid', user.uid)
-        dispatch('getUserData', user.uid)
-      }
+  async checkLogin ({ commit, dispatch }) {
+    await firebase.auth().onAuthStateChanged(user => {
+      if (!user) return
+      const uid = user.uid
+      console.log('uid', uid)
+      setCookie(user)
+      commit('setUid', uid)
+      dispatch('isUser', uid)
+      dispatch('getFighters')
     })
   },
-  // updateUserData ({ commit }) {
-  // },
-  getUserData ({ commit }, uid) {
+  async isUser({ commit, dispatch }, authId) {
     const db = firebase.firestore()
-    const userDocRef = db.collection('users').doc(uid)
-    userDocRef.get().then(doc => {
-      if (!doc.exists) {
-        this.$router.push("/signup");
-        return
-      }
-      const user = doc.data()
-      console.log("user data", user)
-      commit('setUser', {
-        userId: user.userId,
-        username: user.username,
-        twitterId: user.twitterId,
-        main: user.main
+    const authUser = await db
+      .collection('authUsers')
+      .doc(authId)
+      .get()
+      .then(doc => {
+        return doc.data()
       })
-      this.$router.push("/");
-    })
-    .catch(function(error) {
-      console.log("Error getting document:", error)
+    if (!authUser) {
+      this.$router.push("/signup")
+      return
+    }
+    const userId = authUser.userId
+    dispatch('getUser', userId)
+    dispatch('getRecords', userId)
+  },
+  async getUser ({ commit }, userId) {
+    const user = await db
+      .collection('users')
+      .doc(userId)
+      .get()
+      .then(doc => {
+        return doc.data()
+      }).catch(function(error) {
+        console.log("Error getting document:", error);
+      })
+    commit('setUser', {
+      userId,
+      username: user.username,
+      twitterId: user.twitterId,
+      main: user.main
     })
   },
   async getRecords ({ commit }, userId) {
