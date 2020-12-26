@@ -39,10 +39,14 @@ export default {
       required: false,
       type: Number
     },
+    defaultValue: {
+      default: '',
+      type: String
+    }, 
   },
   data() {
     return {
-      input: ''
+      input: this.defaultValue
     }
   },
   computed: {

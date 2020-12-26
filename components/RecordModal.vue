@@ -11,7 +11,7 @@
       <p class="error">{{ error }}</p>
       <form class="mb-4 px-4">
         <div class="input">
-          <TextField ref="fighter" :allowEmpty="false" label="自分のファイター" placeholder="ロイ" />
+          <TextField ref="fighter" :allowEmpty="false" defaultValue="ロイ" label="自分のファイター" placeholder="ロイ" />
           <label class="block mt-4">
             <span class="text-gray-700">Select</span>
             <select v-model="record.opponent" class="form-select block w-full mt-1">
