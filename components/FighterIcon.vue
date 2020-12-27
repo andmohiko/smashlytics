@@ -1,5 +1,5 @@
 <template>
-  <div class="icon" :style="sizeStyle">
+  <div class="icon" :style="sizeStyle" :class="{ hasBorder: isSelected }">
     <img :src="fighterIconPath" />
   </div>
 </template>
@@ -12,13 +12,13 @@ export default {
       required: true,
       type: String
     },
-    fighters: {
-      required: true,
-      type: Object
-    },
     size: {
       default: '100%',
       type: String
+    },
+    isSelected: {
+      defalut: false,
+      type: Boolean
     }
   },
   data() {
@@ -31,10 +31,7 @@ export default {
   },
   computed: {
     fighterIconPath() {
-      const fighterId = this.record
-      // エラー用画像を用意する
-      if (!this.fighters[this.fighterId].name_en) return '/images/fighters/01_Mario.png'
-      const fighterEnName = this.fighters[this.fighterId]['name_en']
+      const fighterEnName = this.$store.state.fighters[this.fighterId].name_en
       return '/images/fighters/' + this.fighterId + '_' + fighterEnName + '.png'
     }
   }
@@ -44,5 +41,9 @@ export default {
 <style scoped lang="scss">
 .icon {
   margin: 0 auto;
+}
+.hasBorder {
+  border: solid 2px #8282fa;
+  border-radius: 20%;
 }
 </style>
