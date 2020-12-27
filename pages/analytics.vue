@@ -1,27 +1,31 @@
 <template>
   <div class="container">
-    <div class="block">
-      <p class="title">Analytics coming soon!</p>
-      <p>updating features</p>
-      <p>results by character</p>
-      <p>WoW, MoM</p>
-    </div>
     <div class="winning-percentage">
-      <p class="title">キャラごとの勝率</p>
-      <form class="mb-4 px-4">
-        <div class="input">
-          <label class="block mt-4">
-            <span class="text-gray-700">Select Period(days)</span>
-            <select v-model="period" class="form-select block w-full mt-1">
-              <option>1</option>
-              <option>3</option>
-              <option>7</option>
-              <option>30</option>
-            </select>
-          </label>
+      <h2 class="text-2xl py-2 border-b mb-4">キャラごとの勝率</h2>
+      <form class="mb-2 px-4">
+        <div class="input-radio mb-2">
+          <p class="text-l">期間(日)</p>
+          <input v-model="period" type="radio" name="1" :value="1"/>
+          <label for="1">1日</label>
+          <input v-model="period" type="radio" name="3" :value="3"/>
+          <label for="3">3日</label>
+          <input v-model="period" type="radio" name="7" :value="7"/>
+          <label for="7">7日</label>
+          <input v-model="period" type="radio" name="30" :value="30"/>
+          <label for="30">30日</label>
+        </div>
+        <div class="input-radio">
+          <p class="text-l">並べ替え</p>
+          <input v-model="sorting" type="radio" name="fighterId" value="opponentId"/>
+          <label for="1">ファイター順</label>
+          <input v-model="sorting" type="radio" name="matches" value="matches"/>
+          <label for="3">試合数</label>
+          <input v-model="sorting" type="radio" name="winningPercentage" value="winningPercentage"/>
+          <label for="7">勝率</label>
         </div>
       </form>
-      {{ recordsByPeriod.length }} matches in this period, {{ records.length }} matches in all.
+      <!-- {{ entries }} -->
+      <p class="message">{{ period }} 日以内の記録は {{ recordsByPeriod.length }} 試合です({{ calcWinningPercentage(recordsByPeriod) }})</p>
       <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
@@ -32,15 +36,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="opponentId in fightedFighterIds" :key="opponentId.id">
+            <tr v-for="entry in entries" :key="entry.id">
               <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="'25'" size="32px" /></td>
+              ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
               <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="opponentId" size="32px" /></td>
+              ><FighterIcon :fighterId="entry.opponentId" size="32px" /></td>
               <td class="border-dashed border-t border-gray-200 px-3"
-              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ winningPercentage('25', opponentId).slice(0,5) }}</span></td>
+              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
               <td class="border-dashed border-t border-gray-200 px-3"
-              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ winningPercentage('25', opponentId).slice(7) }}</span></td>
+              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.winningPercentage }}%</span></td>
             </tr>
           </tbody>
         </table>
@@ -60,7 +64,8 @@ export default {
   },
   data() {
     return {
-      period: 2,
+      period: 3,
+      sorting: 'opponentId',
       now: now(),
       today: today()
     }
@@ -86,6 +91,25 @@ export default {
         return record.opponentId
       })
       return Array.from(new Set(fighted))
+    },
+    entries() {
+      let entries = []
+      this.usedFighterIds.map(fighterId => {
+        this.fightedFighterIds.map(opponentId => {
+          const specificRecords = this.getRecordsByFighters(fighterId, opponentId)
+          const wins = specificRecords.filter(record => record.result).length
+          entries.push({
+            fighterId,
+            opponentId,
+            matches: specificRecords.length,
+            wins,
+            loses: specificRecords.length - wins,
+            winningPercentage: Math.round((wins/specificRecords.length)*100 * 10) / 10
+          })
+        })
+      })
+      if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
+      return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
     }
   },
   methods: {
@@ -102,6 +126,7 @@ export default {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return timestamp2date(timestamp) > targetDate
     },
+    calcWinningPercentage,
     timestamp2date
   }
 }
@@ -117,14 +142,12 @@ export default {
   align-items: center;
   text-align: center;
 }
-.block {
-  margin: 20px 0;
-  .title {
-    font-size: 20px;
-  }
-}
 .table {
   margin: 10px 0;
+}
+.message {
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 .table-byFighter {
   display: grid;
