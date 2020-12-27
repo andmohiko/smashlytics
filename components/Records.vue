@@ -35,7 +35,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </template>
@@ -93,11 +92,6 @@ export default {
       }
     }
   },
-  // computed: {
-  //   fighters() {
-  //     return this.$store.state.fighters
-  //   }
-  // },
   methods: {
     bool2result(result) {
       return result ? '勝ち' : '負け'
