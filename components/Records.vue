@@ -17,10 +17,10 @@
                 <span class="text-gray-700 px-6 py-3 flex items-center">{{ timestamp2dateString(record.createdAt) }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ record.fighter }}</span>
+                <FighterIcon :fighterId="record.fighterId" size="32px" />
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ record.opponent }}</span>
+                <FighterIcon :fighterId="record.opponentId" size="32px" />
               </td>
               <td class="border-dashed border-t border-gray-200">
                 <span class="text-gray-700 px-6 py-3 flex items-center">{{ bool2result(record.result) }}</span>
@@ -42,6 +42,7 @@
 
 <script>
 import { timestamp2dateString } from '@/utils/date.js'
+import FighterIcon from '@/components/FighterIcon.vue'
 
 export default {
   props: {
@@ -53,6 +54,9 @@ export default {
       required: true,
       type: Object
     }
+  },
+  components: {
+    FighterIcon
   },
   data() {
     return {
@@ -104,6 +108,10 @@ export default {
     get() {
       const fightersVals = Object.values(this.fighters)
       console.log(fightersVals)
+    },
+    fighterIconPath(fighterId){
+      const fighterEnName = this.fighters[fighterId].name_en
+      return ''
     },
     timestamp2dateString
   }

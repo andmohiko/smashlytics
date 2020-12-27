@@ -2,7 +2,7 @@
   <div class="container">
     <div class="register">
       <template v-if="isShowModal">
-        <RecordModal :fighters="fightersArray" :lastRecord="records[0]" @close="closeModal" />
+        <RecordModal :lastRecord="records[0]" @close="closeModal" />
       </template>
     </div>
     <div class="results">
