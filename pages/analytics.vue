@@ -26,8 +26,8 @@
         <div v-for="fighterId in usedFighterIds" :key="fighterId.id">
           <div v-for="opponentId in fightedFighterIds" :key="opponentId.id">
             <div class="winningPercentage-byFighter">
-              <FighterIcon :fighterId="fighterId" :fighters="fighters" size="32px" />
-              <FighterIcon :fighterId="opponentId" :fighters="fighters" size="32px" />
+              <FighterIcon :fighterId="fighterId" size="32px" />
+              <FighterIcon :fighterId="opponentId" size="32px" />
               {{ winningPercentage(fighterId, opponentId) }}
             </div>
           </div>
