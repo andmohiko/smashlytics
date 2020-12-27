@@ -5,7 +5,7 @@
       <p class="username">{{ user.username }}</p>
       <p class="userId">{{ user.userId }}</p>
       <p class="user-twitterId">twitter: @{{ user.twitterId }}</p>
-      <!-- <p>勝率: {{ winningPercentage }} </p> -->
+      <p>勝率: {{ calcWinningPercentage(records) }} </p>
       <Button @onClick="toEdit" label="編集する" />
     </div>
     <div>
@@ -24,7 +24,7 @@
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
-import { calcWinnigPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/fighter.js'
 import Cookies from "universal-cookie"
 
 export default {
@@ -34,15 +34,9 @@ export default {
   data() {
     return {
       error: '',
-      // user: {},
-      // records: [],
-      fighters: {}
     }
   },
   mounted() {
-    // this.user = this.$store.state.user
-    // this.records = this.$store.state.records
-    this.fighters = this.$store.state.fighters
     const cookie = new Cookies()
     const value = cookie.get('smash_access_token')
   },
@@ -52,6 +46,9 @@ export default {
     },
     records() {
       return this.$store.state.records
+    },
+    fighters() {
+      return this.$store.state.fighters
     },
     winningRate(fighter, opponent) {
       console.log(this.records)
@@ -92,7 +89,8 @@ export default {
       cookie.remove('smash_access_token')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', {})
-    }
+    },
+    calcWinningPercentage
   }
 }
 </script>

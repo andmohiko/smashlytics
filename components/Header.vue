@@ -6,12 +6,12 @@
       <nuxt-link to="/login">login</nuxt-link>
       <nuxt-link to="/signup">signup</nuxt-link>
     </nav>
-    <!-- <p>勝率: {{ winningPercentage }} </p> -->
+    <p>{{ calcWinningPercentage(records) }} </p>
   </div>
 </template>
 
 <script>
-import { calcWinnigPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/fighter.js'
 
 export default {
   computed: {
@@ -60,9 +60,7 @@ export default {
     route() {
       console.log(this.$route.name)
     },
-    winningPercentage() {
-      return calcWinnigPercentage(this.records)
-    }
+    calcWinningPercentage
   }
 }
 </script>
