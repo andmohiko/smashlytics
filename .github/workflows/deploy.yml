@@ -26,7 +26,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
-          MESSAGEING_SENDER_ID: ${{ secrets.MESSAGE_SENDER_ID }}
+          MESSAGE_SENDER_ID: ${{ secrets.MESSAGE_SENDER_ID }}
           APP_ID: ${{ secrets.APP_ID }}
           MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
         run: |
