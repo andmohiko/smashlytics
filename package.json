@@ -14,7 +14,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "dotenv": "^8.2.0",
-    "firebase": "^8.2.0",
+    "firebase": "^7.2.0",
     "jwt-decode": "^3.1.2",
     "nuxt": "^2.0.0",
     "universal-cookie": "^4.0.4"
