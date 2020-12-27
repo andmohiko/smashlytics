@@ -21,17 +21,29 @@
           </label>
         </div>
       </form>
-      {{ recordsByPeriod.length }} in this period, {{ records.length }} matches in all.
-      <div class="winningPercentage">
-        <div v-for="fighterId in usedFighterIds" :key="fighterId.id">
-          <div v-for="opponentId in fightedFighterIds" :key="opponentId.id">
-            <div class="winningPercentage-byFighter">
-              <FighterIcon :fighterId="fighterId" size="32px" />
-              <FighterIcon :fighterId="opponentId" size="32px" />
-              {{ winningPercentage(fighterId, opponentId) }}
-            </div>
-          </div>
-        </div>
+      {{ recordsByPeriod.length }} matches in this period, {{ records.length }} matches in all.
+      <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
+        <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+          <thead>
+            <tr class="text-left">
+              <th v-for="heading in ['自分', '相手', '勝敗数', '勝率']" :key="heading.id"
+                class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+              >{{ heading }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="opponentId in fightedFighterIds" :key="opponentId.id">
+              <td class="border-dashed border-t border-gray-200 px-3"
+              ><FighterIcon :fighterId="'25'" size="32px" /></td>
+              <td class="border-dashed border-t border-gray-200 px-3"
+              ><FighterIcon :fighterId="opponentId" size="32px" /></td>
+              <td class="border-dashed border-t border-gray-200 px-3"
+              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ winningPercentage('25', opponentId).slice(0,5) }}</span></td>
+              <td class="border-dashed border-t border-gray-200 px-3"
+              ><span class="text-gray-700 px-3 py-3 flex items-center">{{ winningPercentage('25', opponentId).slice(7) }}</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -111,10 +123,10 @@ export default {
     font-size: 20px;
   }
 }
-.winningPercentage {
+.table {
   margin: 10px 0;
 }
-.winningPercentage-byFighter {
+.table-byFighter {
   display: grid;
   grid-template-rows: 40px;
   grid-template-columns:50px 50px 1fr;
