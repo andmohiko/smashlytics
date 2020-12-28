@@ -33,19 +33,11 @@ export default {
   },
   data() {
     return {
-      record: {
-        fighter: 'ロイ',
-        opponent: '',
-        result: true,
-        globalSmashPower: null,
-        stage: null
-      },
-      error: '',
       isShowModal: false,
-      userId: 'andmohiko',
       now: now()
     }
   },
+  watch: {},
   computed: {
     records() {
       return this.$store.state.records
@@ -54,8 +46,8 @@ export default {
       return this.$store.state.fighters
     },
     resultsToday() {
-      const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10).replaceAll('/', '-')
-      const recordsToday = this.records.filter(record => timestamp2dateString(record.createdAt) === today)
+      const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10)
+      const recordsToday = this.records.filter(record => record.createdAt.toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10) === today)
       const wins = recordsToday.filter(record => record.result).length
       const loses = recordsToday.length - wins
       return wins + '勝' + loses + '敗'
@@ -67,9 +59,6 @@ export default {
     }
   },
   methods: {
-    async getRecords() {
-      await this.$store.dispatch('getRecords', this.userId)
-    },
     openModal() {
       this.isShowModal = true
     },
@@ -86,7 +75,7 @@ export default {
   min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
-  // justify-content: center;
+  justify-content: center;
   align-items: center;
   text-align: center;
 }
@@ -110,7 +99,7 @@ export default {
 }
 .records {
   margin: 0 50px;
-  width: 500px;
+  // width: 500px;
   display: flex;
   flex-direction: column;
   // justify-content: center;
