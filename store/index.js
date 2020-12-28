@@ -33,10 +33,10 @@ const actions = {
     await firebase.auth().onAuthStateChanged(user => {
       if (!user) return
       const uid = user.uid
-      console.log('uid', uid)
       setCookie(user)
       commit('setUid', uid)
       dispatch('isUser', uid)
+      this.$router.push("/")
     })
   },
   async isUser({ dispatch }, authId) {

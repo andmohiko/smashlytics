@@ -1,12 +1,6 @@
 <template>
   <div class="header">
     <p class="page-title">{{ pageTitle }}</p>
-    <!-- <p v-if="isLogin" class="user">{{ user.username }} @{{ user.userId }}</p> -->
-    <!-- <nav v-else class="nav">
-      <nuxt-link to="/login">login</nuxt-link>
-      <nuxt-link to="/signup">signup</nuxt-link>
-    </nav> -->
-    <!-- <p>{{ calcWinningPercentage(records) }} </p> -->
   </div>
 </template>
 
@@ -44,8 +38,8 @@ export default {
         case 'fighters': {
           return 'ファイター追加'
         }
-        case 'login': {
-          return 'ログイン'
+        case 'new': {
+          return 'Smashlytics'
         }
         case 'signup': {
           return 'ユーザ登録'
