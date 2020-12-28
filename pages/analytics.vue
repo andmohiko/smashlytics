@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="winning-percentage">
-      <h2 class="text-2xl py-2 border-b mb-4">キャラごとの勝率</h2>
+      <h2 class="text-2xl py-2 border-b mb-4">ファイターごとの勝率</h2>
       <form class="mb-2 px-4">
         <div class="input-radio mb-2">
           <p class="text-l">期間(日)</p>
@@ -24,8 +24,10 @@
           <label for="7">勝率</label>
         </div>
       </form>
-      <!-- {{ entries }} -->
-      <p class="message">{{ period }} 日以内の記録は {{ recordsByPeriod.length }} 試合です({{ calcWinningPercentage(recordsByPeriod) }})</p>
+      <p class="message">
+        <span>{{ period }} 日以内の記録は {{ recordsByPeriod.length }} 試合です。</span>
+        <span>({{ calcWinningPercentage(recordsByPeriod) }})</span>
+      </p>
       <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
@@ -148,6 +150,9 @@ export default {
 .message {
   font-size: 18px;
   margin-bottom: 8px;
+  span {
+    display: block;
+  }
 }
 .table-byFighter {
   display: grid;
