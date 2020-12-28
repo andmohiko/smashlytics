@@ -1,0 +1,666 @@
+{
+  "01": {
+    "fighterId": "01",
+    "icon": "01_Mario.png",
+    "isDashFighter": false,
+    "name": "マリオ",
+    "name_en": "Mario",
+    "number": 1
+  },
+  "02": {
+    "fighterId": "02",
+    "icon": "02_DonkeyKong.png",
+    "isDashFighter": false,
+    "name": "ドンキーコング",
+    "name_en": "DonkeyKong",
+    "number": 2
+  },
+  "03": {
+    "fighterId": "03",
+    "icon": "03_Link.png",
+    "isDashFighter": false,
+    "name": "リンク",
+    "name_en": "Link",
+    "number": 3
+  },
+  "04": {
+    "fighterId": "04",
+    "icon": "04_Samus.png",
+    "isDashFighter": false,
+    "name": "サムス",
+    "name_en": "Samus",
+    "number": 4
+  },
+  "04e": {
+    "fighterId": "04e",
+    "icon": "04e_DarkSamus.png",
+    "isDashFighter": true,
+    "name": "ダークサムス",
+    "name_en": "DarkSamus",
+    "number": 4
+  },
+  "05": {
+    "fighterId": "05",
+    "icon": "05_Yoshi.png",
+    "isDashFighter": false,
+    "name": "ヨッシー",
+    "name_en": "Yoshi",
+    "number": 5
+  },
+  "06": {
+    "fighterId": "06",
+    "icon": "06_Kirby.png",
+    "isDashFighter": false,
+    "name": "カービィ",
+    "name_en": "Kirby",
+    "number": 6
+  },
+  "07": {
+    "fighterId": "07",
+    "icon": "07_Fox.png",
+    "isDashFighter": false,
+    "name": "フォックス",
+    "name_en": "Fox",
+    "number": 7
+  },
+  "08": {
+    "fighterId": "08",
+    "icon": "08_Pikachu.png",
+    "isDashFighter": false,
+    "name": "ピカチュウ",
+    "name_en": "Pikachu",
+    "number": 8
+  },
+  "09": {
+    "fighterId": "09",
+    "icon": "09_Luigi.png",
+    "isDashFighter": false,
+    "name": "ルイージ",
+    "name_en": "Luigi",
+    "number": 9
+  },
+  "10": {
+    "fighterId": "10",
+    "icon": "10_Ness.png",
+    "isDashFighter": false,
+    "name": "ネス",
+    "name_en": "Ness",
+    "number": 10
+  },
+  "11": {
+    "fighterId": "11",
+    "icon": "11_CaptainFalcon.png",
+    "isDashFighter": false,
+    "name": "キャプテン・ファルコン",
+    "name_en": "CaptainFalcon",
+    "number": 11
+  },
+  "12": {
+    "fighterId": "12",
+    "icon": "12_Jigglypuff.png",
+    "isDashFighter": false,
+    "name": "プリン",
+    "name_en": "Jigglypuff",
+    "number": 12
+  },
+  "13": {
+    "fighterId": "13",
+    "icon": "13_Peach.png",
+    "isDashFighter": false,
+    "name": "ピーチ",
+    "name_en": "Peach",
+    "number": 13
+  },
+  "13e": {
+    "fighterId": "13e",
+    "icon": "13e_Daisy.png",
+    "isDashFighter": true,
+    "name": "デイジー",
+    "name_en": "Daisy",
+    "number": 13
+  },
+  "14": {
+    "fighterId": "14",
+    "icon": "14_Bowser.png",
+    "isDashFighter": false,
+    "name": "クッパ",
+    "name_en": "Bowser",
+    "number": 14
+  },
+  "15": {
+    "fighterId": "15",
+    "icon": "15_IceClimbers.png",
+    "isDashFighter": false,
+    "name": "アイスクライマー",
+    "name_en": "IceClimbers",
+    "number": 15
+  },
+  "16": {
+    "fighterId": "16",
+    "icon": "16_Sheik.png",
+    "isDashFighter": false,
+    "name": "シーク",
+    "name_en": "Sheik",
+    "number": 16
+  },
+  "17": {
+    "fighterId": "17",
+    "icon": "17_Zelda.png",
+    "isDashFighter": false,
+    "name": "ゼルダ",
+    "name_en": "Zelda",
+    "number": 17
+  },
+  "18": {
+    "fighterId": "18",
+    "icon": "18_Dr.Mario.png",
+    "isDashFighter": false,
+    "name": "ドクターマリオ",
+    "name_en": "Dr.Mario",
+    "number": 18
+  },
+  "19": {
+    "fighterId": "19",
+    "icon": "19_Pichu.png",
+    "isDashFighter": false,
+    "name": "ピチュー",
+    "name_en": "Pichu",
+    "number": 19
+  },
+  "20": {
+    "fighterId": "20",
+    "icon": "20_Falco.png",
+    "isDashFighter": false,
+    "name": "ファルコ",
+    "name_en": "Falco",
+    "number": 20
+  },
+  "21": {
+    "fighterId": "21",
+    "icon": "21_Marth.png",
+    "isDashFighter": false,
+    "name": "マルス",
+    "name_en": "Marth",
+    "number": 21
+  },
+  "21e": {
+    "fighterId": "21e",
+    "icon": "21e_Lucina.png",
+    "isDashFighter": true,
+    "name": "ルキナ",
+    "name_en": "Lucina",
+    "number": 21
+  },
+  "22": {
+    "fighterId": "22",
+    "icon": "22_YoungLink.png",
+    "isDashFighter": false,
+    "name": "こどもリンク",
+    "name_en": "YoungLink",
+    "number": 22
+  },
+  "23": {
+    "fighterId": "23",
+    "icon": "23_Ganondorf.png",
+    "isDashFighter": false,
+    "name": "ガノンドロフ",
+    "name_en": "Ganondorf",
+    "number": 23
+  },
+  "24": {
+    "fighterId": "24",
+    "icon": "24_Mewtwo.png",
+    "isDashFighter": false,
+    "name": "ミュウツー",
+    "name_en": "Mewtwo",
+    "number": 24
+  },
+  "25": {
+    "fighterId": "25",
+    "icon": "25_Roy.png",
+    "isDashFighter": false,
+    "name": "ロイ",
+    "name_en": "Roy",
+    "number": 25
+  },
+  "25e": {
+    "fighterId": "25e",
+    "icon": "25e_Chrom.png",
+    "isDashFighter": true,
+    "name": "クロム",
+    "name_en": "Chrom",
+    "number": 25
+  },
+  "26": {
+    "fighterId": "26",
+    "icon": "26_Mr.Game&Watch.png",
+    "isDashFighter": false,
+    "name": "Mr.ゲーム&ウォッチ",
+    "name_en": "Mr.Game&Watch",
+    "number": 26
+  },
+  "27": {
+    "fighterId": "27",
+    "icon": "27_MetaKnight.png",
+    "isDashFighter": false,
+    "name": "メタナイト",
+    "name_en": "MetaKnight",
+    "number": 27
+  },
+  "28": {
+    "fighterId": "28",
+    "icon": "28_Pit.png",
+    "isDashFighter": false,
+    "name": "ピット",
+    "name_en": "Pit",
+    "number": 28
+  },
+  "28e": {
+    "fighterId": "28e",
+    "icon": "28e_DarkPit.png",
+    "isDashFighter": true,
+    "name": "ブラックピット",
+    "name_en": "DarkPit",
+    "number": 28
+  },
+  "29": {
+    "fighterId": "29",
+    "icon": "29_ZeroSuitSamus.png",
+    "isDashFighter": false,
+    "name": "ゼロスーツサムス",
+    "name_en": "ZeroSuitSamus",
+    "number": 29
+  },
+  "30": {
+    "fighterId": "30",
+    "icon": "30_Wario.png",
+    "isDashFighter": false,
+    "name": "ワリオ",
+    "name_en": "Wario",
+    "number": 30
+  },
+  "31": {
+    "fighterId": "31",
+    "icon": "31_Snake.png",
+    "isDashFighter": false,
+    "name": "スネーク",
+    "name_en": "Snake",
+    "number": 31
+  },
+  "32": {
+    "fighterId": "32",
+    "icon": "32_Ike.png",
+    "isDashFighter": false,
+    "name": "アイク",
+    "name_en": "Ike",
+    "number": 32
+  },
+  "33": {
+    "fighterId": "33",
+    "icon": "33_PokémonTrainer.png",
+    "isDashFighter": false,
+    "name": "ポケモントレーナー",
+    "name_en": "PokémonTrainer",
+    "number": 33
+  },
+  "36": {
+    "fighterId": "36",
+    "icon": "36_DiddyKong.png",
+    "isDashFighter": false,
+    "name": "ディディーコング",
+    "name_en": "DiddyKong",
+    "number": 36
+  },
+  "37": {
+    "fighterId": "37",
+    "icon": "37_Lucas.png",
+    "isDashFighter": false,
+    "name": "リュカ",
+    "name_en": "Lucas",
+    "number": 37
+  },
+  "38": {
+    "fighterId": "38",
+    "icon": "38_Sonic.png",
+    "isDashFighter": false,
+    "name": "ソニック",
+    "name_en": "Sonic",
+    "number": 38
+  },
+  "39": {
+    "fighterId": "39",
+    "icon": "39_KingDedede.png",
+    "isDashFighter": false,
+    "name": "デデデ",
+    "name_en": "KingDedede",
+    "number": 39
+  },
+  "40": {
+    "fighterId": "40",
+    "icon": "40_Olimar.png",
+    "isDashFighter": false,
+    "name": "ピクミン&オリマー",
+    "name_en": "Olimar",
+    "number": 40
+  },
+  "41": {
+    "fighterId": "41",
+    "icon": "41_Lucario.png",
+    "isDashFighter": false,
+    "name": "ルカリオ",
+    "name_en": "Lucario",
+    "number": 41
+  },
+  "42": {
+    "fighterId": "42",
+    "icon": "42_R.O.B..png",
+    "isDashFighter": false,
+    "name": "ロボット",
+    "name_en": "R.O.B.",
+    "number": 42
+  },
+  "43": {
+    "fighterId": "43",
+    "icon": "43_ToonLink.png",
+    "isDashFighter": false,
+    "name": "トゥーンリンク",
+    "name_en": "ToonLink",
+    "number": 43
+  },
+  "44": {
+    "fighterId": "44",
+    "icon": "44_Wolf.png",
+    "isDashFighter": false,
+    "name": "ウルフ",
+    "name_en": "Wolf",
+    "number": 44
+  },
+  "45": {
+    "fighterId": "45",
+    "icon": "45_Villager.png",
+    "isDashFighter": false,
+    "name": "むらびと",
+    "name_en": "Villager",
+    "number": 45
+  },
+  "46": {
+    "fighterId": "46",
+    "icon": "46_MegaMan.png",
+    "isDashFighter": false,
+    "name": "ロックマン",
+    "name_en": "MegaMan",
+    "number": 46
+  },
+  "47": {
+    "fighterId": "47",
+    "icon": "47_WiiFitTrainer.png",
+    "isDashFighter": false,
+    "name": "Wii Fit トレーナー",
+    "name_en": "WiiFitTrainer",
+    "number": 47
+  },
+  "48": {
+    "fighterId": "48",
+    "icon": "48_Rosalina&Luma.png",
+    "isDashFighter": false,
+    "name": "ロゼッタ&チコ",
+    "name_en": "Rosalina&Luma",
+    "number": 48
+  },
+  "49": {
+    "fighterId": "49",
+    "icon": "49_Little Mac.png",
+    "isDashFighter": false,
+    "name": "リトル・マック",
+    "name_en": "Little Mac",
+    "number": 49
+  },
+  "50": {
+    "fighterId": "50",
+    "icon": "50_Greninja.png",
+    "isDashFighter": false,
+    "name": "ゲッコウガ",
+    "name_en": "Greninja",
+    "number": 50
+  },
+  "51": {
+    "fighterId": "51",
+    "icon": "51_MiiBrawler.png",
+    "isDashFighter": false,
+    "name": "Miiファイター格闘",
+    "name_en": "MiiBrawler",
+    "number": 51
+  },
+  "52": {
+    "fighterId": "52",
+    "icon": "52_MiiSwordfighter.png",
+    "isDashFighter": false,
+    "name": "Miiファイター剣術",
+    "name_en": "MiiSwordfighter",
+    "number": 52
+  },
+  "53": {
+    "fighterId": "53",
+    "icon": "53_MiiGunner.png",
+    "isDashFighter": false,
+    "name": "Miiファイター射撃",
+    "name_en": "MiiGunner",
+    "number": 53
+  },
+  "54": {
+    "fighterId": "54",
+    "icon": "54_Palutena.png",
+    "isDashFighter": false,
+    "name": "パルテナ",
+    "name_en": "Palutena",
+    "number": 54
+  },
+  "55": {
+    "fighterId": "55",
+    "icon": "55_Pac-Man.png",
+    "isDashFighter": false,
+    "name": "パックマン",
+    "name_en": "Pac-Man",
+    "number": 55
+  },
+  "56": {
+    "fighterId": "56",
+    "icon": "56_Robin.png",
+    "isDashFighter": false,
+    "name": "ルフレ",
+    "name_en": "Robin",
+    "number": 56
+  },
+  "57": {
+    "fighterId": "57",
+    "icon": "57_Shulk.png",
+    "isDashFighter": false,
+    "name": "シュルク",
+    "name_en": "Shulk",
+    "number": 57
+  },
+  "58": {
+    "fighterId": "58",
+    "icon": "58_BowserJr..png",
+    "isDashFighter": false,
+    "name": "クッパJr.",
+    "name_en": "BowserJr.",
+    "number": 58
+  },
+  "59": {
+    "fighterId": "59",
+    "icon": "59_DuckHunt.png",
+    "isDashFighter": false,
+    "name": "ダックハント",
+    "name_en": "DuckHunt",
+    "number": 59
+  },
+  "60": {
+    "fighterId": "60",
+    "icon": "60_Ryu.png",
+    "isDashFighter": false,
+    "name": "リュウ",
+    "name_en": "Ryu",
+    "number": 60
+  },
+  "60e": {
+    "fighterId": "60e",
+    "icon": "60e_Ken.png",
+    "isDashFighter": true,
+    "name": "ケン",
+    "name_en": "Ken",
+    "number": 60
+  },
+  "61": {
+    "fighterId": "61",
+    "icon": "61_Cloud.png",
+    "isDashFighter": false,
+    "name": "クラウド",
+    "name_en": "Cloud",
+    "number": 61
+  },
+  "62": {
+    "fighterId": "62",
+    "icon": "62_Corrin.png",
+    "isDashFighter": false,
+    "name": "カムイ",
+    "name_en": "Corrin",
+    "number": 62
+  },
+  "63": {
+    "fighterId": "63",
+    "icon": "63_Bayonetta.png",
+    "isDashFighter": false,
+    "name": "ベヨネッタ",
+    "name_en": "Bayonetta",
+    "number": 63
+  },
+  "64": {
+    "fighterId": "64",
+    "icon": "64_Inkling.png",
+    "isDashFighter": false,
+    "name": "インクリング",
+    "name_en": "Inkling",
+    "number": 64
+  },
+  "65": {
+    "fighterId": "65",
+    "icon": "65_Ridley.png",
+    "isDashFighter": false,
+    "name": "リドリー",
+    "name_en": "Ridley",
+    "number": 65
+  },
+  "66": {
+    "fighterId": "66",
+    "icon": "66_Simon.png",
+    "isDashFighter": false,
+    "name": "シモン",
+    "name_en": "Simon",
+    "number": 66
+  },
+  "66e": {
+    "fighterId": "66e",
+    "icon": "66e_Richter.png",
+    "isDashFighter": true,
+    "name": "リヒター",
+    "name_en": "Richter",
+    "number": 66
+  },
+  "67": {
+    "fighterId": "67",
+    "icon": "67_KingK.Rool.png",
+    "isDashFighter": false,
+    "name": "キングクルール",
+    "name_en": "KingK.Rool",
+    "number": 67
+  },
+  "68": {
+    "fighterId": "68",
+    "icon": "68_Isabelle.png",
+    "isDashFighter": false,
+    "name": "しずえ",
+    "name_en": "Isabelle",
+    "number": 68
+  },
+  "69": {
+    "fighterId": "69",
+    "icon": "69_Incineroar.png",
+    "isDashFighter": false,
+    "name": "ガオガエン",
+    "name_en": "Incineroar",
+    "number": 69
+  },
+  "70": {
+    "fighterId": "70",
+    "icon": "70_PiranhaPlant.png",
+    "isDashFighter": false,
+    "name": "パックンフラワー",
+    "name_en": "PiranhaPlant",
+    "number": 70
+  },
+  "71": {
+    "fighterId": "71",
+    "icon": "71_Joker.png",
+    "isDashFighter": false,
+    "name": "ジョーカー",
+    "name_en": "Joker",
+    "number": 71
+  },
+  "72": {
+    "fighterId": "72",
+    "icon": "72_Hero.png",
+    "isDashFighter": false,
+    "name": "勇者",
+    "name_en": "Hero",
+    "number": 72
+  },
+  "73": {
+    "fighterId": "73",
+    "icon": "73_Banjo&Kazooie.png",
+    "isDashFighter": false,
+    "name": "バンジョー&カズーイ",
+    "name_en": "Banjo&Kazooie",
+    "number": 73
+  },
+  "74": {
+    "fighterId": "74",
+    "icon": "74_Terry.png",
+    "isDashFighter": false,
+    "name": "テリー",
+    "name_en": "Terry",
+    "number": 74
+  },
+  "75": {
+    "fighterId": "75",
+    "icon": "75_Byleth.png",
+    "isDashFighter": false,
+    "name": "ベレト/ベレス",
+    "name_en": "Byleth",
+    "number": 75
+  },
+  "76": {
+    "fighterId": "76",
+    "icon": "76_MinMin.png",
+    "isDashFighter": false,
+    "name": "ミェンミェン",
+    "name_en": "MinMin",
+    "number": 76
+  },
+  "77": {
+    "fighterId": "77",
+    "icon": "77_Steve.png",
+    "isDashFighter": false,
+    "name": "スティーブ",
+    "name_en": "Steve",
+    "number": 77
+  },
+  "78": {
+    "fighterId": "78",
+    "icon": "78_Sephiroth.png",
+    "isDashFighter": false,
+    "name": "セフィロス",
+    "name_en": "Sephiroth",
+    "number": 78
+  }
+}

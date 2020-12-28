@@ -94,6 +94,7 @@ import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { timestamp2dateString } from '@/utils/date.js'
+import fighters from '@/assets/fighters.json'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -117,7 +118,8 @@ export default {
         globalSmashPower: null,
         stage: null
       },
-      error: ''
+      error: '',
+      fighters
     }
   },
   mounted() {
@@ -128,9 +130,6 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
-    },
-    fighters() {
-      return this.$store.state.fighters
     },
     usedFighterIds() {
       const used = this.$store.state.records.map(record => {

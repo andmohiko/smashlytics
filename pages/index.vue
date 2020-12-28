@@ -20,7 +20,7 @@
 import firebase from '@/plugins/firebase'
 import { timestamp2dateString, now } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
-
+import fighters from '@/assets/fighters.json'
 import Button from '@/components/Button.vue'
 import Records from '@/components/Records.vue'
 import RecordModal from '@/components/RecordModal.vue'
@@ -34,16 +34,14 @@ export default {
   data() {
     return {
       isShowModal: false,
-      now: now()
+      now: now(),
+      fighters
     }
   },
   watch: {},
   computed: {
     records() {
       return this.$store.state.records
-    },
-    fighters() {
-      return this.$store.state.fighters
     },
     resultsToday() {
       const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10)

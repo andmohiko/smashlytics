@@ -11,6 +11,7 @@
 
 <script>
 import Records from '@/components/Records.vue'
+import fighters from '@/assets/fighters.json'
 
 export default {
   components: {
@@ -21,12 +22,11 @@ export default {
       error: '',
       userId: 'andmohiko',
       records: [],
-      fighters: {}
+      fighters
     }
   },
   mounted() {
     this.records = this.$store.state.records
-    this.fighters = this.$store.state.fighters
   },
   methods: {
     async getRecords() {

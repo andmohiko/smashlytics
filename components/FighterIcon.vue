@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import fighters from '@/assets/fighters.json'
 
 export default {
   props: {
@@ -26,13 +27,13 @@ export default {
       sizeStyle: {
         height: this.size,
         width: this.size
-      }
+      },
+      fighters
     }
   },
   computed: {
     fighterIconPath() {
-      const fighterEnName = this.$store.state.fighters[this.fighterId].name_en
-      return '/images/fighters/' + this.fighterId + '_' + fighterEnName + '.png'
+      return '/images/fighters/' + this.fighters[this.fighterId].icon
     }
   }
 }
