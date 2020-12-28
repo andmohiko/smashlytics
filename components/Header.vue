@@ -1,17 +1,17 @@
 <template>
   <div class="header">
     <p class="page-title">{{ pageTitle }}</p>
-    <p v-if="isLogin" class="user">{{ user.username }} @{{ user.userId }}</p>
-    <nav v-else class="nav">
+    <!-- <p v-if="isLogin" class="user">{{ user.username }} @{{ user.userId }}</p> -->
+    <!-- <nav v-else class="nav">
       <nuxt-link to="/login">login</nuxt-link>
       <nuxt-link to="/signup">signup</nuxt-link>
-    </nav>
-    <p>{{ calcWinningPercentage(records) }} </p>
+    </nav> -->
+    <!-- <p>{{ calcWinningPercentage(records) }} </p> -->
   </div>
 </template>
 
 <script>
-import { calcWinningPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/records.js'
 
 export default {
   computed: {
@@ -33,7 +33,7 @@ export default {
           return '戦績一覧'
         }
         case 'analytics': {
-          return '分析'
+          return '戦績分析'
         }
         case 'mypage-id': {
           return 'マイページ'
@@ -51,7 +51,7 @@ export default {
           return 'ユーザ登録'
         }
         default: {
-          return 'すましす'
+          return 'Smashlytics'
         }
       }
     }
@@ -69,7 +69,7 @@ export default {
 .header {
   height: 60px;
   width: 100%;
-  background-color: #fafa7f;
+  background-color: #579aff;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -85,7 +85,7 @@ export default {
 .page-title {
   font-size: 24px;
   font-weight: 600;
-  color: #4a5568d9;
+  color: #eaecf0;
 }
 .nav {
   display: flex;
