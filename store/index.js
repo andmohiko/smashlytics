@@ -1,5 +1,6 @@
 import firebase from '@/plugins/firebase'
 import { setCookie } from '@/plugins/cookie'
+import { now } from '@/utils/date.js'
 
 const db = firebase.firestore()
 // import "firebase/auth"
@@ -40,7 +41,7 @@ const actions = {
       dispatch('getFighters')
     })
   },
-  async isUser({ commit, dispatch }, authId) {
+  async isUser({ dispatch }, authId) {
     const db = firebase.firestore()
     const authUser = await db
       .collection('authUsers')
@@ -79,11 +80,16 @@ const actions = {
     const records = await db
       .collection('records')
       .where("userId", "==", userId)
+      // .orderBy('createdAt', 'desc')
+      // .limit(docLength)
       .get()
       .then(querySnapshot => {
         let recordsArray = []
         querySnapshot.forEach(doc => {
-          recordsArray.push(doc.data())
+          let record = doc.data()
+          record.createdAt = record.createdAt.toDate()
+          record.updatedAt = record.updatedAt.toDate()
+          recordsArray.push(record)
         })
         return recordsArray.sort((a, b) => {
           return a.createdAt > b.createdAt ? -1 : 1
@@ -108,6 +114,13 @@ const actions = {
         console.log("Error getting document:", error);
       })
     commit('setFighters', fighters)
+  },
+  addRecords ({ commit, state }, newRecord) {
+    newRecord.createdAt = new Date(now())
+    newRecord.updatedAt = new Date(now())
+    let recordsUnshifted = state.records.slice()
+    recordsUnshifted.unshift(newRecord)
+    commit('setRecords', recordsUnshifted)
   }
 }
 

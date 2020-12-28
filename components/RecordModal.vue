@@ -1,6 +1,6 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
+    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
       <div class="close" @click="onClose">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -15,7 +15,7 @@
             ref="fighter"
             :usedFighterIds="usedFighterIds"
             :previouslySelected="lastRecord.fighterId"
-            iconSize="48px"
+            iconSize="44px"
             :isShowOption="true"
             label="自分のファイター"
           />
@@ -25,7 +25,7 @@
             @select="select"
             ref="opponent"
             :previouslySelected="lastRecord.opponentId"
-            iconSize="48px"
+            iconSize="44px"
             label="相手のファイター"
           />
         </div>
@@ -93,6 +93,7 @@ import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
+import { timestamp2dateString } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -120,7 +121,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.lastRecord)
     if(!this.lastRecord) return
     this.record.fighterId = this.lastRecord.fighterId
     this.record.opponentId = this.lastRecord.opponentId
@@ -137,49 +137,42 @@ export default {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
-    },
-    allFighterIds() {
-      return Object.keys(this.fighters).sort()
     }
   },
   methods: {
     select() {
       this.record.fighterId = String(this.$refs.fighter.get())
       this.record.opponentId = String(this.$refs.opponent.get())
-      console.log('select emit', this.record.fighterId, this.record.opponentId)
     },
     async submit () {
       console.log('submit', this.record.fighterId, this.record.opponentId)
       this.error = ''
       this.record.globalSmashPower = this.$refs.globalSmashPower.input
-      if (
-        !this.record.fighterId ||
-        !this.record.opponentId ||
-        this.record.result === null
-      ) {
+      if (!this.record.fighterId || !this.record.opponentId || this.record.result === null) {
         this.error = '自分・相手・結果は入力してください'
         return
+      }
+      const newRecord = {
+        createdAt: serverTimestamp,
+        updatedAt: serverTimestamp,
+        userId: this.user.userId,
+        fighter: this.fighters[this.record.fighterId].name,
+        fighterId: this.record.fighterId,
+        opponent: this.fighters[this.record.opponentId].name,
+        opponentId: this.record.opponentId,
+        result: this.record.result,
+        stage: this.record.stage,
+        globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
       }
       const db = firebase.firestore()
       try {
         const sendingRecord = db
           .collection('records')
-          .add({
-            createdAt: serverTimestamp,
-            updatedAt: serverTimestamp,
-            userId: this.user.userId,
-            fighter: this.fighters[this.record.fighterId].name,
-            fighterId: this.record.fighterId,
-            opponent: this.fighters[this.record.opponentId].name,
-            opponentId: this.record.opponentId,
-            result: this.record.result,
-            stage: this.record.stage,
-            globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
-          })
+          .add(newRecord)
           .catch(error => {
             console.log(error)
           })
-        await this.$store.dispatch('getRecords', this.user.userId)
+        this.$store.dispatch('addRecords', newRecord)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
@@ -208,7 +201,7 @@ export default {
 .record-modal {
   position: relative;
   height: 80%;
-  max-width: 95%;
+  max-width: 400px;
   z-index: 30;
 }
 .close {
