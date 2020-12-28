@@ -11,7 +11,7 @@
     </div>
     <div class="records">
       <!-- <p class="records-title">直近10戦の戦績</p> -->
-      <Records :records="records.slice(0, 10)" :fighters="fighters" />
+      <Records :records="records.slice(0, 10)" />
     </div>
   </div>
 </template>
@@ -20,7 +20,6 @@
 import firebase from '@/plugins/firebase'
 import { timestamp2dateString, now } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
-import fighters from '@/assets/fighters.json'
 import Button from '@/components/Button.vue'
 import Records from '@/components/Records.vue'
 import RecordModal from '@/components/RecordModal.vue'
@@ -34,8 +33,7 @@ export default {
   data() {
     return {
       isShowModal: false,
-      now: now(),
-      fighters
+      now: now()
     }
   },
   watch: {},
@@ -49,11 +47,6 @@ export default {
       const wins = recordsToday.filter(record => record.result).length
       const loses = recordsToday.length - wins
       return wins + '勝' + loses + '敗'
-    },
-    fightersArray() {
-      return Object.values(this.fighters)
-        .slice()
-        .sort((a, b) => (a.number < b.number ? -1 : 1))
     }
   },
   methods: {

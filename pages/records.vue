@@ -4,14 +4,13 @@
       <button @click="getRecords" type="button">更新</button>
     </div> -->
     <div class="records">
-      <Records :records="records" :fighters="fighters" />
+      <Records :records="records" />
     </div>
   </div>
 </template>
 
 <script>
 import Records from '@/components/Records.vue'
-import fighters from '@/assets/fighters.json'
 
 export default {
   components: {
@@ -21,8 +20,7 @@ export default {
     return {
       error: '',
       userId: 'andmohiko',
-      records: [],
-      fighters
+      records: []
     }
   },
   mounted() {

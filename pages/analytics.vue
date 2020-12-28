@@ -59,7 +59,6 @@
 import { timestamp2date, now, today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/FighterIcon.vue'
-import fighters from '@/assets/fighters.json'
 
 export default {
   components: {
@@ -70,8 +69,7 @@ export default {
       period: 3,
       sorting: 'opponentId',
       now: now(),
-      today: today(),
-      fighters
+      today: today()
     }
   },
   computed: {
