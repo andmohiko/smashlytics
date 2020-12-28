@@ -1,23 +1,25 @@
 <template>
   <div class="container">
-    <div class="user-info">
-      <p class="title">プロフィール</p>
-      <p class="username">{{ user.username }}</p>
-      <p class="userId">{{ user.userId }}</p>
-      <p class="user-twitterId">twitter: @{{ user.twitterId }}</p>
-      <p>勝率: {{ calcWinningPercentage(records) }} </p>
-      <Button @onClick="toEdit" label="編集する" />
+    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
+      <p class="title text-center">プロフィール</p>
+      <p class="username text-xl">{{ user.username }}</p>
+      <p class="userId text-xl">{{ user.userId }}</p>
+      <p class="user-twitterId text-gray-700">twitter: @{{ user.twitterId }}</p>
+      <p>{{ calcWinningPercentage(records) }}</p>
+      <!-- <Button @onClick="toEdit" label="編集する" /> -->
     </div>
-    <div>
+    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
       <p class="title">過去の戦績登録</p>
-      <Button @onClick="toHistory" label="登録する" />
-      <Button @onClick="toSumHistory" label="一括登録する" />
+      <span>coming soon!</span>
+      <!-- <Button @onClick="toHistory" label="登録する" />
+      <Button @onClick="toSumHistory" label="一括登録する" /> -->
     </div>
-    <div>
+    <!-- <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
       <p class="title">ログイン/ログアウト</p>
       <Button @onClick="login" label="googleでログイン" />
+      <br>
       <Button @onClick="logout" label="ログアウト" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
     winningRate(fighter, opponent) {
       console.log(this.records)
       return
-      if (this.records === {}) return 'あああ'
+      if (this.records === {}) return 'no data'
       const fighterRecords = this.records.filter(record => record.fighter === fighter)
       const opponentRecords = this.records.filter(record => record.opponent === opponent)
       const wins = fighterRecords.filter(record => record.result).length
@@ -100,6 +102,7 @@ export default {
 .container {
   margin: 0 auto;
   min-height: 100vh;
+  width: 400px;
   display: flex;
   flex-direction: column;
   // justify-content: center;
@@ -111,5 +114,11 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
 }
 </style>

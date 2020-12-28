@@ -2,7 +2,7 @@
   <button
     :class="[{ disable: isDisable }, buttonType]"
     :disabled="isDisable"
-    class="uppercase px-8 py-2 rounded-full border border-yellow-600 text-yellow-600 max-w-max shadow-sm hover:shadow-md button"
+    class="uppercase px-8 py-2 rounded-full max-w-max shadow-sm hover:shadow-md button"
     @click="$emit('onClick')"
   >
     {{ label }}
@@ -51,10 +51,9 @@ export default {
   margin: 0 auto;
   display: block;
   border-radius: 50px;
-  // background: $bg-white;
-  // color: $text-purple;
+  border: solid 1px #69a5ff;
+  color: #69a5ff;
   padding: 15px 0;
-  // border: solid 1px $text-purple;
   font-weight: bold;
   font-size: 14px;
   letter-spacing: 1px;
