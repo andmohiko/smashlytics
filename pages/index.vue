@@ -6,12 +6,16 @@
       </template>
     </div>
     <div class="results">
-      <p class="results-number">本日の戦績: {{ resultsToday }}</p>
+      <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openModal" label="戦績を登録する" />
     </div>
     <div class="records">
       <!-- <p class="records-title">直近10戦の戦績</p> -->
       <Records :records="records.slice(0, 10)" />
+    </div>
+    <p class="error text-xl py-2 mb-4 text-red-700">{{ error }}</p>
+    <div v-show="error" class="border-b">
+      <button @click="toNew">ログインはこちら</button>
     </div>
   </div>
 </template>
@@ -33,7 +37,8 @@ export default {
   data() {
     return {
       isShowModal: false,
-      now: now()
+      now: now(),
+      error: ''
     }
   },
   watch: {},
@@ -43,6 +48,9 @@ export default {
     },
     records() {
       return this.$store.state.records
+    },
+    isLogin() {
+      return Boolean(this.$store.state.user.userId)
     },
     lastRecord() {
       if (this.records.length) return this.records[0]
@@ -61,11 +69,19 @@ export default {
   },
   methods: {
     openModal() {
+      this.error = ''
+      if (!this.isLogin) {
+        this.error = '登録するにはログインしてください'
+        return
+      }
       this.isShowModal = true
     },
     closeModal() {
       this.isShowModal = false
     },
+    toNew() {
+      this.$router.push("/new")
+    }
   }
 }
 </script>
