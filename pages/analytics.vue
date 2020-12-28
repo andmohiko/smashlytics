@@ -73,9 +73,6 @@ export default {
     }
   },
   computed: {
-    fighters() {
-      return this.$store.state.fighters
-    },
     records() {
       return this.$store.state.records
     },

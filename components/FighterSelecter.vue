@@ -17,6 +17,7 @@
 <script>
 import FighterIcon from '@/components/FighterIcon.vue'
 import Button from '@/components/Button.vue'
+import fighters from '@/assets/fighters.json'
 
 export default {
   props: {
@@ -48,7 +49,8 @@ export default {
   data() {
     return {
       fighterId: null,
-      isShowAllFighters: false
+      isShowAllFighters: false,
+      fighters
     }
   },
   mounted() {
@@ -56,7 +58,7 @@ export default {
   },
   computed: {
     fighterIds() {
-      if (!this.usedFighterIds || this.isShowAllFighters) return Object.keys(this.$store.state.fighters).sort()
+      if (!this.usedFighterIds || this.isShowAllFighters) return Object.keys(this.fighters).sort()
       return this.usedFighterIds
     }
   },
@@ -98,7 +100,7 @@ export default {
 .fighter-selecter {
   display: flex;
   flex-wrap: wrap;
-  width: 500px;
+  width: 100%;
 }
 .fighter-icon {
   margin: 2px;

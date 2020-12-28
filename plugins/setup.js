@@ -12,8 +12,6 @@ export default async ({ store }) => {
     const uid = decodedToken['user_id']
     store.commit('setUid', uid)
     store.dispatch('isUser', uid)
-    
-    const resultFighters = await store.dispatch('getFighters')
   } catch (error) {
     console.log('error in setup', error)
   }

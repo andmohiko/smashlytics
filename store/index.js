@@ -17,8 +17,7 @@ const state = {
     main: '',
   },
   uid: '',
-  records: [],
-  fighters: {}
+  records: []
 }
 
 const actions = {
@@ -38,7 +37,6 @@ const actions = {
       setCookie(user)
       commit('setUid', uid)
       dispatch('isUser', uid)
-      dispatch('getFighters')
     })
   },
   async isUser({ dispatch }, authId) {
@@ -99,22 +97,6 @@ const actions = {
       })
     commit('setRecords', records)
   },
-  async getFighters ({ commit }) {
-    const db = firebase.firestore()
-    const fighters = await db
-      .collection('fighters')
-      .get()
-      .then(querySnapshot => {
-        let fighters = {}
-        querySnapshot.forEach(doc => {
-          fighters[doc.id] = doc.data()
-        })
-        return fighters
-      }).catch(function(error) {
-        console.log("Error getting document:", error);
-      })
-    commit('setFighters', fighters)
-  },
   addRecords ({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
     newRecord.updatedAt = new Date(now())
@@ -133,9 +115,6 @@ const mutations = {
   },
   setUid(state, payload) {
     state.uid = payload
-  },
-  setFighters(state, payload) {
-    state.fighters = payload
   }
 }
 

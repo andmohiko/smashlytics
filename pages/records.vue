@@ -4,7 +4,7 @@
       <button @click="getRecords" type="button">更新</button>
     </div> -->
     <div class="records">
-      <Records :records="records" :fighters="fighters" />
+      <Records :records="records" />
     </div>
   </div>
 </template>
@@ -20,13 +20,11 @@ export default {
     return {
       error: '',
       userId: 'andmohiko',
-      records: [],
-      fighters: {}
+      records: []
     }
   },
   mounted() {
     this.records = this.$store.state.records
-    this.fighters = this.$store.state.fighters
   },
   methods: {
     async getRecords() {

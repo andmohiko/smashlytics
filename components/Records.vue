@@ -41,16 +41,13 @@
 
 <script>
 import FighterIcon from '@/components/FighterIcon.vue'
+import fighters from '@/assets/fighters.json'
 
 export default {
   props: {
     records: {
       required: true,
       type: Array
-    },
-    fighters: {
-      required: true,
-      type: Object
     }
   },
   components: {
@@ -58,6 +55,7 @@ export default {
   },
   data() {
     return {
+      fighters,
       headings: [
         {
           key: 'timestamp',
