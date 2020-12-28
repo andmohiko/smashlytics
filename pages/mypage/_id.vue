@@ -20,6 +20,9 @@
       <br>
       <Button @onClick="logout" label="ログアウト" />
     </div> -->
+    <div class="logout text-gray-500">
+      <button @click="logout">googleログアウト</button>
+    </div>
   </div>
 </template>
 
@@ -92,6 +95,7 @@ export default {
       cookie.remove('smash_access_token')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', {})
+      this.$router.push("/new")
     },
     calcWinningPercentage
   }
@@ -120,5 +124,14 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: left;
+}
+.logout {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: right;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 </style>

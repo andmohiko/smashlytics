@@ -2,7 +2,7 @@
   <div class="container">
     <div class="register">
       <template v-if="isShowModal">
-        <RecordModal :lastRecord="records[0]" @close="closeModal" />
+        <RecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
     </div>
     <div class="results">
@@ -38,8 +38,18 @@ export default {
   },
   watch: {},
   computed: {
+    user() {
+      return this.$store.state.user
+    },
     records() {
       return this.$store.state.records
+    },
+    lastRecord() {
+      if (this.records.length) return this.records[0]
+      return {
+        fighterId: this.user.main,
+        opponentId: '01',
+      }
     },
     resultsToday() {
       const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10)
@@ -66,7 +76,7 @@ export default {
   min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   text-align: center;
 }

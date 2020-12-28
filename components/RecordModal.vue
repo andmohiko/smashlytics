@@ -49,34 +49,40 @@
                 :value="false"
               />
               <label for="result-lose">負け</label>
+              <!-- <ButtonSquare /><ButtonSquare /> -->
             </div>
-            <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="500" />
-            <div class="input-radio">
-              <p>ステージ</p>
-              <input
-                id="stage-finalDestination"
-                v-model="record.stage"
-                type="radio"
-                name="finalDestination"
-                :value="'finalDestination'"
-              />
-              <label for="stage-finalDestination">終点( __ )</label>
-              <input
-                id="stage-battleField"
-                v-model="record.stage"
-                type="radio"
-                name="battleField"
-                :value="'battleField'"
-              />
-              <label for="stage-battleField">戦場( -^- )</label>
-              <input
-                id="stage-smallBattleField"
-                v-model="record.stage"
-                type="radio"
-                name="smallBattleField"
-                :value="'smallBattleField'"
-              />
-              <label for="stage-smallBattleField">小戦場( - - )</label>
+            <!-- <button @click="switchShowDetails">詳細を入力する</button> -->
+            <div v-show="isShowInputDetails" class="details">
+              <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
+              <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+              <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="500" />
+              <div class="input-radio">
+                <p>ステージ</p>
+                <input
+                  id="stage-finalDestination"
+                  v-model="record.stage"
+                  type="radio"
+                  name="finalDestination"
+                  :value="'finalDestination'"
+                />
+                <label for="stage-finalDestination">終点( __ )</label>
+                <input
+                  id="stage-battleField"
+                  v-model="record.stage"
+                  type="radio"
+                  name="battleField"
+                  :value="'battleField'"
+                />
+                <label for="stage-battleField">戦場( -^- )</label>
+                <input
+                  id="stage-smallBattleField"
+                  v-model="record.stage"
+                  type="radio"
+                  name="smallBattleField"
+                  :value="'smallBattleField'"
+                />
+                <label for="stage-smallBattleField">小戦場( - - )</label>
+              </div>
             </div>
           </div>
         </form>
@@ -92,6 +98,7 @@
 import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
+import ButtonSquare from '@/components/ButtonSquare.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { timestamp2dateString } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
@@ -102,10 +109,15 @@ export default {
     lastRecord: {
       required: true,
       type: Object
+    },
+    isShowInputDetails: {
+      default: true,
+      type: Boolean
     }
   },
   components: {
     Button,
+    ButtonSquare,
     TextField,
     FighterSelecter
   },
@@ -119,13 +131,13 @@ export default {
         stage: null
       },
       error: '',
-      fighters
+      fighters,
     }
   },
   mounted() {
-    if(!this.lastRecord) return
     this.record.fighterId = this.lastRecord.fighterId
     this.record.opponentId = this.lastRecord.opponentId
+    // if (this.lastRecord.stage || this.lastRecord.globalSmashPower) this.isShowInputDetails = true
   },
   computed: {
     user() {
@@ -177,6 +189,9 @@ export default {
         console.log('error in sending record', error)
       }
     },
+    switchShowDetails() {
+      this.isShowInputDetails = !this.isShowInputDetailss
+    },
     onClose() {
       this.$emit('close')
     }
@@ -208,5 +223,8 @@ export default {
   margin: 8px 8px 0 0;
   right: 0;
   top: 0;
+}
+.details {
+  margin: 20px 0 30px 0;
 }
 </style>

@@ -74,7 +74,6 @@ export default {
         return
       }
       const db = firebase.firestore()
-      console.log('db')
       const addFighter = db
         .collection('fighters')
         .doc(this.fighter.english)
@@ -87,7 +86,6 @@ export default {
         .then(ref => {
           this.fighter.english = ''
           this.fighter.japanese = ''
-          console.log('Add ID: ', ref)
           return ref
         })
       console.log('addFighter', addFighter)

@@ -4,7 +4,7 @@
     <div class="main">
       <nuxt />
     </div>
-    <Footer v-show="isLogin" />
+    <Footer />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     isLogin() {
-      return Boolean(this.$store.state.uid)
+      return Boolean(this.$store.state.user.userId)
     },
   }
 }

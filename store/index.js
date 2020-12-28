@@ -1,5 +1,6 @@
 import firebase from '@/plugins/firebase'
 import { setCookie } from '@/plugins/cookie'
+import Cookies from "universal-cookie"
 import { now } from '@/utils/date.js'
 
 const db = firebase.firestore()
@@ -24,6 +25,8 @@ const actions = {
   loginGoogle ({ dispatch }) {
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider).then(result => {
+      const cookie = new Cookies()
+      cookie.remove('smash_access_token')
       dispatch('checkLogin')
     }).catch(error => {
       console.log(error)
@@ -33,10 +36,9 @@ const actions = {
     await firebase.auth().onAuthStateChanged(user => {
       if (!user) return
       const uid = user.uid
-      setCookie(user)
       commit('setUid', uid)
       dispatch('isUser', uid)
-      this.$router.push("/")
+      setCookie(user)
     })
   },
   async isUser({ dispatch }, authId) {
@@ -55,6 +57,7 @@ const actions = {
     const userId = authUser.userId
     dispatch('getUser', userId)
     dispatch('getRecords', userId)
+    this.$router.push("/")
   },
   async getUser ({ commit }, userId) {
     const user = await db

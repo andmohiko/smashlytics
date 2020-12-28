@@ -4,8 +4,8 @@
       <div class="form">
         <p class="error">{{ error }}</p>
         <form class="mb-4 px-4">
-          <TextField ref="userId" :allowEmpty="false" label="ユーザID" placeholder="userid" />
-          <TextField ref="username" :allowEmpty="false" label="ユーザ名" placeholder="ユーザ名" />
+          <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="userid" />
+          <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名" />
           <TextField ref="twitterId" label="Twitter Id" placeholder="twitterId" />
         </form>
         <div class="fighter-selecter">
@@ -13,9 +13,10 @@
             @select="select"
             ref="fighter"
             iconSize="48px"
-            label="メインファイターを選ぶ"
+            label="メインファイターを選ぶ (*)"
           />
         </div>
+        <p class="error">{{ error }}</p>
       </div>
       <div class="mb-10">
         <span class="text-gray-700 px-1 py-3 flex items-center">※ユーザIDはあとから変更できません</span>
@@ -60,11 +61,12 @@ export default {
       this.user.mainFighterId = String(this.$refs.fighter.get())
     },
     submit () {
+      console.log('submit')
       const authId = this.$store.state.uid
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
       this.user.twitterId = this.$refs.twitterId.input || null
-      if (this.user.twitterId.slice(0,1) === '@') {
+      if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
         this.user.twitterId = this.user.twitterId.slice(1)
       }
       if (!authId || this.user.userId === '' || this.user.username === '') {
@@ -72,7 +74,6 @@ export default {
         return
       }
       const db = firebase.firestore()
-      console.log('db')
       try {
         db.collection('authUsers')
           .doc(authId)
@@ -114,7 +115,7 @@ export default {
       cookie.remove('smash_access_token')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', {})
-      this.$router.push("/login")
+      this.$router.push("/new")
     }
   }
 }

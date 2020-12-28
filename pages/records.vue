@@ -17,18 +17,19 @@ export default {
     Records
   },
   data() {
-    return {
-      error: '',
-      userId: 'andmohiko',
-      records: []
-    }
+    return {}
   },
-  mounted() {
-    this.records = this.$store.state.records
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+    records() {
+      return this.$store.state.records
+    }
   },
   methods: {
     async getRecords() {
-      await this.$store.dispatch('getRecords', this.userId)
+      await this.$store.dispatch('getRecords', this.user.userId)
       this.records = this.$store.state.records
     }
   }
