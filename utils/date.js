@@ -1,7 +1,9 @@
 export function timestamp2dateString(timestamp) {
   if (!timestamp) return 'N/A'
   const date = timestamp.toDate()
-  return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
+  return date.getDate() < 10 ?
+    date.getFullYear() + '/' + (date.getMonth()+1) + '/0' + date.getDate() :
+    date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate()
 }
 
 export function timestamp2date(timestamp) {

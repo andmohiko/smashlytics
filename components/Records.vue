@@ -1,20 +1,20 @@
 <template>
   <div class="records-table">
-    <div class="container mx-auto py-0 px-4">
+    <div class="mx-auto py-2 px-1">
       <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
             <tr class="text-left">
               <th
                 v-for="heading in headings" :key="heading.key"
-                class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+                class="bg-gray-100 sticky top-0 border-b border-gray-200 px-4 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
               >{{ heading.value }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="record in records" :key="record.id">
               <td class="border-dashed border-t border-gray-200 px-3">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ timestamp2dateString(record.createdAt) }}</span>
+                <span class="text-gray-700 px-1 py-3 flex items-center">{{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
                 <FighterIcon :fighterId="record.fighterId" size="32px" />
@@ -23,14 +23,14 @@
                 <FighterIcon :fighterId="record.opponentId" size="32px" />
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ bool2result(record.result) }}</span>
+                <span class="text-gray-700 px-3 py-3 flex items-center">{{ bool2result(record.result) }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center">{{ record.globalSmashPower }}</span>
+                <span class="text-gray-700 px-3 py-3 flex items-center">{{ record.globalSmashPower }}</span>
               </td>
-              <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-6 py-3 flex items-center" x-text="record.stage">{{ jpStageName(record.stage) }}</span>
-              </td>
+              <!-- <td class="border-dashed border-t border-gray-200">
+                <span class="text-gray-700 px-3 py-3 flex items-center" x-text="record.stage">{{ jpStageName(record.stage) }}</span>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { timestamp2dateString } from '@/utils/date.js'
 import FighterIcon from '@/components/FighterIcon.vue'
 
 export default {
@@ -79,10 +78,10 @@ export default {
         {
           key: 'globalSmashPower',
           value: '世界戦闘力'
-        },
-        {
-          key: 'stage',
-          value: 'ステージ'
+        // },
+        // {
+        //   key: 'stage',
+        //   value: 'ステージ'
         }
       ],
       stages: {
@@ -106,13 +105,18 @@ export default {
     fighterIconPath(fighterId){
       const fighterEnName = this.fighters[fighterId].name_en
       return ''
-    },
-    timestamp2dateString
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.records-table {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+}
 ul {
   display: flex;
   flex-direction: column;

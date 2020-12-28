@@ -11,9 +11,10 @@
     <div>
       <p class="title">過去の戦績登録</p>
       <Button @onClick="toHistory" label="登録する" />
+      <Button @onClick="toSumHistory" label="一括登録する" />
     </div>
     <div>
-      <p class="title">ログイン・ログアウト</p>
+      <p class="title">ログイン/ログアウト</p>
       <Button @onClick="login" label="googleでログイン" />
       <Button @onClick="logout" label="ログアウト" />
     </div>
@@ -24,7 +25,7 @@
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
-import { calcWinningPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/records.js'
 import Cookies from "universal-cookie"
 
 export default {
@@ -46,9 +47,6 @@ export default {
     },
     records() {
       return this.$store.state.records
-    },
-    fighters() {
-      return this.$store.state.fighters
     },
     winningRate(fighter, opponent) {
       console.log(this.records)
@@ -80,6 +78,9 @@ export default {
     },
     toHistory () {
       this.$router.push("/history")
+    },
+    toSumHistory () {
+      this.$router.push("/sumhistory")
     },
     login() {
       this.$store.dispatch('loginGoogle')

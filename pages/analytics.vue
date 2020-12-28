@@ -57,7 +57,7 @@
 
 <script>
 import { timestamp2date, now, today } from '@/utils/date.js'
-import { calcWinningPercentage } from '@/utils/fighter.js'
+import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/FighterIcon.vue'
 
 export default {
@@ -124,9 +124,9 @@ export default {
       const specificRecords = this.getRecordsByFighters(fighterId, opponentId)
       return calcWinningPercentage(specificRecords)
     },
-    inPeriod(timestamp, period) {
+    inPeriod(date, period) {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
-      return timestamp2date(timestamp) > targetDate
+      return date > targetDate
     },
     calcWinningPercentage,
     timestamp2date
