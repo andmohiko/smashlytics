@@ -1,8 +1,10 @@
 <template>
   <div class="container">
-    <!-- <div class="get">
-      <button @click="getRecords" type="button">更新</button>
-    </div> -->
+    <div class="get flex flex-col">
+      <span class="text-gray-500 text-sm">もしうまく反映されてなかったら</span>
+      <span class="text-gray-500 text-sm pb-2">これを押してね(連打はしないでね)</span>
+      <Button @onClick="getRecords" label="戦績を更新" />
+    </div>
     <div class="edit">
       <template v-if="isShowModal">
         <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
@@ -51,6 +53,7 @@
 </template>
 
 <script>
+import Button from '@/components/Button.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
 import EditRecordModal from '@/components/EditRecordModal.vue'
 import fighters from '@/assets/fighters.json'
@@ -58,7 +61,8 @@ import fighters from '@/assets/fighters.json'
 export default {
   components: {
     FighterIcon,
-    EditRecordModal
+    EditRecordModal,
+    Button
   },
   data() {
     return {
@@ -82,7 +86,6 @@ export default {
   methods: {
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
-      this.records = this.$store.state.records
     },
     bool2result(result) {
       return result ? '勝ち' : '負け'
@@ -106,6 +109,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   text-align: center;
+}
+.get {
+  span {
+    display: inline-block;
+  }
 }
 .records {
   margin: 10px 0;
