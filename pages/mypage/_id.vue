@@ -8,11 +8,23 @@
       <p>{{ calcWinningPercentage(records) }}</p>
       <!-- <Button @onClick="toEdit" label="編集する" /> -->
     </div>
-    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
-      <p class="title">過去の戦績登録</p>
-      <span>coming soon!</span>
-      <!-- <Button @onClick="toHistory" label="登録する" />
-      <Button @onClick="toSumHistory" label="一括登録する" /> -->
+    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
+      <p class="title text-center">戦績管理</p>
+      <div v-show="!isLogin" class="pb-20">
+        <p class="error text-xl py-2 mb-4 text-red-700">登録するにはログインしてください</p>
+        <div class="border-b">
+          <button @click="toNew">ログインはこちら</button>
+        </div>
+      </div>
+      <div>
+        <button @click="toEditRecords">▷ 登録した戦績を編集・削除</button>
+        <button @click="toSumHistory">▷ 戦績を一括登録</button>
+      </div>
+      <br>
+      <span>🚀 coming soon! 🚀</span>
+      <span>過去の戦績を日付を指定して登録</span>
+      <!-- <Button @onClick="toHistory" label="登録する" /> -->
+      <!-- <Button @onClick="toSumHistory" label="一括登録する" /> -->
     </div>
     <!-- <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
       <p class="title">ログイン/ログアウト</p>
@@ -49,6 +61,9 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
+    },
+    isLogin() {
+      return Boolean(this.user.userId)
     },
     records() {
       return this.$store.state.records
@@ -94,7 +109,10 @@ export default {
       const cookie = new Cookies()
       cookie.remove('smash_access_token')
       this.$store.commit('setUser', {})
-      this.$store.commit('setRecords', {})
+      this.$store.commit('setRecords', [])
+      this.$router.push("/new")
+    },
+    toNew() {
       this.$router.push("/new")
     },
     calcWinningPercentage
