@@ -13,16 +13,25 @@
           <label for="7">7日</label>
           <input v-model="period" type="radio" name="30" :value="30"/>
           <label for="30">30日</label>
+          <input v-model="period" type="radio" name="all" :value="'all'"/>
+          <label for="30">全期間</label>
         </div>
         <div class="input-radio">
           <p class="text-l">並べ替え</p>
           <input v-model="sorting" type="radio" name="fighterId" value="opponentId"/>
-          <label for="1">ファイター順</label>
+          <label for="1">相手ファイター順</label>
           <input v-model="sorting" type="radio" name="matches" value="matches"/>
           <label for="3">試合数</label>
           <input v-model="sorting" type="radio" name="winningPercentage" value="winningPercentage"/>
           <label for="7">勝率</label>
         </div>
+        <!-- <div class="input-radio">
+          <p class="text-l">並び順</p>
+          <input v-model="order" type="radio" name="ascending" :value="true"/>
+          <label for="1">通常</label>
+          <input v-model="order" type="radio" name="descending" :value="false"/>
+          <label for="3">逆順</label>
+        </div> -->
       </form>
       <p class="message">
         <span>{{ period }} 日以内の記録は {{ recordsByPeriod.length }} 試合です。</span>
@@ -68,6 +77,7 @@ export default {
     return {
       period: 3,
       sorting: 'opponentId',
+      order: true,
       now: now(),
       today: today()
     }
@@ -77,6 +87,7 @@ export default {
       return this.$store.state.records
     },
     recordsByPeriod() {
+      if (this.period === 'all') return this.records
       return this.records.filter(record => this.inPeriod(record.createdAt, this.period))
     },
     usedFighterIds() {
@@ -107,8 +118,12 @@ export default {
           })
         })
       })
-      if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
-      return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
+      if (this.order) {
+        if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
+        return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
+      }
+      if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
+      return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
     }
   },
   methods: {
