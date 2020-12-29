@@ -1,6 +1,5 @@
 <template>
   <div class="footer">
-    <div class="border"></div>
     <nav>
       <ul>
         <li>

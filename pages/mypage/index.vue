@@ -6,7 +6,9 @@
       <p class="userId text-xl">{{ user.userId }}</p>
       <p class="user-twitterId text-gray-700">twitter: @{{ user.twitterId }}</p>
       <p>{{ calcWinningPercentage(records) }}</p>
-      <!-- <Button @onClick="toEdit" label="編集する" /> -->
+      <!-- <div class="edit">
+        <Button @onClick="toEdit" label="プロフィールを編集する" />
+      </div> -->
     </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="title text-center">戦績管理</p>
@@ -96,11 +98,14 @@ export default {
     toEdit () {
       this.$router.push("/edit")
     },
+    toEditRecords() {
+      this.$router.push("/mypage/editRecords")
+    },
     toHistory () {
       this.$router.push("/history")
     },
     toSumHistory () {
-      this.$router.push("/sumhistory")
+      this.$router.push("/mypage/sumhistory")
     },
     login() {
       this.$store.dispatch('loginGoogle')
@@ -151,5 +156,8 @@ export default {
   align-items: right;
   font-size: 14px;
   margin-bottom: 10px;
+}
+.edit {
+  margin-top: 16px;
 }
 </style>

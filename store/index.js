@@ -57,7 +57,7 @@ const actions = {
     const userId = authUser.userId
     dispatch('getUser', userId)
     dispatch('getRecords', userId)
-    this.$router.push("/")
+    // this.$router.push("/")
   },
   async getUser ({ commit }, userId) {
     const user = await db
@@ -90,6 +90,7 @@ const actions = {
           let record = doc.data()
           record.createdAt = record.createdAt.toDate()
           record.updatedAt = record.updatedAt.toDate()
+          record['docId'] = doc.id
           recordsArray.push(record)
         })
         return recordsArray.sort((a, b) => {
@@ -103,9 +104,9 @@ const actions = {
   addRecords ({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
     newRecord.updatedAt = new Date(now())
-    let recordsUnshifted = state.records.slice()
-    recordsUnshifted.unshift(newRecord)
-    commit('setRecords', recordsUnshifted)
+    let records = state.records.slice()
+    records.unshift(newRecord)
+    commit('setRecords', records)
   }
 }
 
