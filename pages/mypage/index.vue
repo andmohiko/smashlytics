@@ -18,7 +18,7 @@
       </div>
       <br>
       <span>🚀 coming soon! 🚀</span>
-      <span>過去の戦績を一括登録</span>
+      <span>過去の戦績を日付を指定して登録</span>
       <!-- <Button @onClick="toHistory" label="登録する" /> -->
       <!-- <Button @onClick="toSumHistory" label="一括登録する" /> -->
     </div>
