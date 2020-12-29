@@ -49,13 +49,11 @@
                 :value="false"
               />
               <label for="result-lose">負け</label>
-              <!-- <ButtonSquare /><ButtonSquare /> -->
             </div>
-            <!-- <button @click="switchShowDetails">詳細を入力する</button> -->
             <div v-show="isShowInputDetails" class="details">
               <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
               <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-              <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="500" />
+              <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" />
               <div class="input-radio">
                 <p>ステージ</p>
                 <input
@@ -98,7 +96,6 @@
 import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
-import ButtonSquare from '@/components/ButtonSquare.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { timestamp2dateString } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
@@ -117,7 +114,6 @@ export default {
   },
   components: {
     Button,
-    ButtonSquare,
     TextField,
     FighterSelecter
   },

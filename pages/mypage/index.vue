@@ -6,13 +6,21 @@
       <p class="userId text-xl">{{ user.userId }}</p>
       <p class="user-twitterId text-gray-700">twitter: @{{ user.twitterId }}</p>
       <p>{{ calcWinningPercentage(records) }}</p>
-      <!-- <Button @onClick="toEdit" label="編集する" /> -->
+      <!-- <div class="edit">
+        <Button @onClick="toEdit" label="プロフィールを編集する" />
+      </div> -->
     </div>
-    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
-      <p class="title">過去の戦績登録</p>
-      <span>coming soon!</span>
-      <!-- <Button @onClick="toHistory" label="登録する" />
-      <Button @onClick="toSumHistory" label="一括登録する" /> -->
+    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
+      <p class="title text-center">戦績管理</p>
+      <div>
+        <button @click="toEditRecords">▷ 登録した戦績を編集・削除</button>
+        <button @click="toSumHistory">▷ 戦績を一括登録</button>
+      </div>
+      <br>
+      <span>🚀 coming soon! 🚀</span>
+      <span>過去の戦績を一括登録</span>
+      <!-- <Button @onClick="toHistory" label="登録する" /> -->
+      <!-- <Button @onClick="toSumHistory" label="一括登録する" /> -->
     </div>
     <!-- <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
       <p class="title">ログイン/ログアウト</p>
@@ -81,11 +89,14 @@ export default {
     toEdit () {
       this.$router.push("/edit")
     },
+    toEditRecords() {
+      this.$router.push("/mypage/editRecords")
+    },
     toHistory () {
       this.$router.push("/history")
     },
     toSumHistory () {
-      this.$router.push("/sumhistory")
+      this.$router.push("/mypage/sumhistory")
     },
     login() {
       this.$store.dispatch('loginGoogle')
@@ -133,5 +144,8 @@ export default {
   align-items: right;
   font-size: 14px;
   margin-bottom: 10px;
+}
+.edit {
+  margin-top: 16px;
 }
 </style>

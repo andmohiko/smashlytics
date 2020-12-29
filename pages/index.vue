@@ -2,7 +2,7 @@
   <div class="container">
     <div class="register">
       <template v-if="isShowModal">
-        <RecordModal :lastRecord="lastRecord" @close="closeModal" />
+        <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
     </div>
     <div class="results">
@@ -26,12 +26,12 @@ import { timestamp2dateString, now } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/Button.vue'
 import Records from '@/components/Records.vue'
-import RecordModal from '@/components/RecordModal.vue'
+import AddRecordModal from '@/components/AddRecordModal.vue'
 
 export default {
   components: {
     Records,
-    RecordModal,
+    AddRecordModal,
     Button
   },
   data() {
@@ -41,7 +41,9 @@ export default {
       error: ''
     }
   },
-  watch: {},
+  async fetch ({ store }) {
+    store.dispatch('getRecords', store.state.user.userId)
+  },
   computed: {
     user() {
       return this.$store.state.user
