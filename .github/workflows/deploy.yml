@@ -11,7 +11,7 @@ env:
   STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
   MESSAGE_SENDER_ID: ${{ secrets.MESSAGE_SENDER_ID }}
   APP_ID: ${{ secrets.APP_ID }}
-  MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }
+  MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
 
 jobs:
   firebase:
@@ -29,9 +29,8 @@ jobs:
         run: |
           yarn
       - name: Build nuxt app
-}
         run: |
-          yarn install && yarn build
+          yarn build
       - name: Setup Firebase CLI
         run: |
           npm install -g firebase-tools
