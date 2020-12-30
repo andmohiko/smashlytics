@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    braches: 
+    branches: 
       - master
 env: 
   API_KEY: ${{ secrets.API_KEY }}
