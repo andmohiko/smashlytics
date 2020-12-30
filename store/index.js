@@ -2,6 +2,9 @@ import firebase from '@/plugins/firebase'
 import { setCookie } from '@/plugins/cookie'
 import Cookies from "universal-cookie"
 import { now } from '@/utils/date.js'
+import createPersistedState from "vuex-persistedstate"
+
+
 
 const db = firebase.firestore()
 // import "firebase/auth"
@@ -126,7 +129,8 @@ const store = () => {
   return new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    plugins: [createPersistedState()]
   })
 }
 
