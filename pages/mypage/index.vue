@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
-      <p class="title text-center">プロフィール</p>
+      <h2 class="title text-center">プロフィール</h2>
       <p class="username text-xl">{{ user.username }}</p>
       <p class="userId text-xl">{{ user.userId }}</p>
       <p class="user-twitterId text-gray-700">twitter: @{{ user.twitterId }}</p>
@@ -34,6 +34,9 @@
       <br>
       <Button @onClick="logout" label="ログアウト" />
     </div> -->
+    <div v-show="isAdmin" class="logout text-gray-500">
+      <button @click="toAllRecords">管理者用 全戦績</button>
+    </div>
     <div class="logout text-gray-500">
       <button @click="logout">googleログアウト</button>
     </div>
@@ -85,13 +88,8 @@ export default {
         return record.fighter
       }))
     },
-    battledPair() {
-      return new Set(this.records.map(record => {
-        return {}
-      }))
-    },
-    winningPercentage() {
-      return calcWinnigPercentage(this.records)
+    isAdmin() {
+      return this.user.userId === 'andmohiko'
     }
   },
   methods: {
@@ -120,6 +118,9 @@ export default {
     toNew() {
       this.$router.push("/new")
     },
+    toAllRecords() {
+      this.$router.push("/allRecords")
+    },
     calcWinningPercentage
   }
 }
@@ -129,12 +130,17 @@ export default {
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  width: 400px;
+  // width: 400px;
   display: flex;
   flex-direction: column;
   // justify-content: center;
   align-items: center;
   text-align: center;
+}
+@media screen and (min-width: 800px) {
+  .container {
+    width: 400px;
+  }
 }
 .title {
   margin: 20px 0;
