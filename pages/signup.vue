@@ -79,7 +79,8 @@ export default {
           .doc(authId)
           .set({
             createdAt: serverTimestamp,
-            userId: this.user.userId
+            userId: this.user.userId,
+            loginMethod: 'google'
           })
         const createdUser = db
           .collection('users')
@@ -90,11 +91,7 @@ export default {
             authId,
             username: this.user.username,
             twitterId: this.user.twitterId,
-            main: this.user.mainFighterId,
-            sub: null,
-            friendCode: null,
-            selfIntroduction: null,
-            smashmateRating: null
+            main: this.user.mainFighterId
           })
           .catch(error => {
             console.error("Error updating document: ", error);

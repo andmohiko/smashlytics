@@ -93,6 +93,7 @@ const actions = {
           let record = doc.data()
           record.createdAt = record.createdAt.toDate()
           record.updatedAt = record.updatedAt.toDate()
+          record.createdDate = record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
           record['docId'] = doc.id
           recordsArray.push(record)
         })

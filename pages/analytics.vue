@@ -101,13 +101,14 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records.sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+      return this.$store.state.records
     },
     recordsFiltered() {
-      if (this.period === 'whole' && this.stage === 'all') return this.records
-      if (this.period === 'whole' && this.stage !== 'all') return this.records.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return this.records.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = this.records.filter(record => record.stage === this.stage)
+      const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
+      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
+      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
+      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
       return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
     },
     usedFighterIds() {

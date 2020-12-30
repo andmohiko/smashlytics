@@ -43,9 +43,10 @@
           </ul>
         </div>
       </div>
-      <div class="logout text-gray-500">
-        <button @click="logout">googleログアウト</button>
+      <div v-show="isAdmin" class="logout text-gray-500">
+        <button @click="toAllRecords">管理者用 全戦績</button>
       </div>
+      <Button @onClick="logout" label="ログアウト" />
       <div class="copyright">
       <p>
         <small>© 2020 andmohiko</small>
@@ -57,9 +58,19 @@
 
 <script>
 import Button from '@/components/Button.vue'
+import Cookies from "universal-cookie"
+
 export default {
   components: {
     Button
+  },
+  mounted() {
+    const cookie = new Cookies()
+  },
+  computed: {
+    isAdmin() {
+      return this.$store.state.user.userId === 'andmohiko'
+    }
   },
   methods: {
     logout() {
@@ -67,7 +78,11 @@ export default {
       cookie.remove('smash_access_token')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
+      window.localStorage.clear();
       this.$router.push("/new")
+    },
+    toAllRecords() {
+      this.$router.push("/allRecords")
     }
   }
 }

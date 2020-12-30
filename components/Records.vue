@@ -14,7 +14,7 @@
           <tbody>
             <tr v-for="record in records" :key="record.id">
               <td class="border-dashed border-t border-gray-200 px-3">
-                <span class="text-gray-700 px-1 py-3 flex items-center">{{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) }}</span>
+                <span class="text-gray-700 px-1 py-3 flex items-center">{{ record.createdDate }}</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
                 <FighterIcon :fighterId="record.fighterId" size="32px" />
