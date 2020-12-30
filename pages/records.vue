@@ -25,11 +25,9 @@
             <tbody>
               <tr v-for="record in records" :key="record.id">
                 <td class="border-dashed border-t border-gray-200 px-3">
-                  <!-- <span class="text-gray-700 px-1 py-3 flex items-center">{{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) }}</span> -->
                   <span class="text-gray-700 px-1 py-3 flex items-center">
                     {{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) }}
-                    {{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17) }}
-                    
+                    {{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17) }}  
                   </span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">
@@ -39,7 +37,8 @@
                   <FighterIcon :fighterId="record.opponentId" size="32px" />
                 </td>
                 <td class="border-dashed border-t border-gray-200">
-                  <span class="text-gray-700 px-3 py-3 flex items-center">{{ bool2result(record.result) }}</span>
+                  <span v-if="record.result" class="text-red-700 px-3 py-3 flex items-center">勝ち</span>
+                  <span v-else class="text-blue-700 px-3 py-3 flex items-center">負け</span>
                 </td>
                 <td class="border-dashed border-t border-gray-200 text-gray-600 text-xs">
                   <button class="pt-1" @click="openModal(record)">
@@ -88,9 +87,6 @@ export default {
   methods: {
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
-    },
-    bool2result(result) {
-      return result ? '勝ち' : '負け'
     },
     openModal(record) {
       this.isShowModal = true

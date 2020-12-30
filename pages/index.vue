@@ -10,13 +10,18 @@
       <Button @onClick="openModal" label="戦績を登録する" />
     </div>
     <div class="records">
-      <!-- <p class="records-title">直近10戦の戦績</p> -->
+      <h2 class="records-title">直近10戦の戦績</h2>
       <Records :records="records.slice(0, 10)" />
     </div>
     <p class="error text-xl py-2 mb-4 text-red-700">{{ error }}</p>
     <div v-show="error" class="border-b">
       <button @click="toNew">ログインはこちら</button>
     </div>
+    <!-- <div class="add-button">
+      <button @click="openModal">
+        <div class="plus">+</div>
+      </button>
+    </div> -->
   </div>
 </template>
 
@@ -40,9 +45,6 @@ export default {
       now: now(),
       error: ''
     }
-  },
-  async fetch ({ store }) {
-    store.dispatch('getRecords', store.state.user.userId)
   },
   computed: {
     user() {
@@ -105,11 +107,11 @@ export default {
   letter-spacing: 1px;
 }
 .results {
-  margin: 16px 0 0 0;
   &-number {
-    font-size: 18px;
+    font-size: 20px;
     color: #4a5568;
     letter-spacing: 2px;
+    margin: 4px 0 4px 0;
   }
 }
 .register {
@@ -127,11 +129,34 @@ export default {
   &-title {
     width: 100%;
     display: block;
-    justify-content: left;
-    text-align: left;
-    font-size: 18px;
-    margin: 4px 0;
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    margin: 8px 0 0 0;
     color: #4a5568;
   }
 }
+// .add-button {
+//   position: absolute;
+//   position: relative;
+//   bottom: 60px;
+//   z-index: 1;
+//   border-radius: 50%;
+//   background-color: #579AFF;
+//   width: 50px;
+//   height: 50px;
+//   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.45);
+//   transition: all .5s ease;
+//   .plus {
+//     font-size: 50px;
+//     color: white;
+//     position: absolute;
+//     bottom: -8px;
+//     right: 9px;
+//   }
+// }
+// .add-button:hover {
+//   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.75);
+//   bottom: 65px;
+// }
 </style>

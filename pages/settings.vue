@@ -2,26 +2,28 @@
   <div class="container">
     <div class="settings">
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
-        <h2 class="text-xl mb-2">戦績の一括登録</h2>
-        <ul class="text-left">
-          <li>coming soon</li>
-        </ul>
-      </div>
-      <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">お問い合わせ</h2>
         <ul class="text-left">
           <li>coming soon</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
-        <h2 class="text-xl mb-4">今後追加される機能🚀</h2>
+        <h2 class="text-xl mb-4">今後追加予定の機能🚀</h2>
         <ul class="text-left">
-          <li>◎ステージごとの勝率の確認</li>
           <li>◎プロフィールの公開</li>
           <li>◎勝率の変化をグラフで表示</li>
+          <li>◎過去の戦績を日付を指定して登録</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
+        <h2 class="text-xl mb-4">Release notes</h2>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 0.3.0</h3>
+          <ul class="text-sm">
+            <li>◎ステージごとの勝率の確認</li>
+            <li>◎分析の並べ替えで逆順を追加</li>
+          </ul>
+        </div>
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 0.2.0</h3>

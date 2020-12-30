@@ -19,12 +19,13 @@
         </div>
       </div>
       <div>
-        <button @click="toEditRecords">▷ 登録した戦績を編集・削除</button>
         <button @click="toSumHistory">▷ 戦績を一括登録</button>
       </div>
       <br>
-      <span>🚀 coming soon! 🚀</span>
-      <span>過去の戦績を日付を指定して登録</span>
+      <span class="text-xs">他の記録アプリから移行する際にお使いください。</span>
+      <span class="text-xs">相手ファイターごとに勝敗数を入力してください</span>
+      <span class="text-xs">(他アプリとこのアプリを行ったり来たりするのはちょっと面倒かもです🙇‍♀️)</span>
+      <span class="text-xs">今日の日付で記録されます。</span>
       <!-- <Button @onClick="toHistory" label="登録する" /> -->
       <!-- <Button @onClick="toSumHistory" label="一括登録する" /> -->
     </div>
@@ -94,10 +95,7 @@ export default {
   },
   methods: {
     toEdit () {
-      this.$router.push("/edit")
-    },
-    toEditRecords() {
-      this.$router.push("/mypage/editRecords")
+      this.$router.push("/mypage/edit")
     },
     toHistory () {
       this.$router.push("/history")

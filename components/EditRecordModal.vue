@@ -51,9 +51,9 @@
             <label for="result-lose">負け</label>
           </div>
           <div v-show="isShowInputDetails" class="details">
-            <!-- <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-            <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span> -->
-            <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="editingRecord.globalSmashPower" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
+            <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
+            <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+            <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
             <div class="input-radio">
               <p>ステージ</p>
               <div class="flex flex-wrap">
@@ -171,11 +171,12 @@ export default {
     async updateRecord () {
       // console.log('submit', this.editingRecord)
       this.error = ''
-      // this.editingRecord.globalSmashPower = this.$refs.globalSmashPower.input
       if (!this.editingRecord.fighterId || !this.editingRecord.opponentId || this.editingRecord.result === null) {
         this.error = '自分・相手・結果は入力してください'
         return
       }
+      // this.editingRecord.globalSmashPower = this.$refs.globalSmashPower.input
+      // this.editingRecord.globalSmashPower = this.editingRecord.globalSmashPower ? Number(this.editingRecord.globalSmashPower) : null
       let updatingRecord = {
         updatedAt: serverTimestamp,
         fighter: this.fighters[this.editingRecord.fighterId].name,
@@ -186,7 +187,7 @@ export default {
         stage: this.editingRecord.stage,
         // globalSmashPower: this.editingRecord.globalSmashPower ? Number(this.editingRecord.globalSmashPower) * 10000 : null,
       }
-      // console.log('updating this', updatingRecord)
+      console.log('updating this', updatingRecord)
       const db = firebase.firestore()
       try {
         // console.log('upd')

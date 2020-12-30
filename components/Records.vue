@@ -23,7 +23,8 @@
                 <FighterIcon :fighterId="record.opponentId" size="32px" />
               </td>
               <td class="border-dashed border-t border-gray-200">
-                <span class="text-gray-700 px-3 py-3 flex items-center">{{ bool2result(record.result) }}</span>
+                <span v-if="record.result" class="text-red-700 px-3 py-3 flex items-center">勝ち</span>
+                <span v-else class="text-blue-700 px-3 py-3 flex items-center">負け</span>
               </td>
               <td class="border-dashed border-t border-gray-200">
                 <span class="text-gray-700 px-3 py-3 flex items-center">{{ record.globalSmashPower }}</span>
@@ -76,10 +77,6 @@ export default {
         {
           key: 'globalSmashPower',
           value: '世界戦闘力'
-        // },
-        // {
-        //   key: 'stage',
-        //   value: 'ステージ'
         }
       ],
       stages: {
@@ -90,19 +87,12 @@ export default {
     }
   },
   methods: {
-    bool2result(result) {
-      return result ? '勝ち' : '負け'
-    },
     jpStageName(stageE) {
       return this.stages[stageE]
     },
     get() {
       const fightersVals = Object.values(this.fighters)
       console.log(fightersVals)
-    },
-    fighterIconPath(fighterId){
-      const fighterEnName = this.fighters[fighterId].name_en
-      return ''
     }
   }
 }
