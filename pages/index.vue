@@ -27,12 +27,12 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import { timestamp2dateString, now } from '@/utils/date.js'
+import { now, date2string } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/Button.vue'
 import Records from '@/components/Records.vue'
 import AddRecordModal from '@/components/AddRecordModal.vue'
-import Cookies from "universal-cookie"
+// import Cookies from "universal-cookie"
 
 export default {
   components: {
@@ -48,9 +48,10 @@ export default {
     }
   },
   mounted() {
-    const cookie = new Cookies()
-    const auth_token = cookie.get('smash_access_token')
-    if (!Boolean(auth_token)) this.$router.push("/new")
+  //   const cookie = new Cookies()
+  //   const auth_token = cookie.get('smash_access_token')
+    // if (!Boolean(auth_token)) this.$router.push("/new")
+    if (!this.$store.state.user.userId) this.$router.push("/new")
   },
   computed: {
     user() {
@@ -70,11 +71,10 @@ export default {
       }
     },
     resultsToday() {
-      const today = new Date(this.now).toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10)
-      const recordsToday = this.records.filter(record => record.createdAt.toLocaleString({ timeZone: 'Asia/Tokyo' }).slice(0, 10) === today)
+      const today = date2string(this.now).split(' ')[0]
+      const recordsToday = this.records.filter(record => record.createdAtString.split(' ')[0] === today)
       const wins = recordsToday.filter(record => record.result).length
-      const loses = recordsToday.length - wins
-      return wins + '勝' + loses + '敗'
+      return wins + '勝' + (recordsToday.length - wins) + '敗'
     }
   },
   methods: {

@@ -26,7 +26,7 @@
               <tr v-for="record in records" :key="record.id">
                 <td class="border-dashed border-t border-gray-200 px-3">
                   <span class="text-gray-700 px-1 py-3 flex items-center">
-                    {{ record.createdAtString }}
+                    {{ record.createdAtString.slice(5, -3) }}
                   </span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">

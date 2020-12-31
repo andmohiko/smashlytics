@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { timestamp2date, now, today } from '@/utils/date.js'
+import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/FighterIcon.vue'
 
@@ -94,7 +94,6 @@ export default {
       stage: 'all',
       sorting: 'opponentId',
       order: true,
-      now: now(),
       today: today(),
       descending: false
     }
@@ -168,8 +167,7 @@ export default {
     toggle() {
       return this.descending = !this.descending
     },
-    calcWinningPercentage,
-    timestamp2date
+    calcWinningPercentage
   }
 }
 </script>

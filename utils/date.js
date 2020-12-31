@@ -1,15 +1,9 @@
-export function timestamp2dateString(timestamp) {
-  if (!timestamp) return 'N/A'
-  const date = timestamp.toDate()
-  return date.getDate() < 10 ?
-    date.getFullYear() + '/' + (date.getMonth()+1) + '/0' + date.getDate() :
-    date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate()
-}
-
-export function timestamp2date(timestamp) {
-  if (!timestamp) return 'N/A'
-  const date = timestamp.toDate()
-  return new Date(date.getFullYear(), (date.getMonth()), date.getDate())
+export function date2string(datetime) {
+  const datetimeLocalStr = datetime.toLocaleString({ timeZone: 'Asia/Tokyo'})
+  const date = datetimeLocalStr.split(' ')[0]
+  let time = datetimeLocalStr.split(' ')[1]
+  if (datetime.getHours() < 10) time = '0' + time
+  return date + ' ' + time
 }
 
 export const now = () => {

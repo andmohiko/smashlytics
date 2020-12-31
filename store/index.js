@@ -1,7 +1,7 @@
 import firebase from '@/plugins/firebase'
 import { setCookie } from '@/plugins/cookie'
 import Cookies from "universal-cookie"
-import { now } from '@/utils/date.js'
+import { now, date2string } from '@/utils/date.js'
 import createPersistedState from "vuex-persistedstate"
 
 
@@ -91,11 +91,10 @@ const actions = {
         let recordsArray = []
         querySnapshot.forEach(doc => {
           let record = doc.data()
+          record.docId = doc.id
           record.createdAt = record.createdAt.toDate()
           record.updatedAt = record.updatedAt.toDate()
-          record.createdDate = record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
-          record.createdAtString = record.createdDate + ' ' + record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
-          record['docId'] = doc.id
+          record.createdAtString = date2string(record.createdAt)
           recordsArray.push(record)
         })
         return recordsArray.sort((a, b) => {
@@ -109,8 +108,7 @@ const actions = {
   addRecords ({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
     newRecord.updatedAt = new Date(now())
-    newRecord.createdDate = newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
-    newRecord.createdAtString = newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) + ' ' + newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
+    newRecord.createdAtString = date2string(newRecord.createdAt)
     let records = state.records.slice()
     records.unshift(newRecord)
     commit('setRecords', records)

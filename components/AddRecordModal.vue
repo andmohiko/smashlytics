@@ -97,7 +97,6 @@ import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
-import { timestamp2dateString } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 

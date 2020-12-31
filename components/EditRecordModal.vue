@@ -116,7 +116,7 @@ import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
-import { timestamp2dateString, now } from '@/utils/date.js'
+import { now } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
@@ -200,8 +200,7 @@ export default {
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
-          updatingRecord.createdDate = this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
-          updatingRecord.createdAtString = this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) + ' ' + this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
+          updatingRecord.createdAtString = date2string(this.editingRecord.createdAt)
           updatingRecord.updatedAt = this.now
           updatingRecord.docId = this.editingRecord.docId
           // console.log('fix date', this.updatingRecord)
