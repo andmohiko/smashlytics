@@ -52,7 +52,7 @@ export default {
   computed: {
     isLogin() {
       if (this.$store.state.user.userId) {
-        this.$router.push("/mypage/");
+        this.$router.push("/");
       }
       return Boolean(this.$store.state.user.userId);
     },
