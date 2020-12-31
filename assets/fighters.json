@@ -4,6 +4,7 @@
     "icon": "01_Mario.png",
     "isDashFighter": false,
     "name": "マリオ",
+    "nickname": "マリオ",
     "name_en": "Mario",
     "number": 1
   },
@@ -12,6 +13,7 @@
     "icon": "02_DonkeyKong.png",
     "isDashFighter": false,
     "name": "ドンキーコング",
+    "nickname": "ドンキー",
     "name_en": "DonkeyKong",
     "number": 2
   },
@@ -20,6 +22,7 @@
     "icon": "03_Link.png",
     "isDashFighter": false,
     "name": "リンク",
+    "nickname": "リンク",
     "name_en": "Link",
     "number": 3
   },
@@ -28,6 +31,7 @@
     "icon": "04_Samus.png",
     "isDashFighter": false,
     "name": "サムス",
+    "nickname": "サムス",
     "name_en": "Samus",
     "number": 4
   },
@@ -36,6 +40,7 @@
     "icon": "04e_DarkSamus.png",
     "isDashFighter": true,
     "name": "ダークサムス",
+    "nickname": "ダムス",
     "name_en": "DarkSamus",
     "number": 4
   },
@@ -44,6 +49,7 @@
     "icon": "05_Yoshi.png",
     "isDashFighter": false,
     "name": "ヨッシー",
+    "nickname": "ヨッシー",
     "name_en": "Yoshi",
     "number": 5
   },
@@ -52,6 +58,7 @@
     "icon": "06_Kirby.png",
     "isDashFighter": false,
     "name": "カービィ",
+    "nickname": "カービィ",
     "name_en": "Kirby",
     "number": 6
   },
@@ -60,6 +67,7 @@
     "icon": "07_Fox.png",
     "isDashFighter": false,
     "name": "フォックス",
+    "nickname": "狐",
     "name_en": "Fox",
     "number": 7
   },
@@ -68,6 +76,7 @@
     "icon": "08_Pikachu.png",
     "isDashFighter": false,
     "name": "ピカチュウ",
+    "nickname": "ピカ",
     "name_en": "Pikachu",
     "number": 8
   },
@@ -76,6 +85,7 @@
     "icon": "09_Luigi.png",
     "isDashFighter": false,
     "name": "ルイージ",
+    "nickname": "ルイージ",
     "name_en": "Luigi",
     "number": 9
   },
@@ -84,6 +94,7 @@
     "icon": "10_Ness.png",
     "isDashFighter": false,
     "name": "ネス",
+    "nickname": "ネス",
     "name_en": "Ness",
     "number": 10
   },
@@ -92,6 +103,7 @@
     "icon": "11_CaptainFalcon.png",
     "isDashFighter": false,
     "name": "キャプテン・ファルコン",
+    "nickname": "CF",
     "name_en": "CaptainFalcon",
     "number": 11
   },
@@ -100,6 +112,7 @@
     "icon": "12_Jigglypuff.png",
     "isDashFighter": false,
     "name": "プリン",
+    "nickname": "プリン",
     "name_en": "Jigglypuff",
     "number": 12
   },
@@ -108,6 +121,7 @@
     "icon": "13_Peach.png",
     "isDashFighter": false,
     "name": "ピーチ",
+    "nickname": "ピーチ",
     "name_en": "Peach",
     "number": 13
   },
@@ -116,6 +130,7 @@
     "icon": "13e_Daisy.png",
     "isDashFighter": true,
     "name": "デイジー",
+    "nickname": "デイジー",
     "name_en": "Daisy",
     "number": 13
   },
@@ -124,6 +139,7 @@
     "icon": "14_Bowser.png",
     "isDashFighter": false,
     "name": "クッパ",
+    "nickname": "クッパ",
     "name_en": "Bowser",
     "number": 14
   },
@@ -132,6 +148,7 @@
     "icon": "15_IceClimbers.png",
     "isDashFighter": false,
     "name": "アイスクライマー",
+    "nickname": "アイクラ",
     "name_en": "IceClimbers",
     "number": 15
   },
@@ -140,6 +157,7 @@
     "icon": "16_Sheik.png",
     "isDashFighter": false,
     "name": "シーク",
+    "nickname": "シーク",
     "name_en": "Sheik",
     "number": 16
   },
@@ -148,6 +166,7 @@
     "icon": "17_Zelda.png",
     "isDashFighter": false,
     "name": "ゼルダ",
+    "nickname": "ゼルダ",
     "name_en": "Zelda",
     "number": 17
   },
@@ -156,6 +175,7 @@
     "icon": "18_Dr.Mario.png",
     "isDashFighter": false,
     "name": "ドクターマリオ",
+    "nickname": "DM",
     "name_en": "Dr.Mario",
     "number": 18
   },
@@ -164,6 +184,7 @@
     "icon": "19_Pichu.png",
     "isDashFighter": false,
     "name": "ピチュー",
+    "nickname": "ピチュー",
     "name_en": "Pichu",
     "number": 19
   },
@@ -172,6 +193,7 @@
     "icon": "20_Falco.png",
     "isDashFighter": false,
     "name": "ファルコ",
+    "nickname": "焼き鳥",
     "name_en": "Falco",
     "number": 20
   },
@@ -180,6 +202,7 @@
     "icon": "21_Marth.png",
     "isDashFighter": false,
     "name": "マルス",
+    "nickname": "マルス",
     "name_en": "Marth",
     "number": 21
   },
@@ -188,6 +211,7 @@
     "icon": "21e_Lucina.png",
     "isDashFighter": true,
     "name": "ルキナ",
+    "nickname": "ルキナ",
     "name_en": "Lucina",
     "number": 21
   },
@@ -196,6 +220,7 @@
     "icon": "22_YoungLink.png",
     "isDashFighter": false,
     "name": "こどもリンク",
+    "nickname": "ヤンリン",
     "name_en": "YoungLink",
     "number": 22
   },
@@ -204,6 +229,7 @@
     "icon": "23_Ganondorf.png",
     "isDashFighter": false,
     "name": "ガノンドロフ",
+    "nickname": "ガノン",
     "name_en": "Ganondorf",
     "number": 23
   },
@@ -212,6 +238,7 @@
     "icon": "24_Mewtwo.png",
     "isDashFighter": false,
     "name": "ミュウツー",
+    "nickname": "ﾐｭｳﾂｰ",
     "name_en": "Mewtwo",
     "number": 24
   },
@@ -220,6 +247,7 @@
     "icon": "25_Roy.png",
     "isDashFighter": false,
     "name": "ロイ",
+    "nickname": "ロイ",
     "name_en": "Roy",
     "number": 25
   },
@@ -228,6 +256,7 @@
     "icon": "25e_Chrom.png",
     "isDashFighter": true,
     "name": "クロム",
+    "nickname": "クロム",
     "name_en": "Chrom",
     "number": 25
   },
@@ -236,6 +265,7 @@
     "icon": "26_Mr.Game&Watch.png",
     "isDashFighter": false,
     "name": "Mr.ゲーム&ウォッチ",
+    "nickname": "ゲッチ",
     "name_en": "Mr.Game&Watch",
     "number": 26
   },
@@ -244,6 +274,7 @@
     "icon": "27_MetaKnight.png",
     "isDashFighter": false,
     "name": "メタナイト",
+    "nickname": "メタ",
     "name_en": "MetaKnight",
     "number": 27
   },
@@ -252,6 +283,7 @@
     "icon": "28_Pit.png",
     "isDashFighter": false,
     "name": "ピット",
+    "nickname": "ピット",
     "name_en": "Pit",
     "number": 28
   },
@@ -260,6 +292,7 @@
     "icon": "28e_DarkPit.png",
     "isDashFighter": true,
     "name": "ブラックピット",
+    "nickname": "ブラピ",
     "name_en": "DarkPit",
     "number": 28
   },
@@ -268,6 +301,7 @@
     "icon": "29_ZeroSuitSamus.png",
     "isDashFighter": false,
     "name": "ゼロスーツサムス",
+    "nickname": "ZSS",
     "name_en": "ZeroSuitSamus",
     "number": 29
   },
@@ -276,6 +310,7 @@
     "icon": "30_Wario.png",
     "isDashFighter": false,
     "name": "ワリオ",
+    "nickname": "ワリオ",
     "name_en": "Wario",
     "number": 30
   },
@@ -284,6 +319,7 @@
     "icon": "31_Snake.png",
     "isDashFighter": false,
     "name": "スネーク",
+    "nickname": "蛇",
     "name_en": "Snake",
     "number": 31
   },
@@ -292,6 +328,7 @@
     "icon": "32_Ike.png",
     "isDashFighter": false,
     "name": "アイク",
+    "nickname": "アイク",
     "name_en": "Ike",
     "number": 32
   },
@@ -300,6 +337,7 @@
     "icon": "33_PokémonTrainer.png",
     "isDashFighter": false,
     "name": "ポケモントレーナー",
+    "nickname": "ポケトレ",
     "name_en": "PokémonTrainer",
     "number": 33
   },
@@ -308,6 +346,7 @@
     "icon": "36_DiddyKong.png",
     "isDashFighter": false,
     "name": "ディディーコング",
+    "nickname": "デデコン",
     "name_en": "DiddyKong",
     "number": 36
   },
@@ -316,6 +355,7 @@
     "icon": "37_Lucas.png",
     "isDashFighter": false,
     "name": "リュカ",
+    "nickname": "リュカ",
     "name_en": "Lucas",
     "number": 37
   },
@@ -324,6 +364,7 @@
     "icon": "38_Sonic.png",
     "isDashFighter": false,
     "name": "ソニック",
+    "nickname": "ソニック",
     "name_en": "Sonic",
     "number": 38
   },
@@ -332,6 +373,7 @@
     "icon": "39_KingDedede.png",
     "isDashFighter": false,
     "name": "デデデ",
+    "nickname": "デデデ",
     "name_en": "KingDedede",
     "number": 39
   },
@@ -340,6 +382,7 @@
     "icon": "40_Olimar.png",
     "isDashFighter": false,
     "name": "ピクミン&オリマー",
+    "nickname": "ピクオリ",
     "name_en": "Olimar",
     "number": 40
   },
@@ -348,6 +391,7 @@
     "icon": "41_Lucario.png",
     "isDashFighter": false,
     "name": "ルカリオ",
+    "nickname": "ルカリオ",
     "name_en": "Lucario",
     "number": 41
   },
@@ -356,6 +400,7 @@
     "icon": "42_R.O.B..png",
     "isDashFighter": false,
     "name": "ロボット",
+    "nickname": "ロボ",
     "name_en": "R.O.B.",
     "number": 42
   },
@@ -364,6 +409,7 @@
     "icon": "43_ToonLink.png",
     "isDashFighter": false,
     "name": "トゥーンリンク",
+    "nickname": "トリン",
     "name_en": "ToonLink",
     "number": 43
   },
@@ -372,6 +418,7 @@
     "icon": "44_Wolf.png",
     "isDashFighter": false,
     "name": "ウルフ",
+    "nickname": "ウルフ",
     "name_en": "Wolf",
     "number": 44
   },
@@ -380,6 +427,7 @@
     "icon": "45_Villager.png",
     "isDashFighter": false,
     "name": "むらびと",
+    "nickname": "むらびと",
     "name_en": "Villager",
     "number": 45
   },
@@ -388,6 +436,7 @@
     "icon": "46_MegaMan.png",
     "isDashFighter": false,
     "name": "ロックマン",
+    "nickname": "ﾛｯｸﾏﾝ",
     "name_en": "MegaMan",
     "number": 46
   },
@@ -396,6 +445,7 @@
     "icon": "47_WiiFitTrainer.png",
     "isDashFighter": false,
     "name": "Wii Fit トレーナー",
+    "nickname": "ﾌｨｯﾄﾚ",
     "name_en": "WiiFitTrainer",
     "number": 47
   },
@@ -404,6 +454,7 @@
     "icon": "48_Rosalina&Luma.png",
     "isDashFighter": false,
     "name": "ロゼッタ&チコ",
+    "nickname": "ロゼチコ",
     "name_en": "Rosalina&Luma",
     "number": 48
   },
@@ -412,6 +463,7 @@
     "icon": "49_Little Mac.png",
     "isDashFighter": false,
     "name": "リトル・マック",
+    "nickname": "トルマク",
     "name_en": "Little Mac",
     "number": 49
   },
@@ -420,6 +472,7 @@
     "icon": "50_Greninja.png",
     "isDashFighter": false,
     "name": "ゲッコウガ",
+    "nickname": "ゲコ",
     "name_en": "Greninja",
     "number": 50
   },
@@ -428,6 +481,7 @@
     "icon": "51_MiiBrawler.png",
     "isDashFighter": false,
     "name": "Miiファイター格闘",
+    "nickname": "格闘",
     "name_en": "MiiBrawler",
     "number": 51
   },
@@ -436,6 +490,7 @@
     "icon": "52_MiiSwordfighter.png",
     "isDashFighter": false,
     "name": "Miiファイター剣術",
+    "nickname": "剣術",
     "name_en": "MiiSwordfighter",
     "number": 52
   },
@@ -444,6 +499,7 @@
     "icon": "53_MiiGunner.png",
     "isDashFighter": false,
     "name": "Miiファイター射撃",
+    "nickname": "射撃",
     "name_en": "MiiGunner",
     "number": 53
   },
@@ -452,6 +508,7 @@
     "icon": "54_Palutena.png",
     "isDashFighter": false,
     "name": "パルテナ",
+    "nickname": "パルテナ",
     "name_en": "Palutena",
     "number": 54
   },
@@ -460,6 +517,7 @@
     "icon": "55_Pac-Man.png",
     "isDashFighter": false,
     "name": "パックマン",
+    "nickname": "ﾊﾟｯｸﾏﾝ",
     "name_en": "Pac-Man",
     "number": 55
   },
@@ -468,6 +526,7 @@
     "icon": "56_Robin.png",
     "isDashFighter": false,
     "name": "ルフレ",
+    "nickname": "ルフレ",
     "name_en": "Robin",
     "number": 56
   },
@@ -476,6 +535,7 @@
     "icon": "57_Shulk.png",
     "isDashFighter": false,
     "name": "シュルク",
+    "nickname": "シュルク",
     "name_en": "Shulk",
     "number": 57
   },
@@ -484,6 +544,7 @@
     "icon": "58_BowserJr..png",
     "isDashFighter": false,
     "name": "クッパJr.",
+    "nickname": "クパJr",
     "name_en": "BowserJr.",
     "number": 58
   },
@@ -492,6 +553,7 @@
     "icon": "59_DuckHunt.png",
     "isDashFighter": false,
     "name": "ダックハント",
+    "nickname": "ダクハン",
     "name_en": "DuckHunt",
     "number": 59
   },
@@ -500,6 +562,7 @@
     "icon": "60_Ryu.png",
     "isDashFighter": false,
     "name": "リュウ",
+    "nickname": "リュウ",
     "name_en": "Ryu",
     "number": 60
   },
@@ -508,6 +571,7 @@
     "icon": "60e_Ken.png",
     "isDashFighter": true,
     "name": "ケン",
+    "nickname": "ケン",
     "name_en": "Ken",
     "number": 60
   },
@@ -516,6 +580,7 @@
     "icon": "61_Cloud.png",
     "isDashFighter": false,
     "name": "クラウド",
+    "nickname": "クラウド",
     "name_en": "Cloud",
     "number": 61
   },
@@ -524,6 +589,7 @@
     "icon": "62_Corrin.png",
     "isDashFighter": false,
     "name": "カムイ",
+    "nickname": "カムイ",
     "name_en": "Corrin",
     "number": 62
   },
@@ -532,6 +598,7 @@
     "icon": "63_Bayonetta.png",
     "isDashFighter": false,
     "name": "ベヨネッタ",
+    "nickname": "ベヨ",
     "name_en": "Bayonetta",
     "number": 63
   },
@@ -540,6 +607,7 @@
     "icon": "64_Inkling.png",
     "isDashFighter": false,
     "name": "インクリング",
+    "nickname": "イカ",
     "name_en": "Inkling",
     "number": 64
   },
@@ -548,6 +616,7 @@
     "icon": "65_Ridley.png",
     "isDashFighter": false,
     "name": "リドリー",
+    "nickname": "リドリー",
     "name_en": "Ridley",
     "number": 65
   },
@@ -556,6 +625,7 @@
     "icon": "66_Simon.png",
     "isDashFighter": false,
     "name": "シモン",
+    "nickname": "シモン",
     "name_en": "Simon",
     "number": 66
   },
@@ -564,6 +634,7 @@
     "icon": "66e_Richter.png",
     "isDashFighter": true,
     "name": "リヒター",
+    "nickname": "リヒター",
     "name_en": "Richter",
     "number": 66
   },
@@ -572,6 +643,7 @@
     "icon": "67_KingK.Rool.png",
     "isDashFighter": false,
     "name": "キングクルール",
+    "nickname": "キンクル",
     "name_en": "KingK.Rool",
     "number": 67
   },
@@ -580,6 +652,7 @@
     "icon": "68_Isabelle.png",
     "isDashFighter": false,
     "name": "しずえ",
+    "nickname": "しずえ",
     "name_en": "Isabelle",
     "number": 68
   },
@@ -588,6 +661,7 @@
     "icon": "69_Incineroar.png",
     "isDashFighter": false,
     "name": "ガオガエン",
+    "nickname": "ガエン",
     "name_en": "Incineroar",
     "number": 69
   },
@@ -596,6 +670,7 @@
     "icon": "70_PiranhaPlant.png",
     "isDashFighter": false,
     "name": "パックンフラワー",
+    "nickname": "パックン",
     "name_en": "PiranhaPlant",
     "number": 70
   },
@@ -604,6 +679,7 @@
     "icon": "71_Joker.png",
     "isDashFighter": false,
     "name": "ジョーカー",
+    "nickname": "ｼﾞｮｰｶｰ",
     "name_en": "Joker",
     "number": 71
   },
@@ -612,6 +688,7 @@
     "icon": "72_Hero.png",
     "isDashFighter": false,
     "name": "勇者",
+    "nickname": "勇者",
     "name_en": "Hero",
     "number": 72
   },
@@ -620,6 +697,7 @@
     "icon": "73_Banjo&Kazooie.png",
     "isDashFighter": false,
     "name": "バンジョー&カズーイ",
+    "nickname": "バンカズ",
     "name_en": "Banjo&Kazooie",
     "number": 73
   },
@@ -628,6 +706,7 @@
     "icon": "74_Terry.png",
     "isDashFighter": false,
     "name": "テリー",
+    "nickname": "テリー",
     "name_en": "Terry",
     "number": 74
   },
@@ -636,6 +715,7 @@
     "icon": "75_Byleth.png",
     "isDashFighter": false,
     "name": "ベレト/ベレス",
+    "nickname": "ベレトス",
     "name_en": "Byleth",
     "number": 75
   },
@@ -644,6 +724,7 @@
     "icon": "76_MinMin.png",
     "isDashFighter": false,
     "name": "ミェンミェン",
+    "nickname": "麺",
     "name_en": "MinMin",
     "number": 76
   },
@@ -652,6 +733,7 @@
     "icon": "77_Steve.png",
     "isDashFighter": false,
     "name": "スティーブ",
+    "nickname": "ｽﾃｨｰﾌﾞ",
     "name_en": "Steve",
     "number": 77
   },
@@ -660,6 +742,7 @@
     "icon": "78_Sephiroth.png",
     "isDashFighter": false,
     "name": "セフィロス",
+    "nickname": "セフィ",
     "name_en": "Sephiroth",
     "number": 78
   }

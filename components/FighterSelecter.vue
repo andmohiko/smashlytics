@@ -8,6 +8,7 @@
       <div v-for="fighterId in fighterIds" :key="fighterId.id" class="fighter-icon">
         <button @click="select(fighterId)">
           <FighterIcon :fighterId="fighterId" :isSelected="isSelected(fighterId)" :size="iconSize" />
+          <span v-show="isShowName" class="text-xs">{{ fighters[fighterId].nickname }}</span>
         </button>
       </div>
     </div>
@@ -40,6 +41,10 @@ export default {
     previouslySelected: {
       required: false,
       type: String
+    },
+    isShowName: {
+      default: false,
+      type: Boolean
     }
   },
   components: {

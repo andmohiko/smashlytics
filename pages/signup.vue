@@ -13,6 +13,7 @@
             @select="select"
             ref="fighter"
             iconSize="48px"
+            :isShowName="true"
             label="メインファイターを選ぶ (*)"
           />
         </div>
