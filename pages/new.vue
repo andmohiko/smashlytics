@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="introduction">
-      <h2 class="text-2xl py-6 border-b mb-4">スマブラ戦績分析ツール Smashlytics</h2>
+      <h2 class="text-2xl py-6 border-b mb-4">
+        スマブラ戦績分析ツール Smashlytics
+      </h2>
       <div class="goole-login">
         <Button @onClick="login" label="googleでログイン" />
         <p v-show="isLogin" class="text-xl py-4 text-red-700">
@@ -42,22 +44,25 @@
 </template>
 
 <script>
-import Button from '@/components/Button.vue'
+import Button from "@/components/Button.vue";
 export default {
   components: {
-    Button
+    Button,
   },
   computed: {
     isLogin() {
-      return Boolean(this.$store.state.user.userId)
-    }
+      if (this.$store.state.user.userId) {
+        this.$router.push("/mypage/");
+      }
+      return Boolean(this.$store.state.user.userId);
+    },
   },
   methods: {
     login() {
-      this.$store.dispatch('loginGoogle')
-    }
-  }
-}
+      this.$store.dispatch("loginGoogle");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
