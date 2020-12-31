@@ -6,7 +6,6 @@
           <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <!-- {{ record }} -->
       <div class="form">
         <h2 class="text-xl py-2 border-b mb-4">戦績を更新する</h2>
         <p class="error">{{ error }}</p>
@@ -187,10 +186,9 @@ export default {
         stage: this.editingRecord.stage,
         // globalSmashPower: this.editingRecord.globalSmashPower ? Number(this.editingRecord.globalSmashPower) * 10000 : null,
       }
-      console.log('updating this', updatingRecord)
+      // console.log('updating this', updatingRecord)
       const db = firebase.firestore()
       try {
-        // console.log('upd')
         const sendingRecord = db
           .collection('records')
           .doc(this.editingRecord.docId)
@@ -202,13 +200,16 @@ export default {
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
+          updatingRecord.createdDate = this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
+          updatingRecord.createdAtString = this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) + ' ' + this.editingRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
           updatingRecord.updatedAt = this.now
+          updatingRecord.docId = this.editingRecord.docId
           // console.log('fix date', this.updatingRecord)
           return updatingRecord
         })
         // console.log('updated', updatedRecords)
         this.$store.commit('setRecords', updatedRecords)
-        console.log('updated record')
+        // console.log('updated record')
       } catch(error) {
         console.log('error in sending record', error)
       }

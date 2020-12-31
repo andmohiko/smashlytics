@@ -26,7 +26,7 @@ export default {
       type: String
     },
     usedFighterIds: {
-      required: false,
+      default: null,
       type: Array
     },
     label: {

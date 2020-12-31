@@ -22,6 +22,7 @@
           <ul class="text-sm">
             <li>◎ステージごとの勝率の確認</li>
             <li>◎分析の並べ替えで逆順を追加</li>
+            <li>◎ログイン状態の保持</li>
           </ul>
         </div>
         <h2 class="text-xl mb-4">Release notes</h2>
@@ -76,6 +77,7 @@ export default {
     logout() {
       const cookie = new Cookies()
       cookie.remove('smash_access_token')
+      this.$store.commit('setUid', '')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
       window.localStorage.clear();
@@ -94,7 +96,6 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   text-align: center;
 }

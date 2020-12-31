@@ -4,6 +4,10 @@
       <h2 class="text-2xl py-6 border-b mb-4">スマブラ戦績分析ツール Smashlytics</h2>
       <div class="goole-login">
         <Button @onClick="login" label="googleでログイン" />
+        <p v-show="isLogin" class="text-xl py-4 text-red-700">
+          <span>ログイン済みです！</span>
+          <span>ホームへGO🏃‍♂️</span>
+        </p>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-2">できること👍</h3>
@@ -42,6 +46,11 @@ import Button from '@/components/Button.vue'
 export default {
   components: {
     Button
+  },
+  computed: {
+    isLogin() {
+      return Boolean(this.$store.state.user.userId)
+    }
   },
   methods: {
     login() {

@@ -37,7 +37,7 @@ export default {
     },
     isBackiconPage() {
       return (
-        (this.routename.length > 7 && this.routename.slice(0,6) === 'mypage') ||
+        this.$route.path.match(/\/mypage\/sumhistory$/) ||
         this.$route.path.match(/\/settings$/)
       )
     },

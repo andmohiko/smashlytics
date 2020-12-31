@@ -6,7 +6,7 @@ export default {
   */
   head: {
     // title: process.env.npm_package_name || '',
-    title: 'smashlytics',
+    title: 'スマレポ',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -47,9 +47,9 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
   ],
-  router: {
-    middleware: 'auth'
-  },
+  // router: {
+  //   middleware: 'auth'
+  // },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

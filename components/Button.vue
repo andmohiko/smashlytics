@@ -1,6 +1,7 @@
 <template>
   <button
     :class="[{ disable: isDisable }, buttonType]"
+    :style="[widthStyle]"
     :disabled="isDisable"
     class="uppercase px-8 py-2 rounded-full max-w-max shadow-sm hover:shadow-md button"
     @click="$emit('onClick')"
@@ -19,7 +20,7 @@ export default {
       required: true
     },
     width: {
-      default: '250px',
+      default: '240px',
       type: String
     },
     buttonType: {

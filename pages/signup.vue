@@ -110,8 +110,10 @@ export default {
     logout(){
       const cookie = new Cookies()
       cookie.remove('smash_access_token')
+      this.$store.commit('setUid', '')
       this.$store.commit('setUser', {})
-      this.$store.commit('setRecords', {})
+      this.$store.commit('setRecords', [])
+      window.localStorage.clear();
       this.$router.push("/new")
     }
   }

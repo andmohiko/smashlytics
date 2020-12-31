@@ -104,7 +104,7 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 export default {
   props: {
     lastRecord: {
-      required: true,
+      required: false,
       type: Object
     },
     isShowInputDetails: {
@@ -131,6 +131,7 @@ export default {
     }
   },
   mounted() {
+    if (!this.lastRecord) return
     this.record.fighterId = this.lastRecord.fighterId
     this.record.opponentId = this.lastRecord.opponentId
     // if (this.lastRecord.stage || this.lastRecord.globalSmashPower) this.isShowInputDetails = true
@@ -139,8 +140,12 @@ export default {
     user() {
       return this.$store.state.user
     },
+    records() {
+      return this.$store.state.records
+    },
     usedFighterIds() {
-      const used = this.$store.state.records.map(record => {
+      if (!this.records.length) return Object.keys(this.fighters).sort()
+      const used = this.records.map(record => {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
@@ -176,6 +181,9 @@ export default {
         const sendingRecord = db
           .collection('records')
           .add(newRecord)
+          .then(docRef => {
+            newRecord.docId = docRef.id
+          })
           .catch(error => {
             console.log(error)
           })

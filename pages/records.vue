@@ -26,8 +26,7 @@
               <tr v-for="record in records" :key="record.id">
                 <td class="border-dashed border-t border-gray-200 px-3">
                   <span class="text-gray-700 px-1 py-3 flex items-center">
-                    {{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) }}
-                    {{ record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17) }}  
+                    {{ record.createdAtString }}
                   </span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">

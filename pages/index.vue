@@ -32,6 +32,7 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/Button.vue'
 import Records from '@/components/Records.vue'
 import AddRecordModal from '@/components/AddRecordModal.vue'
+import Cookies from "universal-cookie"
 
 export default {
   components: {
@@ -46,6 +47,11 @@ export default {
       error: ''
     }
   },
+  mounted() {
+    const cookie = new Cookies()
+    const auth_token = cookie.get('smash_access_token')
+    if (!Boolean(auth_token)) this.$router.push("/new")
+  },
   computed: {
     user() {
       return this.$store.state.user
@@ -59,7 +65,7 @@ export default {
     lastRecord() {
       if (this.records.length) return this.records[0]
       return {
-        fighterId: this.user.main,
+        fighterId: '01',
         opponentId: '01',
       }
     },

@@ -1,7 +1,7 @@
 {
   "name": "smash-bros-fighting-recorder",
   "version": "1.0.0",
-  "description": "smash bros fighting result recording app",
+  "description": "スマブラ戦績記録・分析アプリ",
   "author": "andmohiko",
   "private": true,
   "scripts": {

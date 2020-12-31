@@ -16,11 +16,6 @@ export default {
   components: {
     Header,
     Footer
-  },
-  computed: {
-    isLogin() {
-      return Boolean(this.$store.state.user.userId)
-    },
   }
 }
 </script>

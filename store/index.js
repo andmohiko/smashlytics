@@ -94,6 +94,7 @@ const actions = {
           record.createdAt = record.createdAt.toDate()
           record.updatedAt = record.updatedAt.toDate()
           record.createdDate = record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
+          record.createdAtString = record.createdDate + ' ' + record.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
           record['docId'] = doc.id
           recordsArray.push(record)
         })
@@ -108,6 +109,8 @@ const actions = {
   addRecords ({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
     newRecord.updatedAt = new Date(now())
+    newRecord.createdDate = newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5)
+    newRecord.createdAtString = newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }).slice(0, 5) + ' ' + newRecord.createdAt.toLocaleString('en-US', { timeZone: 'Asia/Tokyo', hour12: false }).slice(12,17)
     let records = state.records.slice()
     records.unshift(newRecord)
     commit('setRecords', records)
