@@ -1,7 +1,6 @@
 # firestore 設計
 
 - [users](#users)
-- [fighters](#fighters)
 - [records](#records)
 
 ## users
@@ -13,29 +12,22 @@
 
 ### 詳細
 
+- createdAt: Timestamp 作成した時間
+- updatedAt: Timestamp 更新した時間
 - userId: String
 - authId: String
 - username: String
 - twitterId: String
-- friendCode: String
-- main: String
-- sub: String
-- selfIntroduction: String
-- smashmateRating: Number
-
-## fighters
-
-### 概要
-
-- ファイター
-- ID: ファイター番号
-
-### 詳細
-
-- isDashFighter: Boolean
-- name: String 日本語名
-- name_en: String 英語名
-- number: ファイター番号
+<!-- - friendCode: String -->
+- main: String fighterId
+- sub: String fighterId
+<!-- - winningPercentage: Object
+  - wins: Number
+  - loses: Number -->
+<!-- - selfIntroduction: String -->
+<!-- - isPrivateAccount: Boolean -->
+<!-- - smashmateRating: Number -->
+<!-- - voicechats: Array [discord, line, nintendo online, skype] -->
 
 ## records
 
