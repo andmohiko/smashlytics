@@ -2,6 +2,7 @@ import firebase from '@/plugins/firebase'
 import { setCookie } from '@/plugins/cookie'
 import Cookies from "universal-cookie"
 import { now, date2string } from '@/utils/date.js'
+import { getUser } from '@/repositories/users.js'
 import createPersistedState from "vuex-persistedstate"
 
 
@@ -14,14 +15,10 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  user: {
-    userId: '',
-    username: '',
-    twitterId: '',
-    main: '',
-  },
+  user: {},
   uid: '',
-  records: []
+  records: [],
+  userIds: []
 }
 
 const actions = {
@@ -63,20 +60,10 @@ const actions = {
     // this.$router.push("/")
   },
   async getUser ({ commit }, userId) {
-    const user = await db
-      .collection('users')
-      .doc(userId)
-      .get()
-      .then(doc => {
-        return doc.data()
-      }).catch(function(error) {
-        console.log("Error getting document:", error);
-      })
+    const user = await getUser(userId)
     commit('setUser', {
       userId,
-      username: user.username,
-      twitterId: user.twitterId,
-      main: user.main
+      ...user
     })
   },
   async getRecords ({ commit }, userId) {
@@ -112,7 +99,7 @@ const actions = {
     let records = state.records.slice()
     records.unshift(newRecord)
     commit('setRecords', records)
-  }
+  },
 }
 
 const mutations = {
@@ -124,6 +111,9 @@ const mutations = {
   },
   setUid(state, payload) {
     state.uid = payload
+  },
+  setUserIds(state, payload) {
+    state.userIds = payload
   }
 }
 
