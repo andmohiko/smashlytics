@@ -238,7 +238,7 @@
     "icon": "24_Mewtwo.png",
     "isDashFighter": false,
     "name": "ミュウツー",
-    "nickname": "ﾐｭｳﾂｰ",
+    "nickname": "M2",
     "name_en": "Mewtwo",
     "number": 24
   },
@@ -301,7 +301,7 @@
     "icon": "29_ZeroSuitSamus.png",
     "isDashFighter": false,
     "name": "ゼロスーツサムス",
-    "nickname": "ZSS",
+    "nickname": "ゼロサム",
     "name_en": "ZeroSuitSamus",
     "number": 29
   },

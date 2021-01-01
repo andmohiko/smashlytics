@@ -1,14 +1,28 @@
 <template>
   <div class="container">
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
-      <h2 class="title text-center">プロフィール</h2>
-      <p class="username text-xl">{{ user.username }}</p>
-      <p class="userId text-xl">{{ user.userId }}</p>
-      <p class="user-twitterId text-gray-700">twitter: @{{ user.twitterId }}</p>
-      <p>{{ calcWinningPercentage(records) }}</p>
-      <!-- <div class="edit">
-        <Button @onClick="toEdit" label="プロフィールを編集する" />
-      </div> -->
+      <h2 class="title text-center text-gray-800">プロフィール</h2>
+      <div class="name pb-4">
+        <p class="username text-3xl text-gray-800">{{ user.username }}</p>
+        <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
+      </div>
+      <p class="userId text-base text-gray-700">使用キャラの世界戦闘力</p>
+      <div class="fightersInfo">
+        <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
+          <FighterIcon :fighterId="record.fighterId" size="40px" />
+          <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
+          <span v-else class="text-2xl text-gray-800">--</span>
+        </div>
+      </div>
+      
+      <p class="text-xl text-gray-800">{{ calcWinningPercentage(records) }}</p>
+
+      <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
+        <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
+          <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
+        </svg>
+        <span class="pl-2">@{{ user.twitterId }}</span>
+      </div>
     </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="title text-center">戦績管理</p>
@@ -26,20 +40,6 @@
       <span class="text-xs">相手ファイターごとに勝敗数を入力してください</span>
       <span class="text-xs">(他アプリとこのアプリを行ったり来たりするのはちょっと面倒かもです🙇‍♀️)</span>
       <span class="text-xs">今日の日付で記録されます。</span>
-      <!-- <Button @onClick="toHistory" label="登録する" /> -->
-      <!-- <Button @onClick="toSumHistory" label="一括登録する" /> -->
-    </div>
-    <!-- <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full">
-      <p class="title">ログイン/ログアウト</p>
-      <Button @onClick="login" label="googleでログイン" />
-      <br>
-      <Button @onClick="logout" label="ログアウト" />
-    </div> -->
-    <div v-show="isAdmin" class="logout text-gray-500">
-      <button @click="toAllRecords">管理者用 全戦績</button>
-    </div>
-    <div class="logout text-gray-500">
-      <button @click="logout">googleログアウト</button>
     </div>
   </div>
 </template>
@@ -48,21 +48,18 @@
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
+import FighterIcon from '@/components/FighterIcon.vue'
 import { calcWinningPercentage } from '@/utils/records.js'
-import Cookies from "universal-cookie"
 
 export default {
   components: {
-    Button
+    Button,
+    FighterIcon
   },
   data() {
     return {
       error: '',
     }
-  },
-  mounted() {
-    const cookie = new Cookies()
-    const value = cookie.get('smash_access_token')
   },
   computed: {
     user() {
@@ -84,13 +81,17 @@ export default {
       const loses = opponentRecords.filter(record => !record.result).length
       return wins + '勝' + loses + '敗 (' + (wins / (wins + loses)) +  '%'
     },
-    usedFighter() {
-      return new Set(this.records.map(record => {
-        return record.fighter
-      }))
+    newestRecordsByFighter() {
+      const newestRecords = this.usedFighterIds.map(fighterId => {
+        return this.records.filter(record => record.fighterId === fighterId)[0]
+      })
+      return newestRecords.sort((a, b) => (a.globalSmashPower > b.globalSmashPower ? -1 : 1))
     },
-    isAdmin() {
-      return this.user.userId === 'andmohiko'
+    usedFighterIds() {
+      const used = this.records.map(record => {
+        return record.fighterId
+      })
+      return Array.from(new Set(used))
     }
   },
   methods: {
@@ -106,18 +107,8 @@ export default {
     login() {
       this.$store.dispatch('loginGoogle')
     },
-    logout() {
-      const cookie = new Cookies()
-      cookie.remove('smash_access_token')
-      this.$store.commit('setUser', {})
-      this.$store.commit('setRecords', [])
-      this.$router.push("/new")
-    },
     toNew() {
       this.$router.push("/new")
-    },
-    toAllRecords() {
-      this.$router.push("/allRecords")
     },
     calcWinningPercentage
   }
@@ -131,7 +122,6 @@ export default {
   // width: 400px;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   text-align: center;
 }
@@ -152,16 +142,20 @@ export default {
   justify-content: center;
   align-items: left;
 }
-.logout {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: right;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
 .edit {
   margin-top: 16px;
+}
+.fightersInfo {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: -10px;
+  margin-bottom: 10px;
+  .fighter {
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: 60px 1fr;
+    align-items: center;
+  }
 }
 </style>
