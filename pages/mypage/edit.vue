@@ -29,7 +29,7 @@
               label="サブも選べるよ"
             />
           </div>
-          <form class="mb-4 px-4">
+          <!-- <form class="mb-4 px-4">
             <p>プロフィールを公開します？</p>
             <div class="input-radio mb-1">
               <input
@@ -51,7 +51,7 @@
               />
               <label for="isPrivate">公開しない</label>
             </div>
-          </form>
+          </form> -->
           <p class="flash-message">{{ flashMessage }}</p>
         </div>
         <div class="submit">
@@ -84,15 +84,15 @@ export default {
         main: '',
         sub: '',
         friendCode: '',
-        isPrivateAccount: false
+        // isPrivateAccount: false
       },
       uid: '',
       flashMessage: ''
     }
   },
-  mounted() {
-    this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
-  },
+  // mounted() {
+  //   this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
+  // },
   computed: {
     user() {
       return this.$store.state.user
@@ -126,7 +126,7 @@ export default {
         sub: this.editUser.sub,
         friendCode: this.$refs.friendCode.input,
         smashmateRating: this.$refs.smashmateRating.input,
-        isPrivateAccount: this.editUser.isPrivateAccount
+        // isPrivateAccount: this.editUser.isPrivateAccount
       }
       try {
         updateUser(this.user, updatingDto)

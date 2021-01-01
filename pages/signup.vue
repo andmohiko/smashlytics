@@ -86,7 +86,6 @@ export default {
         this.error = 'ユーザIDとユーザ名を入力してください'
         return
       }
-      console.log('this.userIds', this.userIds)
       if (this.userIds.includes(this.user.userId)) {
         this.error = '入力されたユーザIDは使用できません'
         return
@@ -103,25 +102,21 @@ export default {
             userId: this.user.userId,
             loginMethod: 'google'
           })
-        const createdUser = db
-          .collection('users')
+        const createUserDto = {
+          createdAt: serverTimestamp,
+          updatedAt: serverTimestamp,
+          authId,
+          username: this.user.username,
+          twitterId: this.user.twitterId,
+          main: this.user.mainFighterId
+        }
+        db.collection('users')
           .doc(this.user.userId)
-          .set({
-            createdAt: serverTimestamp,
-            updatedAt: serverTimestamp,
-            authId,
-            username: this.user.username,
-            twitterId: this.user.twitterId,
-            main: this.user.mainFighterId
-          })
+          .set(createUserDto)
           .catch(error => {
             console.error("Error updating document: ", error);
           })
-        this.$store.commit('setUser', {
-          userId: this.user.userId,
-          username: this.user.username,
-          twitterId: this.user.twitterId
-        })
+        this.$store.commit('setUser', createUserDto)
         this.$store.commit('setRecords', [])
         this.$router.push("/")
       } catch (error) {
