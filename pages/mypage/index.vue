@@ -23,6 +23,7 @@
         </svg>
         <span class="pl-2">@{{ user.twitterId }}</span>
       </div>
+      <Button @onClick="toEdit" label="編集する" />
     </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="title text-center">戦績管理</p>

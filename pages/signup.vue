@@ -54,8 +54,19 @@ export default {
         mainFighterId: ''
       },
       uid: '',
-      error: ''
+      error: '',
+      userIds: []
     }
+  },
+  async fetch() {
+    const db = firebase.firestore()
+    await db.collection('users')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.userIds.push(doc.id)
+        })
+      })
   },
   methods: {
     select() {
@@ -67,12 +78,20 @@ export default {
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
       this.user.twitterId = this.$refs.twitterId.input || null
-      if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
-        this.user.twitterId = this.user.twitterId.slice(1)
+      if (!authId) {
+        this.error = 'ログインできておりません。再度ログインしてください。'
+        return
       }
-      if (!authId || this.user.userId === '' || this.user.username === '') {
+      if (this.user.userId === '' || this.user.username === '') {
         this.error = 'ユーザIDとユーザ名を入力してください'
         return
+      }
+      if (this.userIds.includes(this.user.userId)) {
+        this.error = '入力されたユーザIDは使用できません'
+        return
+      }
+      if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
+        this.user.twitterId = this.user.twitterId.slice(1)
       }
       const db = firebase.firestore()
       try {
@@ -83,25 +102,21 @@ export default {
             userId: this.user.userId,
             loginMethod: 'google'
           })
-        const createdUser = db
-          .collection('users')
+        const createUserDto = {
+          createdAt: serverTimestamp,
+          updatedAt: serverTimestamp,
+          authId,
+          username: this.user.username,
+          twitterId: this.user.twitterId,
+          main: this.user.mainFighterId
+        }
+        db.collection('users')
           .doc(this.user.userId)
-          .set({
-            createdAt: serverTimestamp,
-            updatedAt: serverTimestamp,
-            authId,
-            username: this.user.username,
-            twitterId: this.user.twitterId,
-            main: this.user.mainFighterId
-          })
+          .set(createUserDto)
           .catch(error => {
             console.error("Error updating document: ", error);
           })
-        this.$store.commit('setUser', {
-          userId: this.user.userId,
-          username: this.user.username,
-          twitterId: this.user.twitterId
-        })
+        this.$store.commit('setUser', createUserDto)
         this.$store.commit('setRecords', [])
         this.$router.push("/")
       } catch (error) {

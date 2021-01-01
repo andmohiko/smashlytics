@@ -38,6 +38,7 @@ export default {
     isBackiconPage() {
       return (
         this.$route.path.match(/\/mypage\/sumhistory$/) ||
+        this.$route.path.match(/\/mypage\/edit$/) ||
         this.$route.path.match(/\/settings$/)
       )
     },
