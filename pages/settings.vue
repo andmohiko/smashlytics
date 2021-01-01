@@ -4,7 +4,7 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">お問い合わせ</h2>
         <ul class="text-left">
-          <li>coming soon</li>
+          <li>お問い合わせフォームは<a href="https://forms.gle/jbcq53PqTzPotSU96" target="_blank">こちら</a></li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
@@ -13,10 +13,19 @@
           <li>◎プロフィールの公開</li>
           <li>◎勝率の変化をグラフで表示</li>
           <li>◎過去の戦績を日付を指定して登録</li>
+          <li>◎戦闘力帯ごとのファイターの割合</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 0.4.0</h3>
+          <ul class="text-sm">
+            <li>◎マイページに使用キャラの最新世界戦闘力を表示</li>
+            <li>◎日付/時間表示のバグ修正</li>
+            <li>◎プロフィールの編集機能</li>
+          </ul>
+        </div>
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 0.3.0</h3>
           <ul class="text-sm">
@@ -25,13 +34,11 @@
             <li>◎ログイン状態の保持</li>
           </ul>
         </div>
-        <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 0.2.0</h3>
           <ul class="text-sm">
             <li>◎戦績の編集・削除</li>
             <li>◎戦績の一括登録</li>
-            <li>◎ファイターごとの勝率をステージごとに確認</li>
             <li>◎未ログインで戦績を記録できてしまうバグの修正</li>
           </ul>
         </div>
@@ -125,5 +132,9 @@ export default {
     color: #bbb;
     font-size: 12px;
   }
+}
+a {
+  color: #166af2;
+  border-bottom: solid 1px #166af2;
 }
 </style>
