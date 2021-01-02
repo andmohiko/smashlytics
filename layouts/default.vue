@@ -3,6 +3,10 @@
     <Header />
     <div class="main">
       <nuxt />
+      <!-- <div class="maintenance">
+        <h2 class="text-2xl">ただいまメンテナンス中です。</h2>
+        <h2 class="text-2xl">しばらくお待ちくださいm(_ _)m</h2>
+      </div> -->
     </div>
     <Footer />
   </div>
@@ -20,12 +24,23 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .main {
   margin-top: 60px;
   margin-bottom: 70px;
   min-height: calc(100vh - 130px);
   max-width: 100vw;
+}
+
+.maintenance {
+  margin: 0 auto;
+  height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 400px;
 }
 
 html {

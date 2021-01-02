@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="winning-percentage">
-      <h2 class="text-2xl py-2 border-b mb-4">ファイターごとの勝率</h2>
       <form class="mb-2 px-4">
         <div class="input-radio">
           <p class="text-l text-left pl-4">並べ替え</p>

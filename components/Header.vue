@@ -8,6 +8,14 @@
           </svg>
         </button>
       </template>
+      <template v-else-if="isReloadiconPage">
+        <button class="reload-btn" @click="getRecords">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.2 3.36V7.68L14.88 7.67952" stroke="#E9ECF0" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+            <path d="M20.1595 12C20.1595 16.5072 16.5067 20.16 11.9995 20.16C7.49234 20.16 3.83954 16.5072 3.83954 12C3.83954 7.4928 7.49234 3.84 11.9995 3.84C14.4048 3.84 16.5672 4.88016 18.0605 6.53568C18.3571 6.86496 18.6279 7.21872 18.8683 7.59312" stroke="#E9ECF0" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </template>
       <div>
         <h1 class="page-title">{{ pageTitle }}</h1>
       </div>
@@ -40,6 +48,13 @@ export default {
         this.$route.path.match(/\/mypage\/sumhistory$/) ||
         this.$route.path.match(/\/mypage\/edit$/) ||
         this.$route.path.match(/\/settings$/)
+      )
+    },
+    isReloadiconPage() {
+      return (
+        this.$route.path.match(/\/$/) ||
+        this.$route.path.match(/\/analytics$/) ||
+        this.$route.path.match(/\/records$/)
       )
     },
     isSettingsiconPage() {
@@ -86,7 +101,10 @@ export default {
     },
     toSettings () {
       this.$router.push("/settings")
-    }
+    },
+    async getRecords() {
+      await this.$store.dispatch('getRecords', this.user.userId)
+    },
   }
 }
 </script>
@@ -122,6 +140,10 @@ export default {
 .back-btn {
   position: absolute;
   left: 5px;
+}
+.reload-btn {
+  position: absolute;
+  left: 8px;
 }
 .settings-btn {
   position: absolute;

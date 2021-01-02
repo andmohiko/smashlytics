@@ -3,6 +3,7 @@ import { setCookie } from '@/plugins/cookie'
 import Cookies from "universal-cookie"
 import { now, date2string } from '@/utils/date.js'
 import { getUser } from '@/repositories/users.js'
+import { getRecords } from '@/repositories/records.js'
 import createPersistedState from "vuex-persistedstate"
 
 
@@ -67,29 +68,7 @@ const actions = {
     })
   },
   async getRecords ({ commit }, userId) {
-    const db = firebase.firestore()
-    const records = await db
-      .collection('records')
-      .where("userId", "==", userId)
-      // .orderBy('createdAt', 'desc')
-      // .limit(docLength)
-      .get()
-      .then(querySnapshot => {
-        let recordsArray = []
-        querySnapshot.forEach(doc => {
-          let record = doc.data()
-          record.docId = doc.id
-          record.createdAt = record.createdAt.toDate()
-          record.updatedAt = record.updatedAt.toDate()
-          record.createdAtString = date2string(record.createdAt)
-          recordsArray.push(record)
-        })
-        return recordsArray.sort((a, b) => {
-          return a.createdAt > b.createdAt ? -1 : 1
-        })
-      }).catch(function(error) {
-        console.log("Error getting document:", error);
-      })
+    const records = await getRecords(userId)
     commit('setRecords', records)
   },
   addRecords ({ commit, state }, newRecord) {

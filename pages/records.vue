@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <div class="get flex flex-col">
-      <span class="text-gray-500 text-sm">もしうまく反映されてなかったら</span>
-      <span class="text-gray-500 text-sm pb-2">これを押してね(連打はしないでね)</span>
-      <Button @onClick="getRecords" label="戦績を更新" />
-    </div>
     <div class="edit">
       <template v-if="isShowModal">
         <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
