@@ -5,6 +5,8 @@
         <div class="input">
           <p class="flash-message">{{ flashMessage }}</p>
           <form class="mb-4 px-4">
+            <label class="text-gray-700 flex text-left">アイコンを選択する</label>
+            <input type="file" @change="selectIcon">
             <TextField ref="username" label="ユーザ名" :defaultValue="user.username" placeholder="username" />
             <TextField ref="twitterId" label="Twitter Id" :defaultValue="user.twitterId" placeholder="@twitterId" />
             <!-- <TextField ref="selfIntroduction" label="自己紹介" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" /> -->
@@ -104,6 +106,28 @@ export default {
       this.editUser.sub = String(this.$refs.subFighter.get())
       console.log(this.editUser.main, this.editUser.sub)
     },
+    selectIcon(e) {
+     const file = e.target.files[0]
+     const storage = firebase.storage()
+     const storageRef = storage.ref()
+     const uploadTask = storageRef.child(`images/user/${this.user.userId}/profileImg.png`).put(file)
+     uploadTask.on(
+       'state_changed',
+       (snapshot) => {
+        //  console.log('snapshot', snapshot)
+       },
+       (error) => {
+         console.log('err', error)
+       },
+       () => {
+         // Handle successful uploads on complete
+         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          //  console.log('File available at', downloadURL)
+         })
+       }
+     )
+   },
     submit () {
       console.log('submit')
       const authId = this.$store.state.uid
@@ -125,15 +149,16 @@ export default {
         main: this.editUser.main,
         sub: this.editUser.sub,
         friendCode: this.$refs.friendCode.input,
-        smashmateRating: this.$refs.smashmateRating.input,
+        smashmateRating: this.$refs.smashmateRating.input
         // isPrivateAccount: this.editUser.isPrivateAccount
       }
       try {
         updateUser(this.user, updatingDto)
-        this.$store.commit('setUser', {
-            ...this.user,
-            ...updatingDto
-          })
+        this.$store.dispatch('getUser', this.user.userId)
+        // this.$store.commit('setUser', {
+        //     ...this.user,
+        //     ...updatingDto
+        //   })
         this.flashMessage = '保存しました。'
       } catch(error) {
         console.log('updating error', error)

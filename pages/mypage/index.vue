@@ -145,6 +145,7 @@ export default {
   img {
     height: 120px;
     width: 120px;
+    border: solid 4px #579aff;
     border-radius: 50%;
   }
 }
