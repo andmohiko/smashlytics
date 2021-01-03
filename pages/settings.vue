@@ -10,7 +10,6 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">今後追加予定の機能🚀</h2>
         <ul class="text-left">
-          <li>◎プロフィールの公開</li>
           <li>◎勝率の変化をグラフで表示</li>
           <li>◎過去の戦績を日付を指定して登録</li>
           <li>◎戦闘力帯ごとのファイターの割合</li>
@@ -21,6 +20,7 @@
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 0.4.0</h3>
           <ul class="text-sm">
+            <li>◎プロフィールの公開</li>
             <li>◎マイページに使用キャラの最新世界戦闘力を表示</li>
             <li>◎日付/時間表示のバグ修正</li>
             <li>◎プロフィールの編集機能</li>

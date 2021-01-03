@@ -19,7 +19,7 @@
         </div>
       </div>
       
-      <p class="text-xl text-gray-800">{{ calcWinningPercentage(records) }}</p>
+      <p class="text-xl text-gray-800">{{ calcWinningPercentage(user.results) }}</p>
 
       <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
         <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
@@ -50,7 +50,6 @@
 </template>
 
 <script>
-// import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
@@ -75,16 +74,6 @@ export default {
     },
     records() {
       return this.$store.state.records
-    },
-    winningRate(fighter, opponent) {
-      console.log(this.records)
-      return
-      if (this.records === {}) return 'no data'
-      const fighterRecords = this.records.filter(record => record.fighter === fighter)
-      const opponentRecords = this.records.filter(record => record.opponent === opponent)
-      const wins = fighterRecords.filter(record => record.result).length
-      const loses = opponentRecords.filter(record => !record.result).length
-      return wins + '勝' + loses + '敗 (' + (wins / (wins + loses)) +  '%'
     },
     newestRecordsByFighter() {
       const newestRecords = this.usedFighterIds.map(fighterId => {

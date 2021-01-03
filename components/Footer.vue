@@ -38,7 +38,7 @@
             </div>
           </nuxt-link>
         </li>
-        <li>
+        <li v-if="user.userId">
           <nuxt-link :to="{ name: 'id', params: { id: user.userId, trailingSlash: false }}">
             <div class="menu-item">
               <div class="menu-icon">
@@ -50,6 +50,17 @@
               <span class="menu-title">マイページ</span>
             </div>
           </nuxt-link>
+        </li>
+        <li v-else>
+          <div class="menu-item">
+            <div class="menu-icon">
+              <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M26.6667 11.6667C26.6667 15.3486 23.6818 18.3333 20 18.3333C16.3181 18.3333 13.3333 15.3486 13.3333 11.6667C13.3333 7.98477 16.3181 5 20 5C23.6818 5 26.6667 7.98477 26.6667 11.6667Z" stroke="#4a5568d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 23.3333C13.5567 23.3333 8.33334 28.5567 8.33334 35H31.6667C31.6667 28.5567 26.4433 23.3333 20 23.3333Z" stroke="#4a5568d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="menu-title">マイページ</span>
+          </div>
         </li>
       </ul>
     </nav>
