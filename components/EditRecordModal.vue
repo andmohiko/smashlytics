@@ -200,7 +200,7 @@ export default {
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
-          updatingRecord.createdAtString = date2string(this.editingRecord.createdAt)
+          updatingRecord.createdAtString = this.editingRecord.createdAtString
           updatingRecord.updatedAt = this.now
           updatingRecord.docId = this.editingRecord.docId
           // console.log('fix date', this.updatingRecord)
