@@ -192,7 +192,7 @@ export default {
         const sendingRecord = db
           .collection('records')
           .doc(this.editingRecord.docId)
-          .update(this.editingRecord)
+          .update(updatingRecord)
           .catch(error => {
             console.log(error)
           })
