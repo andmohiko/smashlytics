@@ -39,7 +39,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/mypage">
+          <nuxt-link :to="{ name: 'id', params: { id: user.userId, trailingSlash: false }}">
             <div class="menu-item">
               <div class="menu-icon">
                 <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,6 +58,11 @@
 
 <script>
 export default {
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  }
 }
 </script>
 

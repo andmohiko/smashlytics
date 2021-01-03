@@ -13,11 +13,14 @@ export async function getUser(userId) {
     }).catch(function(error) {
       console.log("Error getting user in usecase:", error);
     })
+  if (!user) return
   const storageRef = storage.ref()
   const profileImgRef = storageRef.child(user.profileImgPath)
+  if (!profileImgRef) return user
   const profileImg = await profileImgRef.getDownloadURL()
   return {
     profileImg,
+    userId,
     ...user
   }
 }
