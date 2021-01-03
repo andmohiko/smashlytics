@@ -62,7 +62,6 @@ export default {
   methods: {
     get() {
       if (!this.valid) return
-      if (this.input === '') return null
       return this.input
     }
   }

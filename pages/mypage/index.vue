@@ -2,14 +2,15 @@
   <div class="container">
     <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-full text-left">
       <div class="profile-icon">
-        <img v-if="user.profileImg" :src="user.profileImg" alt="profileImg">
-        <img v-else src="images/default-icon.png" alt="defaultIcon">
+        <img v-if="user.profileImg" :src="user.profileImg">
+        <img v-else src="images/default-icon.png">
       </div>
       <div class="name pb-4">
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
         <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
+        <p class="userId text-base pt-2 text-gray-700">{{ user.selfIntroduction }}</p>
       </div>
-      <p class="userId text-base text-gray-700">使用キャラの世界戦闘力</p>
+      <p class="text-base text-gray-700 pt-1">使用キャラの世界戦闘力</p>
       <div class="fightersInfo">
         <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
           <FighterIcon :fighterId="record.fighterId" size="40px" />

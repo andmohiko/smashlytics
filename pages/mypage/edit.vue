@@ -9,7 +9,7 @@
             <input type="file" @change="selectIcon">
             <TextField ref="username" label="ユーザ名" :defaultValue="user.username" placeholder="username" />
             <TextField ref="twitterId" label="Twitter Id" :defaultValue="user.twitterId" placeholder="@twitterId" />
-            <!-- <TextField ref="selfIntroduction" label="自己紹介" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" /> -->
+            <TextField ref="selfIntroduction" label="自己紹介(一言)" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" />
             <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
             <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
           </form>
@@ -146,6 +146,7 @@ export default {
       const updatingDto = {
         username: this.$refs.username.input,
         twitterId: this.$refs.twitterId.input,
+        selfIntroduction: this.$refs.selfIntroduction.input,
         main: this.editUser.main,
         sub: this.editUser.sub,
         friendCode: this.$refs.friendCode.input,
