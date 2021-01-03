@@ -98,6 +98,7 @@ import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
+import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -175,6 +176,13 @@ export default {
         stage: this.record.stage,
         globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
       }
+      const updateUserDto = {
+        results: {
+          matches: this.user.results.matches + 1,
+          wins: this.record.result ? this.user.results.wins + 1 : this.user.results.wins,
+          loses: this.record.result ? this.user.results.loses : this.user.results.loses + 1,
+        }
+      }
       const db = firebase.firestore()
       try {
         const sendingRecord = db
@@ -187,6 +195,8 @@ export default {
             console.log(error)
           })
         this.$store.dispatch('addRecords', newRecord)
+        updateUser(this.user, updateUserDto)
+        this.$store.dispatch('getUser', this.user.userId)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)

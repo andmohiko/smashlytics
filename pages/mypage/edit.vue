@@ -31,7 +31,7 @@
               label="サブも選べるよ"
             />
           </div>
-          <!-- <form class="mb-4 px-4">
+          <form class="mb-4 px-4">
             <p>プロフィールを公開します？</p>
             <div class="input-radio mb-1">
               <input
@@ -53,7 +53,7 @@
               />
               <label for="isPrivate">公開しない</label>
             </div>
-          </form> -->
+          </form>
           <p class="flash-message">{{ flashMessage }}</p>
         </div>
         <div class="submit">
@@ -86,15 +86,16 @@ export default {
         main: '',
         sub: '',
         friendCode: '',
-        // isPrivateAccount: false
+        isPrivateAccount: false
       },
       uid: '',
-      flashMessage: ''
+      flashMessage: '',
+      updatedProfileImg: false
     }
   },
-  // mounted() {
-  //   this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
-  // },
+  mounted() {
+    this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
+  },
   computed: {
     user() {
       return this.$store.state.user
@@ -115,6 +116,7 @@ export default {
        'state_changed',
        (snapshot) => {
         //  console.log('snapshot', snapshot)
+        this.updatedProfileImg = true
        },
        (error) => {
          console.log('err', error)
@@ -150,16 +152,13 @@ export default {
         main: this.editUser.main,
         sub: this.editUser.sub,
         friendCode: this.$refs.friendCode.input,
-        smashmateRating: this.$refs.smashmateRating.input
-        // isPrivateAccount: this.editUser.isPrivateAccount
+        smashmateRating: this.$refs.smashmateRating.input,
+        isPrivateAccount: this.editUser.isPrivateAccount,
+        profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : 'images/user/profileImg.png'
       }
       try {
         updateUser(this.user, updatingDto)
         this.$store.dispatch('getUser', this.user.userId)
-        // this.$store.commit('setUser', {
-        //     ...this.user,
-        //     ...updatingDto
-        //   })
         this.flashMessage = '保存しました。'
       } catch(error) {
         console.log('updating error', error)

@@ -116,8 +116,9 @@ import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
-import { now } from '@/utils/date.js'
+import { now, date2string } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
+import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -141,11 +142,12 @@ export default {
       editedRecord: {},
       error: '',
       fighters,
-      now: now()
+      now: now(),
+      originalResult: null
     }
   },
   mounted() {
-    // this.editingRecord = this.record
+    this.originalResult = this.editingRecord.result
   },
   computed: {
     user() {
@@ -168,14 +170,11 @@ export default {
       console.log('submit', this.editingRecord.fighterId, this.editingRecord.opponentId)
     },
     async updateRecord () {
-      // console.log('submit', this.editingRecord)
       this.error = ''
       if (!this.editingRecord.fighterId || !this.editingRecord.opponentId || this.editingRecord.result === null) {
         this.error = '自分・相手・結果は入力してください'
         return
       }
-      // this.editingRecord.globalSmashPower = this.$refs.globalSmashPower.input
-      // this.editingRecord.globalSmashPower = this.editingRecord.globalSmashPower ? Number(this.editingRecord.globalSmashPower) : null
       let updatingRecord = {
         updatedAt: serverTimestamp,
         fighter: this.fighters[this.editingRecord.fighterId].name,
@@ -183,32 +182,37 @@ export default {
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
-        stage: this.editingRecord.stage,
-        // globalSmashPower: this.editingRecord.globalSmashPower ? Number(this.editingRecord.globalSmashPower) * 10000 : null,
+        stage: this.editingRecord.stage
       }
-      // console.log('updating this', updatingRecord)
       const db = firebase.firestore()
       try {
         const sendingRecord = db
           .collection('records')
           .doc(this.editingRecord.docId)
-          .update(this.editingRecord)
+          .update(updatingRecord)
           .catch(error => {
             console.log(error)
           })
-        // console.log('dated')
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
-          updatingRecord.createdAtString = date2string(this.editingRecord.createdAt)
+          updatingRecord.createdAtString = this.editingRecord.createdAtString
           updatingRecord.updatedAt = this.now
           updatingRecord.docId = this.editingRecord.docId
-          // console.log('fix date', this.updatingRecord)
           return updatingRecord
         })
-        // console.log('updated', updatedRecords)
         this.$store.commit('setRecords', updatedRecords)
-        // console.log('updated record')
+        if (this.originalResult !== updatingRecord.result) {
+          const updateUserDto = {
+            results: {
+              matches: this.user.results.matches,
+              wins: updatingRecord.result ? this.user.results.wins + 1 : this.user.results.wins - 1,
+              loses: updatingRecord.result ? this.user.results.loses - 1 : this.user.results.loses + 1,
+            }
+          }
+          updateUser(this.user, updateUserDto)
+          this.$store.dispatch('getUser', this.user.userId)
+        }
       } catch(error) {
         console.log('error in sending record', error)
       }
@@ -220,6 +224,15 @@ export default {
         db.collection("records").doc(this.editingRecord.docId).delete()
         const deletedRecords = this.records.filter(record => record.docId !== this.editingRecord.docId)
         this.$store.commit('setRecords', deletedRecords)
+        const updateUserDto = {
+          results: {
+            matches: this.user.results.matches - 1,
+            wins: this.editingRecord.result ? this.user.results.wins - 1 : this.user.results.wins,
+            loses: this.editingRecord.result ? this.user.results.loses : this.user.results.loses - 1,
+          }
+        }
+        updateUser(this.user, updateUserDto)
+        this.$store.dispatch('getUser', this.user.userId)
         console.log('deleted record')
       } catch(error) {
         console.log('error deleting record', error)
