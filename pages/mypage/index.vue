@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
-      <h2 class="title text-center text-gray-800">プロフィール</h2>
+    <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-full text-left">
+      <div class="profile-icon">
+        <img v-if="user.profileImg" :src="user.profileImg" alt="profileImg">
+        <img v-else src="images/default-icon.png" alt="defaultIcon">
+      </div>
       <div class="name pb-4">
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
         <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
@@ -59,7 +62,7 @@ export default {
   },
   data() {
     return {
-      error: '',
+      error: ''
     }
   },
   computed: {
@@ -136,6 +139,15 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
+}
+.profile-icon {
+  display: flex;
+  img {
+    height: 120px;
+    width: 120px;
+    border: solid 4px #579aff;
+    border-radius: 50%;
+  }
 }
 .user-info {
   display: flex;

@@ -127,6 +127,7 @@ export default {
         this.fightedFighterIds.map(opponentId => {
           const specificRecords = this.getRecordsByFighters(fighterId, opponentId)
           const wins = specificRecords.filter(record => record.result).length
+          if (!specificRecords.length) return
           entries.push({
             fighterId,
             opponentId,
