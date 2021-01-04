@@ -86,7 +86,7 @@ export default {
         main: '',
         sub: '',
         friendCode: '',
-        isPrivateAccount: false
+        isPrivateAccount: null
       },
       uid: '',
       flashMessage: '',
@@ -95,6 +95,8 @@ export default {
   },
   mounted() {
     this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
+    this.editUser.main = this.$store.state.user.main
+    this.editUser.sub = this.$store.state.user.sub
   },
   computed: {
     user() {
@@ -154,7 +156,7 @@ export default {
         friendCode: this.$refs.friendCode.input,
         smashmateRating: this.$refs.smashmateRating.input,
         isPrivateAccount: this.editUser.isPrivateAccount,
-        profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : 'images/user/profileImg.png'
+        profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : this.user.profileImgPath
       }
       try {
         updateUser(this.user, updatingDto)

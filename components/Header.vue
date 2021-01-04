@@ -45,6 +45,7 @@ export default {
     },
     isBackiconPage() {
       return !(
+        this.isReloadiconPage ||
         this.$route.path.match(/\/new$/) ||
         this.$route.path.match(/\/signup$/)
       )

@@ -11,17 +11,16 @@
         <p class="userId text-base pt-2 text-gray-700">{{ user.selfIntroduction }}</p>
       </div>
 
-      <div v-show="user.main">
+      <div v-if="Boolean(user.main)">
         <p class="text-base text-gray-700 pt-1">メインキャラ</p>
         <div class="fightersInfo">
           <div class="fighter">
             <FighterIcon :fighterId="user.main" size="40px" />
           </div>
         </div>
-        {{ records[0] }}
       </div>
 
-      <p class="text-xl text-gray-800">{{ user.results.wins + '勝' + user.results.loses + '敗 勝率' + Math.round(user.results.winningPercentage*100 * 10) / 10 + '%' }}</p>
+      <p class="text-xl text-gray-800">{{ calcWinningPercentage(user.results) }}</p>
 
       <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
         <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
@@ -35,6 +34,7 @@
 
 <script>
 import FighterIcon from '@/components/FighterIcon.vue'
+import { calcWinningPercentage } from '@/utils/records.js'
 
 export default {
   props: {
@@ -66,7 +66,8 @@ export default {
     },
     toNew() {
       this.$router.push("/new")
-    }
+    },
+    calcWinningPercentage
   }
 }
 </script>
