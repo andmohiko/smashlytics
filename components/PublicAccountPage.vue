@@ -10,15 +10,16 @@
         <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
         <p class="userId text-base pt-2 text-gray-700">{{ user.selfIntroduction }}</p>
       </div>
-      <p class="text-base text-gray-700 pt-1">使用キャラの世界戦闘力</p>
-      <div class="fightersInfo">
-        <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
-          <FighterIcon :fighterId="record.fighterId" size="40px" />
-          <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
-          <span v-else class="text-2xl text-gray-800">--</span>
+
+      <div v-if="Boolean(user.main)">
+        <p class="text-base text-gray-700 pt-1">メインキャラ</p>
+        <div class="fightersInfo">
+          <div class="fighter">
+            <FighterIcon :fighterId="user.main" size="40px" />
+          </div>
         </div>
       </div>
-      
+
       <p class="text-xl text-gray-800">{{ userWinningPercentage(user.results) }}</p>
 
       <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
@@ -27,37 +28,26 @@
         </svg>
         <span class="pl-2">@{{ user.twitterId }}</span>
       </div>
-      <Button @onClick="toEdit" label="編集する" />
-    </div>
-    <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
-      <p class="title text-center">戦績管理</p>
-      <div v-show="!isLogin" class="pb-20">
-        <p class="error text-xl py-2 mb-4 text-red-700">登録するにはログインしてください</p>
-        <div class="border-b">
-          <button @click="toNew">ログインはこちら</button>
-        </div>
-      </div>
-      <div>
-        <button @click="toSumHistory">▷ 戦績を一括登録</button>
-      </div>
-      <br>
-      <span class="text-xs">他の記録アプリから移行する際にお使いください。</span>
-      <span class="text-xs">相手ファイターごとに勝敗数を入力してください</span>
-      <span class="text-xs">(他アプリとこのアプリを行ったり来たりするのはちょっと面倒かもです🙇‍♀️)</span>
-      <span class="text-xs">今日の日付で記録されます。</span>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import Button from '@/components/Button.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
 import { userWinningPercentage } from '@/utils/records.js'
 
 export default {
+  props: {
+    user: {
+      required: true,
+      type: Object
+    },
+    records: {
+      default: [],
+      type: Array
+    }
+  },
   components: {
-    Button,
     FighterIcon
   },
   data() {
@@ -66,38 +56,11 @@ export default {
     }
   },
   computed: {
-    user() {
-      return this.$store.state.user
-    },
     isLogin() {
       return Boolean(this.user.userId)
     },
-    records() {
-      return this.$store.state.records
-    },
-    newestRecordsByFighter() {
-      const newestRecords = this.usedFighterIds.map(fighterId => {
-        return this.records.filter(record => record.fighterId === fighterId)[0]
-      })
-      return newestRecords.sort((a, b) => (a.globalSmashPower > b.globalSmashPower ? -1 : 1))
-    },
-    usedFighterIds() {
-      const used = this.records.map(record => {
-        return record.fighterId
-      })
-      return Array.from(new Set(used))
-    }
   },
   methods: {
-    toEdit () {
-      this.$router.push("/mypage/edit")
-    },
-    toHistory () {
-      this.$router.push("/history")
-    },
-    toSumHistory () {
-      this.$router.push("/mypage/sumhistory")
-    },
     login() {
       this.$store.dispatch('loginGoogle')
     },

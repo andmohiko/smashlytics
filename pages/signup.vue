@@ -17,6 +17,29 @@
             label="メインファイターを選ぶ (*)"
           />
         </div>
+        <form class="mb-4 px-4">
+          <p>プロフィールを公開します？</p>
+          <div class="input-radio mb-1">
+            <input
+              id="isPrivateAccount-public"
+              v-model="user.isPrivateAccount"
+              type="radio"
+              name="isPublic"
+              :value="false"
+            />
+            <label for="isPublic">公開する</label>
+          </div>
+          <div class="input-radio">
+            <input
+              id="isPrivateAccount-private"
+              v-model="user.isPrivateAccount"
+              type="radio"
+              name="isPrivate"
+              :value="true"
+            />
+            <label for="isPrivate">公開しない</label>
+          </div>
+        </form>
         <p class="error">{{ error }}</p>
       </div>
       <div class="mb-10">
@@ -51,7 +74,8 @@ export default {
         userId: '',
         username: '',
         twitterId: '',
-        mainFighterId: ''
+        mainFighterId: '',
+        isPrivateAccount: false
       },
       uid: '',
       error: '',
@@ -108,15 +132,25 @@ export default {
           authId,
           username: this.user.username,
           twitterId: this.user.twitterId,
-          main: this.user.mainFighterId
+          main: this.user.mainFighterId,
+          isPrivateAccount: this.user.isPrivateAccount,
+          profileImgPath: 'images/user/profileImg.png',
+          results: {
+            wins: 0,
+            loses: 0,
+            matches: 0
+          }
         }
         db.collection('users')
           .doc(this.user.userId)
           .set(createUserDto)
           .catch(error => {
-            console.error("Error updating document: ", error);
+            console.error("Error creating document: ", error);
           })
-        this.$store.commit('setUser', createUserDto)
+        this.$store.commit('setUser', {
+          ...createUserDto,
+          userId: this.user.userId
+        })
         this.$store.commit('setRecords', [])
         this.$router.push("/")
       } catch (error) {

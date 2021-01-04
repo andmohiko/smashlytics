@@ -33,8 +33,6 @@
 
 
 <script>
-import { calcWinningPercentage } from '@/utils/records.js'
-
 export default {
   computed: {
     user() {
@@ -44,10 +42,10 @@ export default {
       return Boolean(this.uid)
     },
     isBackiconPage() {
-      return (
-        this.$route.path.match(/\/mypage\/sumhistory$/) ||
-        this.$route.path.match(/\/mypage\/edit$/) ||
-        this.$route.path.match(/\/settings$/)
+      return !(
+        this.isReloadiconPage ||
+        this.$route.path.match(/\/new$/) ||
+        this.$route.path.match(/\/signup$/)
       )
     },
     isReloadiconPage() {
@@ -58,7 +56,8 @@ export default {
       )
     },
     isSettingsiconPage() {
-      return this.$route.path.match(/\/mypage$/)
+      const route = this.$route.path.replaceAll('/', '')
+      return (route === this.user.userId)
     },
     routename() {
       return this.$route.name
@@ -97,7 +96,7 @@ export default {
       console.log(this.$route.name)
     },
     back() {
-      this.$router.push('/mypage')
+      this.$router.go(-1)
     },
     toSettings () {
       this.$router.push("/settings")
