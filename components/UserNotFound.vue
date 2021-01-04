@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { calcWinningPercentage } from '@/utils/records.js'
 import { getUser } from '@/repositories/users.js'
 
 export default {
@@ -33,34 +32,6 @@ export default {
     isLogin() {
       return Boolean(this.user.userId)
     },
-    isOwnPage() {
-      return (this.user.userId === this.$route.path)
-    },
-    records() {
-      return this.$store.state.records
-    },
-    winningRate(fighter, opponent) {
-      console.log(this.records)
-      return
-      if (this.records === {}) return 'no data'
-      const fighterRecords = this.records.filter(record => record.fighter === fighter)
-      const opponentRecords = this.records.filter(record => record.opponent === opponent)
-      const wins = fighterRecords.filter(record => record.result).length
-      const loses = opponentRecords.filter(record => !record.result).length
-      return wins + '勝' + loses + '敗 (' + (wins / (wins + loses)) +  '%'
-    },
-    usedFighterIds() {
-      const used = this.records.map(record => {
-        return record.fighterId
-      })
-      return Array.from(new Set(used))
-    },
-    newestRecordsByFighter() {
-      const newestRecords = this.usedFighterIds.map(fighterId => {
-        return this.records.filter(record => record.fighterId === fighterId)[0]
-      })
-      return newestRecords.sort((a, b) => (a.globalSmashPower > b.globalSmashPower ? -1 : 1))
-    }
   },
   methods: {
     toEdit () {
@@ -77,8 +48,7 @@ export default {
     },
     toNew() {
       this.$router.push("/new")
-    },
-    calcWinningPercentage
+    }
   }
 }
 </script>

@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { calcWinningPercentage } from '@/utils/records.js'
 import { getUser } from '@/repositories/users.js'
 
 export default {
@@ -41,8 +40,7 @@ export default {
     },
     toNew() {
       this.$router.push("/new")
-    },
-    calcWinningPercentage
+    }
   }
 }
 </script>

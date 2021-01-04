@@ -33,8 +33,6 @@
 
 
 <script>
-import { calcWinningPercentage } from '@/utils/records.js'
-
 export default {
   computed: {
     user() {

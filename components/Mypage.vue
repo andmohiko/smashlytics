@@ -19,7 +19,7 @@
         </div>
       </div>
       
-      <p class="text-xl text-gray-800">{{ calcWinningPercentage(user.results) }}</p>
+      <p class="text-xl text-gray-800">{{ userWinningPercentage(user.results) }}</p>
 
       <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
         <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
@@ -53,7 +53,7 @@
 import firebase from '@/plugins/firebase'
 import Button from '@/components/Button.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
-import { calcWinningPercentage } from '@/utils/records.js'
+import { userWinningPercentage } from '@/utils/records.js'
 
 export default {
   components: {
@@ -104,7 +104,7 @@ export default {
     toNew() {
       this.$router.push("/new")
     },
-    calcWinningPercentage
+    userWinningPercentage
   }
 }
 </script>
