@@ -9,17 +9,28 @@
       </div> -->
     </div>
     <Footer />
+
+    <template v-if="notice.noticeType">
+      <Notice />
+    </template>
   </div>
 </template>
 
 <script>
 import Header from '~/components/Header.vue'
 import Footer from '~/components/Footer.vue'
+import Notice from '@/components//Notice.vue'
 
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+    Notice
+  },
+  computed: {
+    notice() {
+      return this.$store.state.notice
+    }
   }
 }
 </script>

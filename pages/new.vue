@@ -25,7 +25,7 @@
         <ul class="text-left">
           <li>◎苦手な相手・ステージを把握して重点的に対策したい人</li>
           <li>◎対戦の記録を細かくつけたい人</li>
-          <li>◎ク○メイトが重くて使いづらいと思ってる人(小声)</li>
+          <!-- <li>◎ク○メイトが重くて使いづらいと思ってる人(小声)</li> -->
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">

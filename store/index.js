@@ -19,7 +19,11 @@ const state = {
   user: {},
   uid: '',
   records: [],
-  userIds: []
+  userIds: [],
+  notice: {
+    noticeType: null,
+    message: ''
+  }
 }
 
 const actions = {
@@ -79,6 +83,9 @@ const actions = {
     records.unshift(newRecord)
     commit('setRecords', records)
   },
+  setNotice ({ commit }, notice) {
+    commit('setNotice', notice)
+  }
 }
 
 const mutations = {
@@ -93,6 +100,9 @@ const mutations = {
   },
   setUserIds(state, payload) {
     state.userIds = payload
+  },
+  setNotice(state, payload) {
+    state.notice = payload
   }
 }
 
