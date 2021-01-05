@@ -51,7 +51,6 @@ export default {
   },
   computed: {
     isLogin() {
-      console.log("hogehoge");
       if (this.$store.state.user.userId) {
         this.$router.push("/");
       }
