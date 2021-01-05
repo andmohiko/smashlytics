@@ -4,7 +4,7 @@
       <h2 class="text-2xl py-6 border-b mb-4">
         スマブラ戦績分析ツール Smashlytics
       </h2>
-      <div class="goole-login">
+      <div v-show="isLogin" class="goole-login">
         <Button @onClick="login" label="googleでログイン" />
         <!-- <p v-show="isLogin" class="text-xl py-4 text-red-700">
           <span>ログイン済みです！</span>
@@ -51,6 +51,7 @@ export default {
   },
   computed: {
     isLogin() {
+      console.log("hogehoge");
       if (this.$store.state.user.userId) {
         this.$router.push("/");
       }
