@@ -1,9 +1,23 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
+    <div
+      class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto"
+    >
       <div class="close" @click="onClose">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 18L18 6M6 6L18 18"
+            stroke="#4A5568"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </div>
       <div class="form">
@@ -51,9 +65,18 @@
               <label for="result-lose">負け</label>
             </div>
             <div v-show="isShowInputDetails" class="details">
-              <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-              <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-              <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" />
+              <span class="text-gray-700 px-1 pt-3 flex items-center"
+                >▼詳しく記録したい人向け</span
+              >
+              <span class="text-gray-600 text-xs px-1 pb-3 flex items-center"
+                >入力しておくとあとで詳しく分析できるよ！</span
+              >
+              <TextField
+                ref="globalSmashPower"
+                :allowEmpty="false"
+                label="世界戦闘力(万)"
+                placeholder="例: 678万くらい → 678"
+              />
               <div class="input-radio">
                 <p>ステージ</p>
                 <input
@@ -93,29 +116,29 @@
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import TextField from '@/components/TextField.vue'
-import Button from '@/components/Button.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
-import fighters from '@/assets/fighters.json'
-import { updateUser } from '@/repositories/users.js'
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
+import firebase from "@/plugins/firebase";
+import TextField from "@/components/TextField.vue";
+import Button from "@/components/Button.vue";
+import FighterSelecter from "@/components/FighterSelecter.vue";
+import fighters from "@/assets/fighters.json";
+import { updateUser } from "@/repositories/users.js";
+const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export default {
   props: {
     lastRecord: {
       required: false,
-      type: Object
+      type: Object,
     },
     isShowInputDetails: {
       default: true,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   components: {
     Button,
     TextField,
-    FighterSelecter
+    FighterSelecter,
   },
   data() {
     return {
@@ -124,45 +147,49 @@ export default {
         opponentId: null,
         result: true,
         globalSmashPower: null,
-        stage: null
+        stage: null,
       },
-      error: '',
+      error: "",
       fighters,
-    }
+    };
   },
   mounted() {
-    if (!this.lastRecord) return
-    this.record.fighterId = this.lastRecord.fighterId
-    this.record.opponentId = this.lastRecord.opponentId
+    if (!this.lastRecord) return;
+    this.record.fighterId = this.lastRecord.fighterId;
+    this.record.opponentId = this.lastRecord.opponentId;
     // if (this.lastRecord.stage || this.lastRecord.globalSmashPower) this.isShowInputDetails = true
   },
   computed: {
     user() {
-      return this.$store.state.user
+      return this.$store.state.user;
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records;
     },
     usedFighterIds() {
-      if (!this.records.length) return Object.keys(this.fighters).sort()
-      const used = this.records.map(record => {
-        return record.fighterId
-      })
-      return Array.from(new Set(used)).sort()
-    }
+      if (!this.records.length) return Object.keys(this.fighters).sort();
+      const used = this.records.map((record) => {
+        return record.fighterId;
+      });
+      return Array.from(new Set(used)).sort();
+    },
   },
   methods: {
     select() {
-      this.record.fighterId = String(this.$refs.fighter.get())
-      this.record.opponentId = String(this.$refs.opponent.get())
+      this.record.fighterId = String(this.$refs.fighter.get());
+      this.record.opponentId = String(this.$refs.opponent.get());
     },
-    async submit () {
-      console.log('submit', this.record.fighterId, this.record.opponentId)
-      this.error = ''
-      this.record.globalSmashPower = this.$refs.globalSmashPower.input
-      if (!this.record.fighterId || !this.record.opponentId || this.record.result === null) {
-        this.error = '自分・相手・結果は入力してください'
-        return
+    async submit() {
+      console.log("submit", this.record.fighterId, this.record.opponentId);
+      this.error = "";
+      this.record.globalSmashPower = this.$refs.globalSmashPower.input;
+      if (
+        !this.record.fighterId ||
+        !this.record.opponentId ||
+        this.record.result === null
+      ) {
+        this.error = "自分・相手・結果は入力してください";
+        return;
       }
       const newRecord = {
         createdAt: serverTimestamp,
@@ -174,42 +201,51 @@ export default {
         opponentId: this.record.opponentId,
         result: this.record.result,
         stage: this.record.stage,
-        globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
-      }
+        globalSmashPower: this.record.globalSmashPower
+          ? Number(this.record.globalSmashPower) * 10000
+          : null,
+      };
       const updateUserDto = {
         results: {
           matches: this.user.results.matches + 1,
-          wins: this.record.result ? this.user.results.wins + 1 : this.user.results.wins,
-          loses: this.record.result ? this.user.results.loses : this.user.results.loses + 1,
-        }
-      }
-      const db = firebase.firestore()
+          wins: this.record.result
+            ? this.user.results.wins + 1
+            : this.user.results.wins,
+          loses: this.record.result
+            ? this.user.results.loses
+            : this.user.results.loses + 1,
+        },
+      };
+      const db = firebase.firestore();
       try {
         const sendingRecord = db
-          .collection('records')
+          .collection("records")
           .add(newRecord)
-          .then(docRef => {
-            newRecord.docId = docRef.id
+          .then((docRef) => {
+            newRecord.docId = docRef.id;
           })
-          .catch(error => {
-            console.log(error)
-          })
-        this.$store.dispatch('addRecords', newRecord)
-        updateUser(this.user, updateUserDto)
-        this.$store.dispatch('getUser', this.user.userId)
-        this.onClose()
-      } catch(error) {
-        console.log('error in sending record', error)
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$store.dispatch("addRecords", newRecord);
+        updateUser(this.user, updateUserDto);
+        this.$store.dispatch("getUser", this.user.userId);
+        this.onClose();
+      } catch (error) {
+        this.$store.dispatch("setNotice", {
+          noticeType: "error",
+          message: error,
+        });
       }
     },
     switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
+      this.isShowInputDetails = !this.isShowInputDetailss;
     },
     onClose() {
-      this.$emit('close')
-    }
-  }
-}
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style lang="scss">

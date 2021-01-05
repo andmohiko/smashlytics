@@ -28,7 +28,6 @@ export default Vue.extend({
   methods: {
     closeNotice() {
       this.$store.dispatch("setNotice", { noticeType: null, message: "" });
-      console.log("hogehoge");
     },
   },
 });
