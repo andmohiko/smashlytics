@@ -27,7 +27,7 @@ const state = {
 }
 
 const actions = {
-  loginGoogle ({ dispatch }) {
+  loginGoogle({ dispatch }) {
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider).then(result => {
       const cookie = new Cookies()
@@ -37,7 +37,7 @@ const actions = {
       console.log(error)
     })
   },
-  async checkLogin ({ commit, dispatch }) {
+  async checkLogin({ commit, dispatch }) {
     await firebase.auth().onAuthStateChanged(user => {
       if (!user) return
       const uid = user.uid
@@ -64,26 +64,31 @@ const actions = {
     dispatch('getRecords', userId)
     // this.$router.push("/")
   },
-  async getUser ({ commit }, userId) {
+  async getUser({ commit }, userId) {
     const user = await getUser(userId)
     commit('setUser', {
       userId,
       ...user
     })
   },
-  async getRecords ({ commit }, userId) {
+  async getRecords({ commit }, userId) {
     const records = await getRecords(userId)
     commit('setRecords', records)
   },
-  addRecords ({ commit, state }, newRecord) {
+  addRecords({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
     newRecord.updatedAt = new Date(now())
     newRecord.createdAtString = date2string(newRecord.createdAt)
     let records = state.records.slice()
     records.unshift(newRecord)
     commit('setRecords', records)
+    commit('setNotice', { noticeType: 'success', message: '送信が完了しました' })
+    setTimeout(() => {
+      this.commit('setNotice', { noticeType: null, message: '' })
+    }, 2500);
+
   },
-  setNotice ({ commit }, notice) {
+  setNotice({ commit }, notice) {
     commit('setNotice', notice)
   }
 }

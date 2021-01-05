@@ -13,25 +13,28 @@
           <p class="notice-text">{{ notice.message }}</p>
         </div>
       </div>
+      <Button @onClick="closeNotice" label="close" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
+import Vue from "vue";
+import Button from "./Button.vue";
 export default Vue.extend({
+  components: { Button },
   computed: {
     notice() {
-      return this.$store.state.notice
-    }
+      return this.$store.state.notice;
+    },
   },
   methods: {
     closeNotice() {
-      this.$store.dispatch('setNotice', { noticeType: null, message: ''})
-    }
-  }
-})
+      this.$store.dispatch("setNotice", { noticeType: null, message: "" });
+      console.log("hogehoge");
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -67,8 +70,8 @@ p {
     z-index: z(Middle);
   }
   &-inner::after {
-    content: 'close';
-    font-family: 'Material Icons';
+    content: "close";
+    font-family: "Material Icons";
     color: black;
     position: absolute;
     right: 10px;

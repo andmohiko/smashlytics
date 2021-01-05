@@ -4,9 +4,14 @@
       <template v-if="isShowModal">
         <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
+      <template v-if="!this.$store.state.notice">
+        <Notice :notice="notice" @close="closeModal" />
+      </template>
     </div>
     <div class="results">
-      <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
+      <p v-show="isLogin" class="results-number">
+        本日の戦績: {{ resultsToday }}
+      </p>
       <Button @onClick="openModal" label="戦績を登録する" />
     </div>
     <div class="records">
@@ -26,74 +31,81 @@
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import { now, date2string } from '@/utils/date.js'
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
-import Button from '@/components/Button.vue'
-import Records from '@/components/Records.vue'
-import AddRecordModal from '@/components/AddRecordModal.vue'
+import firebase from "@/plugins/firebase";
+import { now, date2string } from "@/utils/date.js";
+const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+import Button from "@/components/Button.vue";
+import Records from "@/components/Records.vue";
+import Notice from "@/components/Notice.vue";
+import AddRecordModal from "@/components/AddRecordModal.vue";
 // import Cookies from "universal-cookie"
 
 export default {
   components: {
     Records,
     AddRecordModal,
-    Button
+    Button,
+    Notice,
   },
   data() {
     return {
       isShowModal: false,
       now: now(),
-      error: ''
-    }
+      error: "",
+    };
   },
   mounted() {
-  //   const cookie = new Cookies()
-  //   const auth_token = cookie.get('smash_access_token')
+    //   const cookie = new Cookies()
+    //   const auth_token = cookie.get('smash_access_token')
     // if (!Boolean(auth_token)) this.$router.push("/new")
-    if (!this.$store.state.user.userId) this.$router.push("/new")
+    if (!this.$store.state.user.userId) this.$router.push("/new");
   },
   computed: {
     user() {
-      return this.$store.state.user
+      return this.$store.state.user;
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records;
     },
     isLogin() {
-      return Boolean(this.$store.state.user.userId)
+      return Boolean(this.$store.state.user.userId);
+    },
+    notice() {
+      return this.$store.state.notice;
     },
     lastRecord() {
-      if (this.records.length) return this.records[0]
+      if (this.records.length) return this.records[0];
       return {
-        fighterId: '01',
-        opponentId: '01',
-      }
+        fighterId: "01",
+        opponentId: "01",
+      };
     },
     resultsToday() {
-      const today = date2string(this.now).split(' ')[0]
-      const recordsToday = this.records.filter(record => record.createdAtString.split(' ')[0] === today)
-      const wins = recordsToday.filter(record => record.result).length
-      return wins + '勝' + (recordsToday.length - wins) + '敗'
-    }
+      const today = date2string(this.now).split(" ")[0];
+      const recordsToday = this.records.filter(
+        (record) => record.createdAtString.split(" ")[0] === today
+      );
+      const wins = recordsToday.filter((record) => record.result).length;
+      return wins + "勝" + (recordsToday.length - wins) + "敗";
+    },
   },
   methods: {
     openModal() {
-      this.error = ''
+      this.error = "";
       if (!this.isLogin) {
-        this.error = '登録するにはログインしてください'
-        return
+        this.error = "登録するにはログインしてください";
+        return;
       }
-      this.isShowModal = true
+      this.isShowModal = true;
     },
     closeModal() {
-      this.isShowModal = false
+      this.isShowModal = false;
     },
     toNew() {
-      this.$router.push("/new")
-    }
-  }
-}
+      this.$router.push("/new");
+    },
+  },
+};
 </script>
  
 <style lang="scss" scoped>
