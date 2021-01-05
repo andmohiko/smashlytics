@@ -31,8 +31,8 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-4">今後追加される機能🚀</h3>
         <ul class="text-left">
-          <li>◎ステージごとの勝率の確認</li>
-          <li>◎勝率の変化をグラフで表示</li>
+          <li>◎専用部屋の戦績の記録</li>
+          <li>◎戦闘力帯ごとのキャラの使用率</li>
           <li>◎他の人の勝率と比較</li>
         </ul>
       </div>

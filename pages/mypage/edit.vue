@@ -18,6 +18,7 @@
               @select="select"
               ref="mainFighter"
               :previouslySelected="user.main"
+              :isShowName="true"
               iconSize="48px"
               label="メインファイターを選ぶ"
             />
@@ -27,6 +28,7 @@
               @select="select"
               ref="subFighter"
               :previouslySelected="user.sub"
+              :isShowName="true"
               iconSize="48px"
               label="サブも選べるよ"
             />
