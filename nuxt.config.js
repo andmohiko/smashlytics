@@ -33,7 +33,11 @@ export default {
   plugins: [
     '~/plugins/firebase',
     '~/plugins/cookie',
-    '~/plugins/setup'
+    '~/plugins/setup',
+    {
+      src: '~/plugins/ga.js',
+      mode: 'client'
+    }
   ],
   /*
   ** Nuxt.js dev-modules
