@@ -1,7 +1,6 @@
 <template>
   <div class="notice-back">
-    <!-- <div class="notice" @click="closeNotice"> -->
-    <div class="notice">
+    <div class="notice" @click="closeNotice">
       <div class="notice-inner">
         <div>
           <p v-if="notice.noticeType == 'error'" class="error-icon">!</p>
@@ -19,7 +18,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({
+export default {
   computed: {
     notice() {
       return this.$store.state.notice;
@@ -30,7 +29,7 @@ export default Vue.extend({
       this.$store.dispatch("setNotice", { noticeType: null, message: "" });
     },
   },
-});
+}
 </script>
 
 <style lang="scss" scoped>
@@ -71,7 +70,7 @@ p {
     color: black;
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 5px;
   }
   &-text {
     font-size: 16px;

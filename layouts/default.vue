@@ -27,6 +27,12 @@ export default {
     Footer,
     Notice
   },
+  // mounted() {
+  //   this.$store.commit('setNotice', {
+  //     noticeType: 'error',
+  //     message: 'ふぁlせ'
+  //   })
+  // },
   computed: {
     notice() {
       return this.$store.state.notice
