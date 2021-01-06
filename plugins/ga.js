@@ -1,7 +1,5 @@
 import firebase from './firebase'
 
-export default ({
-  app
-}) => {
-  firebase.analytics();
+export default ({ app }) => {
+  firebase.analytics()
 }

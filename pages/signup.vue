@@ -151,6 +151,7 @@ export default {
           ...createUserDto,
           userId: this.user.userId
         })
+        this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])
         this.$router.push("/")
       } catch (error) {
@@ -161,6 +162,7 @@ export default {
       const cookie = new Cookies()
       cookie.remove('smash_access_token')
       this.$store.commit('setUid', '')
+      this.$store.commit('setIsLogin', false)
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
       window.localStorage.clear();

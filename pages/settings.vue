@@ -87,6 +87,7 @@ export default {
       this.$store.commit('setUid', '')
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
+      this.$store.commit('setIsLogin', false)
       window.localStorage.clear();
       this.$router.push("/new")
     },

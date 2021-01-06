@@ -18,6 +18,7 @@ Vue.use(Vuex)
 const state = {
   user: {},
   uid: '',
+  isLogin: false,
   records: [],
   userIds: [],
   notice: {
@@ -46,7 +47,7 @@ const actions = {
       setCookie(user)
     })
   },
-  async isUser({ dispatch }, authId) {
+  async isUser({ commit, dispatch }, authId) {
     const db = firebase.firestore()
     const authUser = await db
       .collection('authUsers')
@@ -60,6 +61,7 @@ const actions = {
       return
     }
     const userId = authUser.userId
+    commit('setIsLogin', true)
     dispatch('getUser', userId)
     dispatch('getRecords', userId)
     // this.$router.push("/")
@@ -91,6 +93,9 @@ const actions = {
 const mutations = {
   setUser(state, payload) {
     state.user = payload
+  },
+  setIsLogin(state, payload) {
+    state.isLogin = payload
   },
   setRecords(state, payload) {
     state.records = payload
