@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
+import Button from '@/components/parts/Button.vue'
 export default {
   components: {
     Button,
@@ -52,14 +52,14 @@ export default {
   computed: {
     isLogin() {
       if (this.$store.state.user.userId) {
-        this.$router.push("/");
+        this.$router.push("/")
       }
-      return Boolean(this.$store.state.user.userId);
+      return Boolean(this.$store.state.user.userId)
     },
   },
   methods: {
     login() {
-      this.$store.dispatch("loginGoogle");
+      this.$store.dispatch("loginGoogle")
     },
   },
 };

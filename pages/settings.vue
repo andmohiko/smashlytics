@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
 import Cookies from "universal-cookie"
 
 export default {

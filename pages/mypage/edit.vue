@@ -68,7 +68,7 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/TextField.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { updateUser } from '@/repositories/users.js'

@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
 import EditRecordModal from '@/components/EditRecordModal.vue'
 import fighters from '@/assets/fighters.json'
