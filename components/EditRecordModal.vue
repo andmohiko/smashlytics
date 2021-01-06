@@ -29,26 +29,8 @@
             label="相手のファイター"
           />
         </div>
+        <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         <form class="mb-4 px-4">
-          <div class="input-radio">
-            <p>勝敗</p>
-            <input
-              id="result-win"
-              v-model="editingRecord.result"
-              type="radio"
-              name="win"
-              :value="true"
-            />
-            <label for="result-win">勝ち</label>
-            <input
-              id="result-lose"
-              v-model="editingRecord.result"
-              type="radio"
-              name="lose"
-              :value="false"
-            />
-            <label for="result-lose">負け</label>
-          </div>
           <div v-show="isShowInputDetails" class="details">
             <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
             <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
@@ -114,7 +96,8 @@
 <script>
 import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
+import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { now, date2string } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
@@ -134,6 +117,7 @@ export default {
   },
   components: {
     Button,
+    ResultButton,
     TextField,
     FighterSelecter
   },
@@ -168,6 +152,12 @@ export default {
       this.editingRecord.fighterId = String(this.$refs.fighter.get())
       this.editingRecord.opponentId = String(this.$refs.opponent.get())
       console.log('submit', this.editingRecord.fighterId, this.editingRecord.opponentId)
+    },
+    isWin() {
+      this.editingRecord.result = true
+    },
+    isLose() {
+      this.editingRecord.result = false
     },
     async updateRecord () {
       this.error = ''

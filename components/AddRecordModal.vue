@@ -29,27 +29,9 @@
             label="相手のファイター"
           />
         </div>
+        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         <form class="mb-4 px-4">
           <div class="input">
-            <div class="input-radio">
-              <p>勝敗</p>
-              <input
-                id="result-win"
-                v-model="record.result"
-                type="radio"
-                name="win"
-                :value="true"
-              />
-              <label for="result-win">勝ち</label>
-              <input
-                id="result-lose"
-                v-model="record.result"
-                type="radio"
-                name="lose"
-                :value="false"
-              />
-              <label for="result-lose">負け</label>
-            </div>
             <div v-show="isShowInputDetails" class="details">
               <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
               <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
@@ -95,7 +77,8 @@
 <script>
 import firebase from '@/plugins/firebase'
 import TextField from '@/components/TextField.vue'
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
+import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -113,6 +96,7 @@ export default {
   },
   components: {
     Button,
+    ResultButton,
     TextField,
     FighterSelecter
   },
@@ -154,6 +138,12 @@ export default {
     select() {
       this.record.fighterId = String(this.$refs.fighter.get())
       this.record.opponentId = String(this.$refs.opponent.get())
+    },
+    isWin() {
+      this.record.result = true
+    },
+    isLose() {
+      this.record.result = false
     },
     async submit () {
       console.log('submit', this.record.fighterId, this.record.opponentId)
