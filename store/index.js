@@ -85,6 +85,12 @@ const actions = {
     records.unshift(newRecord)
     commit('setRecords', records)
   },
+  updateUser ({ commit, state }, updateUserDto) {
+    commit('setUser', {
+      ...state.user,
+      ...updateUserDto
+    })
+  },
   setNotice ({ commit }, notice) {
     commit('setNotice', notice)
   }

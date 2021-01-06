@@ -149,7 +149,7 @@ export default {
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
         this.user.twitterId = this.user.twitterId.slice(1)
       }
-      const updatingDto = {
+      const updateUserDto = {
         username: this.$refs.username.input,
         twitterId: this.$refs.twitterId.input,
         selfIntroduction: this.$refs.selfIntroduction.input,
@@ -161,8 +161,9 @@ export default {
         profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : this.user.profileImgPath
       }
       try {
-        updateUser(this.user, updatingDto)
-        this.$store.dispatch('getUser', this.user.userId)
+        updateUser(this.user, updateUserDto)
+        this.$store.dispatch('updateUser', updateUserDto)
+        // this.$store.dispatch('getUser', this.user.userId)
         this.flashMessage = '保存しました。'
       } catch(error) {
         console.log('updating error', error)

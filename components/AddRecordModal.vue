@@ -98,7 +98,6 @@ import TextField from '@/components/TextField.vue'
 import Button from '@/components/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
-import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -181,22 +180,22 @@ export default {
           matches: this.user.results.matches + 1,
           wins: this.record.result ? this.user.results.wins + 1 : this.user.results.wins,
           loses: this.record.result ? this.user.results.loses : this.user.results.loses + 1,
-        }
+        },
+        updatedAt: serverTimestamp
       }
       const db = firebase.firestore()
+      const batch = db.batch()
       try {
-        const sendingRecord = db
-          .collection('records')
-          .add(newRecord)
-          .then(docRef => {
-            newRecord.docId = docRef.id
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        const newRecordRef = db.collection('records').doc()
+        batch.set(newRecordRef, newRecord)
+        const userRef = db.collection('users').doc(this.user.userId)
+        batch.update(userRef, updateUserDto)
+        batch.commit().catch(function(error) {
+          console.log("Error updating in batch:", error);
+        })
+        newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
-        updateUser(this.user, updateUserDto)
-        this.$store.dispatch('getUser', this.user.userId)
+        this.$store.dispatch('updateUser', updateUserDto)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
