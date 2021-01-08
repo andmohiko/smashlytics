@@ -31,8 +31,8 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-4">今後追加される機能🚀</h3>
         <ul class="text-left">
-          <li>◎ステージごとの勝率の確認</li>
-          <li>◎勝率の変化をグラフで表示</li>
+          <li>◎専用部屋の戦績の記録</li>
+          <li>◎戦闘力帯ごとのキャラの使用率</li>
           <li>◎他の人の勝率と比較</li>
         </ul>
       </div>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
+import Button from '@/components/parts/Button.vue'
 export default {
   components: {
     Button,
@@ -52,14 +52,14 @@ export default {
   computed: {
     isLogin() {
       if (this.$store.state.user.userId) {
-        this.$router.push("/");
+        this.$router.push("/")
       }
-      return Boolean(this.$store.state.user.userId);
+      return Boolean(this.$store.state.user.userId)
     },
   },
   methods: {
     login() {
-      this.$store.dispatch("loginGoogle");
+      this.$store.dispatch("loginGoogle")
     },
   },
 };

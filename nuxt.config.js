@@ -10,7 +10,9 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -32,7 +34,11 @@ export default {
   plugins: [
     '~/plugins/firebase',
     '~/plugins/cookie',
-    '~/plugins/setup'
+    '~/plugins/setup',
+    {
+      src: '~/plugins/ga.js',
+      mode: 'client'
+    }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -47,6 +53,7 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
+    '@nuxtjs/pwa'
   ],
   // router: {
   //   middleware: 'auth'
@@ -55,6 +62,25 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
+  manifest: {
+    name: 'スマレポ',
+    lang: 'ja',
+    short_name: 'スマレポ',
+    title: 'スマレポ',
+    'og:title': 'スマレポ',
+    description: 'スマブラ戦績分析アプリ',
+    'og:description': 'スマブラ戦績分析アプリ',
+    theme_color: '#579aff',
+    background_color: '#ffffff',
+    display: "standalone",
+    scope: "/",
+    start_url: "/",
+    icon: {
+      iconFileName: 'static/icon.png',
+      type: 'image/png',
+      sizes: '512x512'
+    }
+  },
   axios: {
   },
   /*

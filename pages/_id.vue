@@ -30,13 +30,28 @@ export default {
     PrivateAccountPage,
     UserNotFound
   },
-  async asyncData({ route, store }) {
-    const user = store.state.user
+  async asyncData({ route, router, store }) {
+    const isLogin = store.state.isLogin
+    if (!isLogin) {
+      return {
+        isMyUserPage: false,
+        isPublicAccount: false,
+        isPrivateAccount: false
+      }
+    }
+
     const pageUserId = route.path.replaceAll('/', '')
-    let pageData = { isMyUserPage: (user.userId === pageUserId) }
-    if (user.userId === pageUserId) return pageData
+    // ユーザかどうか
+    const myUserId = isLogin ? store.state.user.userId : null
+
+    let pageData = {
+      isMyUserPage: (myUserId === pageUserId)
+    }
+    // 自分のページ
+    if (myUserId === pageUserId) return pageData
 
     const pageUser = await getUser(pageUserId)
+    // ユーザが見つかりませんでした
     if (!pageUser) {
       return {
         ...pageData,
@@ -46,6 +61,8 @@ export default {
         isPrivateAccount: false
       }
     }
+
+    // 他の人のページの場合
     pageData = {
       ...pageData,
       userId: pageUserId,
@@ -61,7 +78,10 @@ export default {
       ...pageData,
       pageUserRecords
     }
-  }
+  },
+  mounted() {
+    if (!this.$store.state.isLogin) this.$router.push("/new")
+  },
 }
 </script>
 

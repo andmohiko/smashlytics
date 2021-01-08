@@ -17,7 +17,6 @@
 
 <script>
 import FighterIcon from '@/components/FighterIcon.vue'
-import Button from '@/components/Button.vue'
 import fighters from '@/assets/fighters.json'
 
 export default {
@@ -48,8 +47,7 @@ export default {
     }
   },
   components: {
-    FighterIcon,
-    Button
+    FighterIcon
   },
   data() {
     return {

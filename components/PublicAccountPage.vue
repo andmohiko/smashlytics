@@ -12,10 +12,13 @@
       </div>
 
       <div v-if="Boolean(user.main)">
-        <p class="text-base text-gray-700 pt-1">メインキャラ</p>
+        <p class="text-base text-gray-700 pt-1">使用ファイター</p>
         <div class="fightersInfo">
           <div class="fighter">
             <FighterIcon :fighterId="user.main" size="40px" />
+          </div>
+          <div v-if="Boolean(user.sub)" class="fighter">
+            <FighterIcon :fighterId="user.sub" size="40px" />
           </div>
         </div>
       </div>
@@ -113,7 +116,7 @@ export default {
 }
 .fightersInfo {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   position: relative;
   left: -10px;
   margin-bottom: 10px;

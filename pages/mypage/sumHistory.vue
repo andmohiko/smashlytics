@@ -44,7 +44,7 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { today } from '@/utils/date.js'

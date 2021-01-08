@@ -43,70 +43,23 @@
             label="相手のファイター"
           />
         </div>
-        <form class="mb-4 px-4">
-          <div class="input">
-            <div class="input-radio">
-              <p>勝敗</p>
-              <input
-                id="result-win"
-                v-model="record.result"
-                type="radio"
-                name="win"
-                :value="true"
-              />
-              <label for="result-win">勝ち</label>
-              <input
-                id="result-lose"
-                v-model="record.result"
-                type="radio"
-                name="lose"
-                :value="false"
-              />
-              <label for="result-lose">負け</label>
-            </div>
-            <div v-show="isShowInputDetails" class="details">
-              <span class="text-gray-700 px-1 pt-3 flex items-center"
-                >▼詳しく記録したい人向け</span
-              >
-              <span class="text-gray-600 text-xs px-1 pb-3 flex items-center"
-                >入力しておくとあとで詳しく分析できるよ！</span
-              >
-              <TextField
-                ref="globalSmashPower"
-                :allowEmpty="false"
-                label="世界戦闘力(万)"
-                placeholder="例: 678万くらい → 678"
-              />
-              <div class="input-radio">
-                <p>ステージ</p>
-                <input
-                  id="stage-finalDestination"
-                  v-model="record.stage"
-                  type="radio"
-                  name="finalDestination"
-                  :value="'finalDestination'"
-                />
-                <label for="stage-finalDestination">終点( __ )</label>
-                <input
-                  id="stage-battleField"
-                  v-model="record.stage"
-                  type="radio"
-                  name="battleField"
-                  :value="'battleField'"
-                />
-                <label for="stage-battleField">戦場( -^- )</label>
-                <input
-                  id="stage-smallBattleField"
-                  v-model="record.stage"
-                  type="radio"
-                  name="smallBattleField"
-                  :value="'smallBattleField'"
-                />
-                <label for="stage-smallBattleField">小戦場( - - )</label>
-              </div>
-            </div>
-          </div>
-        </form>
+        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
+
+        <div v-show="isShowInputDetails" class="details mt-20 mb-30 px-4">
+          <span class="text-gray-700 px-1 pt-3 flex items-center"
+            >▼詳しく記録したい人向け</span
+          >
+          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center"
+            >入力しておくとあとで詳しく分析できるよ！</span
+          >
+          <TextField
+            ref="globalSmashPower"
+            :allowEmpty="false"
+            label="世界戦闘力(万)"
+            placeholder="例: 678万くらい → 678"
+          />
+          <StageSelecter ref="stage" :isShowOptionEmpty="false" />
+        </div>
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
         </div>
@@ -118,10 +71,12 @@
 <script>
 import firebase from "@/plugins/firebase";
 import TextField from "@/components/TextField.vue";
-import Button from "@/components/Button.vue";
+import Button from "@/components/parts/Button.vue";
+import ResultButton from "@/components/parts/ResultButton.vue";
 import FighterSelecter from "@/components/FighterSelecter.vue";
+import StageSelecter from "@/components/parts/StageSelecter.vue";
 import fighters from "@/assets/fighters.json";
-import { updateUser } from "@/repositories/users.js";
+import { logEvent } from "@/utils/analytics.js";
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export default {
@@ -137,8 +92,10 @@ export default {
   },
   components: {
     Button,
+    ResultButton,
     TextField,
     FighterSelecter,
+    StageSelecter,
   },
   data() {
     return {
@@ -147,7 +104,7 @@ export default {
         opponentId: null,
         result: true,
         globalSmashPower: null,
-        stage: null,
+        stage: "",
       },
       error: "",
       fighters,
@@ -179,6 +136,12 @@ export default {
       this.record.fighterId = String(this.$refs.fighter.get());
       this.record.opponentId = String(this.$refs.opponent.get());
     },
+    isWin() {
+      this.record.result = true;
+    },
+    isLose() {
+      this.record.result = false;
+    },
     async submit() {
       console.log("submit", this.record.fighterId, this.record.opponentId);
       this.error = "";
@@ -200,7 +163,7 @@ export default {
         opponent: this.fighters[this.record.opponentId].name,
         opponentId: this.record.opponentId,
         result: this.record.result,
-        stage: this.record.stage,
+        stage: this.$refs.stage.input,
         globalSmashPower: this.record.globalSmashPower
           ? Number(this.record.globalSmashPower) * 10000
           : null,
@@ -215,27 +178,25 @@ export default {
             ? this.user.results.loses
             : this.user.results.loses + 1,
         },
+        updatedAt: serverTimestamp,
       };
       const db = firebase.firestore();
+      const batch = db.batch();
       try {
-        const sendingRecord = db
-          .collection("records")
-          .add(newRecord)
-          .then((docRef) => {
-            newRecord.docId = docRef.id;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        const newRecordRef = db.collection("records").doc();
+        batch.set(newRecordRef, newRecord);
+        const userRef = db.collection("users").doc(this.user.userId);
+        batch.update(userRef, updateUserDto);
+        batch.commit().catch(function (error) {
+          console.log("Error updating in batch:", error);
+        });
+        newRecord.docId = newRecordRef.id;
         this.$store.dispatch("addRecords", newRecord);
-        updateUser(this.user, updateUserDto);
-        this.$store.dispatch("getUser", this.user.userId);
+        this.$store.dispatch("updateUser", updateUserDto);
+        logEvent("addResult", undefined);
         this.onClose();
       } catch (error) {
-        this.$store.dispatch("setNotice", {
-          noticeType: "error",
-          message: error,
-        });
+        console.log("error in sending record", error);
       }
     },
     switchShowDetails() {
@@ -263,7 +224,7 @@ export default {
 }
 .record-modal {
   position: relative;
-  height: 80%;
+  height: 90%;
   max-width: 400px;
   z-index: 30;
 }

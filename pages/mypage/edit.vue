@@ -12,12 +12,14 @@
             <TextField ref="selfIntroduction" label="自己紹介(一言)" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" />
             <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
             <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
+            <TextField ref="mainPlayingTime" label="主にプレイしている時間帯" :defaultValue="user.mainPlayingTime" placeholder="平日の21時~24時が多いです！" />
           </form>
           <div class="fighter-selecter">
             <FighterSelecter
               @select="select"
               ref="mainFighter"
               :previouslySelected="user.main"
+              :isShowName="true"
               iconSize="48px"
               label="メインファイターを選ぶ"
             />
@@ -27,6 +29,7 @@
               @select="select"
               ref="subFighter"
               :previouslySelected="user.sub"
+              :isShowName="true"
               iconSize="48px"
               label="サブも選べるよ"
             />
@@ -66,7 +69,7 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import Button from '@/components/Button.vue'
+import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/TextField.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { updateUser } from '@/repositories/users.js'
@@ -147,20 +150,22 @@ export default {
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
         this.user.twitterId = this.user.twitterId.slice(1)
       }
-      const updatingDto = {
+      const updateUserDto = {
         username: this.$refs.username.input,
         twitterId: this.$refs.twitterId.input,
         selfIntroduction: this.$refs.selfIntroduction.input,
-        main: this.editUser.main,
-        sub: this.editUser.sub,
+        main: this.editUser.main || null,
+        sub: this.editUser.sub || null,
         friendCode: this.$refs.friendCode.input,
         smashmateRating: this.$refs.smashmateRating.input,
+        mainPlayingTime: this.$refs.mainPlayingTime.input,
         isPrivateAccount: this.editUser.isPrivateAccount,
         profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : this.user.profileImgPath
       }
       try {
-        updateUser(this.user, updatingDto)
-        this.$store.dispatch('getUser', this.user.userId)
+        updateUser(this.user, updateUserDto)
+        this.$store.dispatch('updateUser', updateUserDto)
+        // this.$store.dispatch('getUser', this.user.userId)
         this.flashMessage = '保存しました。'
       } catch(error) {
         console.log('updating error', error)
