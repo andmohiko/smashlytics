@@ -65,9 +65,6 @@ export default {
     isLogin() {
       return Boolean(this.$store.state.user.userId);
     },
-    notice() {
-      return this.$store.state.notice;
-    },
     lastRecord() {
       if (this.records.length) return this.records[0];
       return {

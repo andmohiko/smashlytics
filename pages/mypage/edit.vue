@@ -142,9 +142,6 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    notice() {
-      return this.$store.state.notice;
-    },
   },
   methods: {
     select() {
@@ -218,8 +215,8 @@ export default {
         });
         setTimeout(() => {
           this.$store.dispatch("setNotice", { noticeType: null, message: "" });
+          this.$router.push("/" + this.$store.state.user.userId);
         }, 2500);
-        this.$router.push("/" + this.$store.state.user.userId);
       } catch (error) {
         console.log("updating error", error);
         this.flashMessage = "プロフィールの更新に失敗しました。";
