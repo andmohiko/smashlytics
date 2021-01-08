@@ -17,11 +17,6 @@
     <div v-show="error" class="border-b">
       <button @click="toNew">ログインはこちら</button>
     </div>
-    <!-- <div class="add-button">
-      <button @click="openModal">
-        <div class="plus">+</div>
-      </button>
-    </div> -->
   </div>
 </template>
 
@@ -142,27 +137,4 @@ export default {
     color: #4a5568;
   }
 }
-// .add-button {
-//   position: absolute;
-//   position: relative;
-//   bottom: 60px;
-//   z-index: 1;
-//   border-radius: 50%;
-//   background-color: #579AFF;
-//   width: 50px;
-//   height: 50px;
-//   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.45);
-//   transition: all .5s ease;
-//   .plus {
-//     font-size: 50px;
-//     color: white;
-//     position: absolute;
-//     bottom: -8px;
-//     right: 9px;
-//   }
-// }
-// .add-button:hover {
-//   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.75);
-//   bottom: 65px;
-// }
 </style>
