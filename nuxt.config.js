@@ -70,7 +70,7 @@ export default {
     description: 'スマブラ戦績分析アプリ',
     'og:description': 'スマブラ戦績分析アプリ',
     theme_color: '#579aff',
-    background_color: '#579aff',
+    background_color: '#ffffff',
     display: "standalone",
     scope: "/",
     start_url: "/",

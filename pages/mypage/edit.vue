@@ -12,6 +12,7 @@
             <TextField ref="selfIntroduction" label="自己紹介(一言)" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" />
             <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
             <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
+            <TextField ref="mainPlayingTime" label="主にプレイしている時間帯" :defaultValue="user.mainPlayingTime" placeholder="平日の21時~24時が多いです！" />
           </form>
           <div class="fighter-selecter">
             <FighterSelecter
@@ -153,10 +154,11 @@ export default {
         username: this.$refs.username.input,
         twitterId: this.$refs.twitterId.input,
         selfIntroduction: this.$refs.selfIntroduction.input,
-        main: this.editUser.main,
-        sub: this.editUser.sub,
+        main: this.editUser.main || null,
+        sub: this.editUser.sub || null,
         friendCode: this.$refs.friendCode.input,
         smashmateRating: this.$refs.smashmateRating.input,
+        mainPlayingTime: this.$refs.mainPlayingTime.input,
         isPrivateAccount: this.editUser.isPrivateAccount,
         profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : this.user.profileImgPath
       }

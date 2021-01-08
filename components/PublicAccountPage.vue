@@ -12,7 +12,7 @@
       </div>
 
       <div v-if="Boolean(user.main)">
-        <p class="text-base text-gray-700 pt-1">使用キャラ</p>
+        <p class="text-base text-gray-700 pt-1">使用ファイター</p>
         <div class="fightersInfo">
           <div class="fighter">
             <FighterIcon :fighterId="user.main" size="40px" />
