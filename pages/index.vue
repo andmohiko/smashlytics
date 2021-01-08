@@ -5,7 +5,7 @@
         <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
       <template v-if="!this.$store.state.notice">
-        <Notice :notice="notice" @close="closeModal" />
+        <Notice :notice="notice" />
       </template>
     </div>
     <div class="results">
