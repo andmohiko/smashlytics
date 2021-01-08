@@ -66,6 +66,8 @@
 
 <script>
 import Button from '@/components/parts/Button.vue'
+import { logEvent } from '@/utils/analytics.js'
+
 import Cookies from "universal-cookie"
 
 export default {
@@ -89,6 +91,7 @@ export default {
       this.$store.commit('setRecords', [])
       this.$store.commit('setIsLogin', false)
       window.localStorage.clear();
+      logEvent('logoutFromSettings', undefined)
       this.$router.push("/new")
     },
     toAllRecords() {

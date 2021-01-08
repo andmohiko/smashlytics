@@ -59,6 +59,7 @@ import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/TextField.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import firebase from '@/plugins/firebase'
+import { logEvent } from '@/utils/analytics.js'
 import Cookies from "universal-cookie"
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
@@ -154,6 +155,7 @@ export default {
         this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])
         this.$router.push("/")
+        logEvent('signup', undefined)
       } catch (error) {
         console.log('error in setup', error)
       }
@@ -166,6 +168,7 @@ export default {
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
       window.localStorage.clear();
+      logEvent('logoutFromSignup', undefined)
       this.$router.push("/new")
     }
   }

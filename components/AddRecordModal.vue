@@ -81,6 +81,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
+import { logEvent } from '@/utils/analytics.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -107,7 +108,7 @@ export default {
         opponentId: null,
         result: true,
         globalSmashPower: null,
-        stage: null
+        stage: ''
       },
       error: '',
       fighters,
@@ -186,6 +187,7 @@ export default {
         newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
         this.$store.dispatch('updateUser', updateUserDto)
+        logEvent('addResult', undefined)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
@@ -216,7 +218,7 @@ export default {
 }
 .record-modal {
   position: relative;
-  height: 80%;
+  height: 90%;
   max-width: 400px;
   z-index: 30;
 }

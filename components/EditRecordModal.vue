@@ -102,6 +102,7 @@ import FighterSelecter from '@/components/FighterSelecter.vue'
 import { now, date2string } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
 import { updateUser } from '@/repositories/users.js'
+import { logEvent } from '@/utils/analytics.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
@@ -183,6 +184,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
+        logEvent('editResult', undefined)
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
@@ -201,6 +203,7 @@ export default {
             }
           }
           updateUser(this.user, updateUserDto)
+          logEvent('reverseResult', undefined)
           this.$store.dispatch('getUser', this.user.userId)
         }
       } catch(error) {
@@ -223,6 +226,7 @@ export default {
         }
         updateUser(this.user, updateUserDto)
         this.$store.dispatch('getUser', this.user.userId)
+        logEvent('deleteResult', undefined)
         console.log('deleted record')
       } catch(error) {
         console.log('error deleting record', error)
@@ -254,7 +258,7 @@ export default {
 }
 .record-modal {
   position: relative;
-  height: 80%;
+  height: 90%;
   max-width: 400px;
   z-index: 30;
 }
