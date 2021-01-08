@@ -32,6 +32,7 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 import Button from "@/components/parts/Button.vue";
 import Records from "@/components/Records.vue";
 import AddRecordModal from "@/components/AddRecordModal.vue";
+import Notice from "@/components//Notice.vue";
 // import Cookies from "universal-cookie"
 
 export default {
