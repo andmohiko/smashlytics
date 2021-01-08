@@ -1,5 +1,5 @@
 <template>
-  <div class="my-3 flex justify-center">
+  <div class="my-1 flex justify-center">
     <div v-if="result" class="isWin w-full">
       <button
         @click="isWin"

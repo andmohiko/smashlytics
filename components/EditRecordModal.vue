@@ -30,58 +30,13 @@
           />
         </div>
         <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
-        <form class="mb-4 px-4">
-          <div v-show="isShowInputDetails" class="details">
-            <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-            <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-            <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
-            <div class="input-radio">
-              <p>ステージ</p>
-              <div class="flex flex-wrap">
-                <div class="option">
-                  <input
-                    id="stage-finalDestination"
-                    v-model="editingRecord.stage"
-                    type="radio"
-                    name="finalDestination"
-                    :value="'finalDestination'"
-                  />
-                <label for="stage-finalDestination" class="pr-1">終点( __ )</label>
-                </div>
-                <div class="option">
-                  <input
-                    id="stage-battleField"
-                    v-model="editingRecord.stage"
-                    type="radio"
-                    name="battleField"
-                    :value="'battleField'"
-                  />
-                  <label for="stage-battleField"  class="pr-1">戦場( -^- )</label>
-                </div>
-                <div class="option">
-                  <input
-                    id="stage-smallBattleField"
-                    v-model="editingRecord.stage"
-                    type="radio"
-                    name="smallBattleField"
-                    :value="'smallBattleField'"
-                  />
-                  <label for="stage-smallBattleField" class="pr-1">小戦場( - - )</label>
-                </div>
-                <div class="option">
-                  <input
-                    id="stage-null"
-                    v-model="editingRecord.stage"
-                    type="radio"
-                    name="null"
-                    :value="null"
-                  />
-                  <label for="stage-null" class="pr-1">登録しない</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+        
+        <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
+          <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
+          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
+          <StageSelecter ref="stage" :previousSelect="editingRecord.stage" />
+        </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
         </div>
@@ -99,6 +54,7 @@ import TextField from '@/components/TextField.vue'
 import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
+import StageSelecter from '@/components/parts/StageSelecter.vue'
 import { now, date2string } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
 import { updateUser } from '@/repositories/users.js'
@@ -120,7 +76,8 @@ export default {
     Button,
     ResultButton,
     TextField,
-    FighterSelecter
+    FighterSelecter,
+    StageSelecter
   },
   data() {
     return {
@@ -173,7 +130,7 @@ export default {
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
-        stage: this.editingRecord.stage
+        stage: this.$refs.stage.input
       }
       const db = firebase.firestore()
       try {
