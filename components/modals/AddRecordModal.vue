@@ -7,7 +7,7 @@
         </svg>
       </div>
       <div class="form">
-        <h2 class="text-xl py-2 border-b mb-4">戦績を登録する</h2>
+        <h2 class="text-xl py-2 border-b mb-4">オンラインの戦績を登録する</h2>
         <p class="error">{{ error }}</p>
         <div class="fighter-selecter">
           <FighterSelecter
@@ -31,11 +31,13 @@
         </div>
         <ResultButton @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
-        <div v-show="isShowInputDetails" class="details mt-20 mb-30 px-4">
+        <div v-show="isShowInputDetails" class="details mt-20 mb-20 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" />
           <StageSelecter ref="stage" :isShowOptionEmpty="false" />
+          <Checkbox ref="isRepeat" label="連戦だった" />
+          <Checkbox ref="isVip" :defaultValue="lastRecord.isVip" label="VIPマッチ" />
         </div>
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
@@ -52,6 +54,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import Checkbox from '@/components/input/Checkbox.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -72,7 +75,8 @@ export default {
     ResultButton,
     TextField,
     FighterSelecter,
-    StageSelecter
+    StageSelecter,
+    Checkbox
   },
   data() {
     return {
@@ -138,6 +142,8 @@ export default {
         result: this.record.result,
         stage: this.$refs.stage.input,
         globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
+        isRepeat: this.$refs.isRepeat.input,
+        isVip: this.$refs.isVip.input
       }
       const updateUserDto = {
         results: {
