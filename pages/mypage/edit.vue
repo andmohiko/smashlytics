@@ -81,10 +81,10 @@
 <script>
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
-import TextField from '@/components/TextField.vue'
+import TextField from '@/components/input/TextField.vue'
 import TextArea from '@/components/input/TextArea.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 

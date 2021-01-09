@@ -56,8 +56,8 @@
 <script>
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
-import TextField from '@/components/TextField.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import TextField from '@/components/input/TextField.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import firebase from '@/plugins/firebase'
 import { logEvent } from '@/utils/analytics.js'
 import Cookies from "universal-cookie"
