@@ -23,11 +23,29 @@
 - sub: String fighterId
 <!-- - winningPercentage: Object
   - wins: Number
-  - loses: Number -->
-<!-- - selfIntroduction: String -->
-<!-- - isPrivateAccount: Boolean -->
-<!-- - smashmateRating: Number -->
-<!-- - voicechats: Array [discord, line, nintendo online, skype] -->
+  - loses: Number
+- friendCode: String
+- selfIntroduction: String
+- smashmateRating: Number
+- mainPlayingTime: String
+- voiceChat: map
+  - discord: Boolean
+  - line: Boolean
+  - nintendoOnline: Boolean
+  - skype: Boolean
+  - listenOnly: Boolean
+  - ng: Boolean
+<!-- - playStyle: map
+  - 
+  tournament/oneOnOne
+  - items: String on/off -->
+<!-- - privateSettings: Map
+  - isPrivate: Boolean
+  - showProfile: Boolean
+  - showLatestGlobalSmashPower: Boolean
+  - showWinningRate: Boolean
+  - showAnalytics: Boolean -->
+
 
 ## records
 
@@ -48,3 +66,11 @@
 - result: Boolean 勝ち/負け
 - stage: String ステージ
 - globalSmashPower: Number 世界戦闘力
+- isRepeat: Boolean 連戦かどうか
+- isVip: Boolean VIPかどうか
+<!-- - stocksTaken: map
+  - own: number 自分のストックを落とされた数
+  - opponent: number 相手のストックを落とした数
+- roomType: String online|arena
+- against: String 相手の名前
+- againstUserId: String 相手のユーザID -->
