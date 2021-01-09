@@ -120,7 +120,9 @@ export default {
     this.editUser.main = this.$store.state.user.main
     this.editUser.sub = this.$store.state.user.sub
     if (this.$store.state.user.voiceChat) {
-      this.editUser.voiceChat = this.$store.state.user.voiceChat
+      this.editUser.voiceChat = {
+        ...this.$store.state.user.voiceChat
+      }
     }
   },
   computed: {
