@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <p class="text-left pb-1 pl-1">ステージ</p>
-    <form class="mb-4 px-2 flex flex-wrap justify-start items-center stage-selecter">
+    <form class="mb-2 px-2 flex flex-wrap justify-start items-center stage-selecter">
       <div class="option pb-1">
         <input
           id="stage-finalDestination"

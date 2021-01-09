@@ -18,16 +18,23 @@
 - authId: String
 - username: String
 - twitterId: String
-<!-- - friendCode: String -->
 - main: String fighterId
 - sub: String fighterId
-<!-- - winningPercentage: Object
+- winningPercentage: Object
+  - matches: Number
   - wins: Number
-  - loses: Number -->
-<!-- - selfIntroduction: String -->
-<!-- - isPrivateAccount: Boolean -->
-<!-- - smashmateRating: Number -->
-<!-- - voicechats: Array [discord, line, nintendo online, skype] -->
+  - loses: Number
+- friendCode: String
+- selfIntroduction: String
+- smashmateRating: Number
+- mainPlayingTime: String
+- voiceChat: map
+  - discord: Boolean
+  - line: Boolean
+  - nintendoOnline: Boolean
+  - skype: Boolean
+  - listenOnly: Boolean
+  - ng: Boolean
 
 ## records
 
@@ -48,3 +55,5 @@
 - result: Boolean 勝ち/負け
 - stage: String ステージ
 - globalSmashPower: Number 世界戦闘力
+- isRepeat: Boolean 連戦かどうか
+- isVip: Boolean VIPかどうか

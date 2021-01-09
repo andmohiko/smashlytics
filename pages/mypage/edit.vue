@@ -9,10 +9,21 @@
             <input type="file" @change="selectIcon">
             <TextField ref="username" label="ユーザ名" :defaultValue="user.username" placeholder="username" />
             <TextField ref="twitterId" label="Twitter Id" :defaultValue="user.twitterId" placeholder="@twitterId" />
-            <TextField ref="selfIntroduction" label="自己紹介(一言)" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ" />
+            <TextArea ref="selfIntroduction" label="自己紹介" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ"  />
             <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
             <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
             <TextField ref="mainPlayingTime" label="主にプレイしている時間帯" :defaultValue="user.mainPlayingTime" placeholder="平日の21時~24時が多いです！" />
+            <div class="voiceChat flex flex-col">
+              <label class="text-gray-700 text-left">ボイスチャット</label>
+              <div class="options flex flex-wrap items-start">
+                <Checkbox ref="discord" :defaultValue="editUser.voiceChat.discord" label="Discord" />
+                <Checkbox ref="nintendoSwitchOnline" :defaultValue="editUser.voiceChat.nintendoSwitchOnline" label="Nintendo Switch Online" />
+                <Checkbox ref="line" :defaultValue="editUser.voiceChat.line" label="Line" />
+                <Checkbox ref="skype" :defaultValue="editUser.voiceChat.skype" label="Skype" />
+                <Checkbox ref="listenOnly" :defaultValue="editUser.voiceChat.listenOnly" label="聞き専" />
+                <Checkbox ref="ng" :defaultValue="editUser.voiceChat.ng" label="NG" />
+              </div>
+            </div>
           </form>
           <div class="fighter-selecter">
             <FighterSelecter
@@ -71,6 +82,8 @@
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/TextField.vue'
+import TextArea from '@/components/input/TextArea.vue'
+import Checkbox from '@/components/input/Checkbox.vue'
 import FighterSelecter from '@/components/FighterSelecter.vue'
 import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -79,19 +92,25 @@ export default {
   components: {
     Button,
     TextField,
+    TextArea,
+    Checkbox,
     FighterSelecter
   },
   data () {
     return {
       editUser: {
-        username: '',
-        twitterId: '',
         main: '',
         sub: '',
-        friendCode: '',
-        isPrivateAccount: null
+        isPrivateAccount: null,
+        voiceChat: {
+          discord: false,
+          nintendoSwitchOnline: false,
+          line: false,
+          skype: false,
+          listenOnly: false,
+          ng: false
+        },
       },
-      uid: '',
       flashMessage: '',
       updatedProfileImg: false
     }
@@ -100,6 +119,9 @@ export default {
     this.editUser.isPrivateAccount = this.$store.state.user.isPrivateAccount
     this.editUser.main = this.$store.state.user.main
     this.editUser.sub = this.$store.state.user.sub
+    if (this.$store.state.user.voiceChat) {
+      this.editUser.voiceChat = this.$store.state.user.voiceChat
+    }
   },
   computed: {
     user() {
@@ -160,6 +182,14 @@ export default {
         smashmateRating: this.$refs.smashmateRating.input,
         mainPlayingTime: this.$refs.mainPlayingTime.input,
         isPrivateAccount: this.editUser.isPrivateAccount,
+        voiceChat: {
+          discord: this.$refs.discord.input,
+          nintendoSwitchOnline: this.$refs.nintendoSwitchOnline.input,
+          line: this.$refs.line.input,
+          skype: this.$refs.skype.input,
+          listenOnly: this.$refs.listenOnly.input,
+          ng: this.$refs.ng.input,
+        },
         profileImgPath: this.updatedProfileImg ? `images/user/${this.user.userId}/profileImg.png` : this.user.profileImgPath
       }
       try {
