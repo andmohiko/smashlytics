@@ -81,7 +81,7 @@
 <script>
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 
 export default {
   components: {

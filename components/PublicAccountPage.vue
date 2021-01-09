@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import VoiceChat from '@/components/parts/VoiceChat.vue'
 import { userWinningPercentage } from '@/utils/records.js'
 

@@ -80,7 +80,7 @@ import { now, date2string } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/parts/Button.vue'
 import Records from '@/components/Records.vue'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import AddRecordModal from '@/components/modals/AddRecordModal.vue'
 import EditRecordModal from '@/components/modals/EditRecordModal.vue'
 // import Cookies from "universal-cookie"

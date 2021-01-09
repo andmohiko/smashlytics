@@ -84,7 +84,7 @@
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
 import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import VoiceChat from '@/components/parts/VoiceChat.vue'
 import { userWinningPercentage, calcWinningPercentage } from '@/utils/records.js'
 import { logEvent } from '@/utils/analytics.js'

@@ -52,10 +52,10 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import TextField from '@/components/TextField.vue'
+import TextField from '@/components/input/TextField.vue'
 import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
