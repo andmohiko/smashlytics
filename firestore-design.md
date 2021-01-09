@@ -18,10 +18,10 @@
 - authId: String
 - username: String
 - twitterId: String
-<!-- - friendCode: String -->
 - main: String fighterId
 - sub: String fighterId
-<!-- - winningPercentage: Object
+- winningPercentage: Object
+  - matches: Number
   - wins: Number
   - loses: Number
 - friendCode: String
