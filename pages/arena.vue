@@ -2,20 +2,20 @@
   <div class="container">
     <div class="add">
       <template v-if="isShowAddModal">
-        <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
+        <AddArenaRecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
     </div>
     <div class="edit">
       <template v-if="isShowEditModal">
-        <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
+        <EditArenaRecordModal :editingRecord="editingRecord" @close="closeModal" />
       </template>
     </div>
 
     <div class="results">
-      <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
+      <!-- <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p> -->
       <Button @onClick="openAddModal" label="戦績を登録する" />
     </div>
-    
+
     <div class="records">
       <div class="mx-auto py-2 px-1">
         <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
@@ -32,7 +32,7 @@
               <tr v-for="record in records" :key="record.id">
                 <td class="border-dashed border-t border-gray-200 px-3">
                   <span class="text-gray-700 px-1 py-3 flex items-center">
-                    {{ record.createdAtString.slice(5, -3) }}
+                    {{ record.createdAtString.split(' ')[0].slice(5) }}
                   </span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">
@@ -40,6 +40,9 @@
                 </td>
                 <td class="border-dashed border-t border-gray-200">
                   <FighterIcon :fighterId="record.opponentId" size="32px" />
+                </td>
+                <td class="border-dashed border-t border-gray-200">
+                  <span class="text-gray-700 px-3 py-3 flex items-center">{{ record.against }}</span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">
                   <span v-if="record.result" class="text-red-700 px-3 py-3 flex items-center">勝ち</span>
@@ -58,63 +61,42 @@
         </div>
       </div>
     </div>
-    
-    <p class="error text-xl py-2 mb-4 text-red-700">{{ error }}</p>
-    <div v-show="error" class="border-b">
-      <button @click="toNew">ログインはこちら</button>
-    </div>
-
-    <!-- <div class="add-button shadow-lg">
-      <button @click="openModal">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 0C5.38293 0 0 5.38293 0 12C0 18.6171 5.38293 24 12 24C18.6171 24 24 18.6171 24 12C24 5.38293 18.6171 0 12 0ZM17.25 12.9999H12.9999V17.25C12.9999 17.8021 12.5521 18.2499 12 18.2499C11.4479 18.2499 11.0001 17.8021 11.0001 17.25V12.9999H6.75C6.19794 12.9999 5.75006 12.5521 5.75006 12C5.75006 11.4479 6.19794 11.0001 6.75 11.0001H11.0001V6.75C11.0001 6.19794 11.4479 5.75006 12 5.75006C12.5521 5.75006 12.9999 6.19794 12.9999 6.75V11.0001H17.25C17.8021 11.0001 18.2499 11.4479 18.2499 12C18.2499 12.5521 17.8021 12.9999 17.25 12.9999V12.9999Z" fill="#579AFF"/>
-        </svg>
-      </button>
-    </div> -->
   </div>
 </template>
 
 <script>
 import firebase from '@/plugins/firebase'
 import { now, date2string } from '@/utils/date.js'
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/parts/Button.vue'
-import Records from '@/components/Records.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
-import AddRecordModal from '@/components/modals/AddRecordModal.vue'
-import EditRecordModal from '@/components/modals/EditRecordModal.vue'
-// import Cookies from "universal-cookie"
+import AddArenaRecordModal from '@/components/modals/AddArenaRecordModal.vue'
+import EditArenaRecordModal from '@/components/modals/EditArenaRecordModal.vue'
+import fighters from '@/assets/fighters.json'
+
+const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 export default {
   components: {
-    Records,
-    AddRecordModal,
-    EditRecordModal,
     FighterIcon,
+    AddArenaRecordModal,
+    EditArenaRecordModal,
     Button
   },
   data() {
     return {
+      fighters,
+      headings: ['日付','自分','相手','','勝敗','編集'],
       isShowAddModal: false,
       isShowEditModal: false,
-      headings: ['日付','自分','相手','勝敗','編集'],
-      editingRecord: {},
-      now: now(),
-      error: ''
+      editingRecord: {}
     }
-  },
-  mounted() {
-  //   const cookie = new Cookies()
-  //   const auth_token = cookie.get('smash_access_token')
-    // if (!Boolean(auth_token)) this.$router.push("/new")
-    if (!this.$store.state.user.userId) this.$router.push("/new")
   },
   computed: {
     user() {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'online')
+      return this.$store.state.records.filter(record => record.roomType === 'arena')
     },
     isLogin() {
       return Boolean(this.$store.state.user.userId)
@@ -134,90 +116,45 @@ export default {
     }
   },
   methods: {
+    async getRecords() {
+      await this.$store.dispatch('getRecords', this.user.userId)
+    },
     openAddModal() {
-      this.error = ''
-      if (!this.isLogin) {
-        this.error = '登録するにはログインしてください'
-        return
-      }
       this.isShowAddModal = true
     },
     openEditModal(record) {
-      this.error = ''
-      if (!this.isLogin) {
-        this.error = '編集するにはログインしてください'
-        return
-      }
       this.isShowEditModal = true
       this.editingRecord = record
     },
     closeModal() {
       this.isShowAddModal = false
       this.isShowEditModal = false
-    },
-    toNew() {
-      this.$router.push("/new")
     }
   }
 }
 </script>
- 
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .container {
   margin: 0 auto;
-  min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
-  // justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
 }
+.get {
+  span {
+    display: inline-block;
+  }
+}
+.records {
+  margin: 10px 0;
+}
 .title {
-  margin: 20px 0;
+  margin: 40px 0;
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
 }
-.results {
-  &-number {
-    font-size: 20px;
-    color: #4a5568;
-    letter-spacing: 2px;
-    margin: 4px 0 4px 0;
-  }
-}
-.add {
-  // width: 400px;
-  margin: 0 50px;
-}
-.records {
-  margin: 0 50px;
-  // width: 500px;
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  align-items: center;
-  // text-align: left;
-  &-title {
-    width: 100%;
-    display: block;
-    justify-content: center;
-    text-align: center;
-    font-size: 16px;
-    margin: 8px 0 0 0;
-    color: #4a5568;
-  }
-}
-// .add-button {
-//   position: absolute;
-//   bottom: 50px;
-//   z-index: 10;
-//   border-radius: 50px;
-//   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.45);
-//   transition: all .5s ease;
-// }
-// .add-button:hover {
-//   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.75);
-//   bottom: 65px;
-// }
 </style>

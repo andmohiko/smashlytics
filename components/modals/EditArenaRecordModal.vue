@@ -34,10 +34,8 @@
         <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
-          <StageSelecter ref="stage" :previousSelect="editingRecord.stage" />
-          <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIPマッチ" />
+          <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="editingRecord.stage" />
+          <TextField ref="against" :defaultValue="editingRecord.against" label="対戦相手" placeholder="もひこ" />
         </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
@@ -129,14 +127,14 @@ export default {
       }
       let updatingRecord = {
         updatedAt: serverTimestamp,
+        roomType: 'arena',
         fighter: this.fighters[this.editingRecord.fighterId].name,
         fighterId: this.editingRecord.fighterId,
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
         stage: this.$refs.stage.input,
-        isRepeat: this.$refs.isRepeat.input,
-        isVip: this.$refs.isVip.input
+        against: this.$refs.against.input
       }
       const db = firebase.firestore()
       try {
@@ -153,7 +151,6 @@ export default {
           updatingRecord.createdAt = this.editingRecord.createdAt
           updatingRecord.createdAtString = this.editingRecord.createdAtString
           updatingRecord.updatedAt = this.now
-          updatingRecord.roomType = 'online'
           updatingRecord.docId = this.editingRecord.docId
           return updatingRecord
         })

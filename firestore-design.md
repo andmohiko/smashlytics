@@ -70,7 +70,6 @@
 - isVip: Boolean VIPかどうか
 <!-- - stocksTaken: map
   - own: number 自分のストックを落とされた数
-  - opponent: number 相手のストックを落とした数
+  - opponent: number 相手のストックを落とした数 -->
 - roomType: String online|arena
 - against: String 相手の名前
-- againstUserId: String 相手のユーザID -->

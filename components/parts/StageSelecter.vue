@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full text-gray-700">
     <p class="text-left pb-1 pl-1">ステージ</p>
     <form class="mb-2 px-2 flex flex-wrap justify-start items-center stage-selecter">
       <div class="option pb-1">
