@@ -9,24 +9,51 @@
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
         <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
         <p class="userId text-base pt-2 text-gray-700">{{ user.selfIntroduction }}</p>
+        <div v-if="user.twitterId" class="twitter text-gray-700 flex items-center text-base my-2">
+          <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
+            <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
+          </svg>
+          <span class="pl-2">@{{ user.twitterId }}</span>
+        </div>
+        
       </div>
-      <p class="text-base text-gray-700 pt-1">使用キャラの世界戦闘力</p>
+      <p class="text-base text-gray-700 pt-1">記録したファイターの世界戦闘力</p>
       <div class="fightersInfo">
         <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
           <FighterIcon :fighterId="record.fighterId" size="40px" />
           <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
           <span v-else class="text-2xl text-gray-800">--</span>
+          <!-- <span class="text-base text-gray-800">{{ winningPercentageByFighter(record.fighterId) }}</span> -->
         </div>
       </div>
-      
+
       <p class="text-xl text-gray-800">{{ userWinningPercentage(user.results) }}</p>
 
-      <div v-show="user.twitterId" class="twitter text-gray-700 flex items-center text-lg my-2">
-        <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">
-          <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
-        </svg>
-        <span class="pl-2">@{{ user.twitterId }}</span>
+      <div class="pt-6 pb-6">
+        <h3 class="text-xl text-gray-700 pt-2">プレイヤー情報</h3>
+
+        <div v-if="Boolean(user.main)">
+          <p class="text-sm text-gray-700 pt-1 border-b w-7/12">使用ファイター</p>
+          <div class="flex pt-3">
+            <div class="pr-2">
+              <FighterIcon :fighterId="user.main" size="40px" />
+            </div>
+            <div v-if="Boolean(user.sub)" class="pr-2">
+              <FighterIcon :fighterId="user.sub" size="40px" />
+            </div>
+          </div>
+        </div>
+        <div v-if="user.smashmateRating">
+          <p class="text-sm text-gray-700 pt-4 border-b w-7/12">スマメイト最高レート</p>
+          <p class="userId text-base text-gray-700 pt-2">{{ user.smashmateRating }}</p>
+        </div>
+        <div v-if="user.mainPlayingTime">
+          <p class="text-sm text-gray-700 pt-4 border-b w-7/12">主にプレイしている時間帯</p>
+          <p class="userId text-base text-gray-700 pt-2">{{ user.mainPlayingTime }}</p>
+        </div>
       </div>
+      <TwitterShareButton />
+      
       <Button @onClick="toEdit" label="編集する" />
     </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
@@ -52,12 +79,15 @@
 <script>
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
+import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
 import FighterIcon from '@/components/FighterIcon.vue'
-import { userWinningPercentage } from '@/utils/records.js'
+import { userWinningPercentage, calcWinningPercentage } from '@/utils/records.js'
+import { logEvent } from '@/utils/analytics.js'
 
 export default {
   components: {
     Button,
+    TwitterShareButton,
     FighterIcon
   },
   data() {
@@ -90,6 +120,7 @@ export default {
   },
   methods: {
     toEdit () {
+      logEvent('editProfile', undefined)
       this.$router.push("/mypage/edit")
     },
     toHistory () {
@@ -104,7 +135,11 @@ export default {
     toNew() {
       this.$router.push("/new")
     },
-    userWinningPercentage
+    userWinningPercentage,
+    winningPercentageByFighter(fighterId) {
+      const recordsByFighter = this.records.filter(record => record.fighterId === fighterId)
+      return calcWinningPercentage(recordsByFighter)
+    }
   }
 }
 </script>
@@ -157,7 +192,7 @@ export default {
   .fighter {
     display: grid;
     grid-template-rows: 50px;
-    grid-template-columns: 60px 1fr;
+    grid-template-columns: 60px 80px 1fr;
     align-items: center;
   }
 }

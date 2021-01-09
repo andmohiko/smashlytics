@@ -11,8 +11,11 @@ const analitics = firebase.analytics()
 //   'viewRecords'
 //   'viewAnalytics'
 //   'viewMypage'
+//   'viewNew'
 
 //   'editProfile',
+
+//   'shareOnTwitter'
 
 //   'signup',
 //   'logoutFromSettings'
