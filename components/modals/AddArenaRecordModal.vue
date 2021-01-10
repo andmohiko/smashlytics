@@ -47,10 +47,10 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import TextField from '@/components/TextField.vue'
+import TextField from '@/components/input/TextField.vue'
 import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
@@ -137,27 +137,27 @@ export default {
         stage: this.$refs.stage.input,
         against: this.$refs.against.input
       }
-      const updateUserDto = {
-        resultsArena: {
-          matches: this.user.resultsArena.matches + 1,
-          wins: this.record.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins,
-          loses: this.record.result ? this.user.resultsArena.loses : this.user.resultsArena.loses + 1,
-        },
-        updatedAt: serverTimestamp
-      }
+      // const updateUserDto = {
+      //   resultsArena: {
+      //     matches: this.user.resultsArena.matches + 1,
+      //     wins: this.record.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins,
+      //     loses: this.record.result ? this.user.resultsArena.loses : this.user.resultsArena.loses + 1,
+      //   },
+      //   updatedAt: serverTimestamp
+      // }
       const db = firebase.firestore()
       const batch = db.batch()
       try {
         const newRecordRef = db.collection('records').doc()
         batch.set(newRecordRef, newRecord)
-        const userRef = db.collection('users').doc(this.user.userId)
-        batch.update(userRef, updateUserDto)
+        // const userRef = db.collection('users').doc(this.user.userId)
+        // batch.update(userRef, updateUserDto)
         batch.commit().catch(function(error) {
           console.log("Error updating in batch:", error);
         })
         newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
-        this.$store.dispatch('updateUser', updateUserDto)
+        // this.$store.dispatch('updateUser', updateUserDto)
         logEvent('addResult', undefined)
         this.onClose()
       } catch(error) {

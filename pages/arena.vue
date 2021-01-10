@@ -68,7 +68,7 @@
 import firebase from '@/plugins/firebase'
 import { now, date2string } from '@/utils/date.js'
 import Button from '@/components/parts/Button.vue'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import AddArenaRecordModal from '@/components/modals/AddArenaRecordModal.vue'
 import EditArenaRecordModal from '@/components/modals/EditArenaRecordModal.vue'
 import fighters from '@/assets/fighters.json'

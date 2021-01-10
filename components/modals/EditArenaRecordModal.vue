@@ -50,10 +50,10 @@
 
 <script>
 import firebase from '@/plugins/firebase'
-import TextField from '@/components/TextField.vue'
+import TextField from '@/components/input/TextField.vue'
 import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
@@ -155,18 +155,18 @@ export default {
           return updatingRecord
         })
         this.$store.commit('setRecords', updatedRecords)
-        if (this.originalResult !== updatingRecord.result) {
-          const updateUserDto = {
-            results: {
-              matches: this.user.results.matches,
-              wins: updatingRecord.result ? this.user.results.wins + 1 : this.user.results.wins - 1,
-              loses: updatingRecord.result ? this.user.results.loses - 1 : this.user.results.loses + 1,
-            }
-          }
-          updateUser(this.user, updateUserDto)
-          logEvent('reverseResult', undefined)
-          this.$store.dispatch('getUser', this.user.userId)
-        }
+        // if (this.originalResult !== updatingRecord.result) {
+        //   const updateUserDto = {
+        //     results: {
+        //       matches: this.user.results.matches,
+        //       wins: updatingRecord.result ? this.user.results.wins + 1 : this.user.results.wins - 1,
+        //       loses: updatingRecord.result ? this.user.results.loses - 1 : this.user.results.loses + 1,
+        //     }
+        //   }
+        //   updateUser(this.user, updateUserDto)
+        //   logEvent('reverseResult', undefined)
+        //   this.$store.dispatch('getUser', this.user.userId)
+        // }
       } catch(error) {
         console.log('error in sending record', error)
       }
@@ -178,15 +178,15 @@ export default {
         db.collection("records").doc(this.editingRecord.docId).delete()
         const deletedRecords = this.records.filter(record => record.docId !== this.editingRecord.docId)
         this.$store.commit('setRecords', deletedRecords)
-        const updateUserDto = {
-          results: {
-            matches: this.user.results.matches - 1,
-            wins: this.editingRecord.result ? this.user.results.wins - 1 : this.user.results.wins,
-            loses: this.editingRecord.result ? this.user.results.loses : this.user.results.loses - 1,
-          }
-        }
-        updateUser(this.user, updateUserDto)
-        this.$store.dispatch('getUser', this.user.userId)
+        // const updateUserDto = {
+        //   results: {
+        //     matches: this.user.results.matches - 1,
+        //     wins: this.editingRecord.result ? this.user.results.wins - 1 : this.user.results.wins,
+        //     loses: this.editingRecord.result ? this.user.results.loses : this.user.results.loses - 1,
+        //   }
+        // }
+        // updateUser(this.user, updateUserDto)
+        // this.$store.dispatch('getUser', this.user.userId)
         logEvent('deleteResult', undefined)
         console.log('deleted record')
       } catch(error) {
