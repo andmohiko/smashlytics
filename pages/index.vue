@@ -114,7 +114,7 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     isLogin() {
       return Boolean(this.$store.state.user.userId)

@@ -91,7 +91,7 @@ export default {
   },
   data() {
     return {
-      period: 3,
+      period: 7,
       stage: 'all',
       sorting: 'opponentId',
       order: true,
@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     recordsFiltered() {
       const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))

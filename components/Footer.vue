@@ -141,7 +141,7 @@ export default {
   color: #4a5568d9;
 }
 .coming-soon {
-  font-size: 7px;
+  font-size: 10px;
   color: #a8b1c2d9;
 }
 </style>

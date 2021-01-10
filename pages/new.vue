@@ -52,6 +52,7 @@ export default {
     Button,
   },
   mounted() {
+    if (this.$store.state.user.userId) this.$router.push("/")
     logEvent('viewNew', undefined)
   },
   computed: {
