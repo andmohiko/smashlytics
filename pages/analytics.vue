@@ -2,8 +2,20 @@
   <div class="container">
     <div class="winning-percentage">
       <form class="mb-2 px-4">
-        <div class="input-radio">
-          <p class="text-l text-left pl-4">並べ替え</p>
+        <div class="input-radio pb-2">
+          <div class="sort flex justify-between items-center">
+            <p class="text-l text-left pl-4">並べ替え</p>
+            <div class="toggleDescending">
+              <template>
+                <div class="flex justify-between items-center px-4 py-1" @click="toggle">
+                  <p class="text-right pr-2">逆順</p>
+                  <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
+                    <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': descending,}"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
           <input v-model="sorting" type="radio" name="fighterId" value="opponentId"/>
           <label for="1">相手ファイター順</label>
           <input v-model="sorting" type="radio" name="matches" value="matches"/>
@@ -34,16 +46,6 @@
           <label for="battleField">戦場</label>
           <input v-model="stage" type="radio" name="smallBattleField" value="smallBattleField"/>
           <label for="smallBattleField">小戦場</label>
-        </div>
-        <div class="toggleDescending">
-          <template>
-            <div class="flex justify-between items-center px-4 py-2" @click="toggle">
-              <p class="text-right">逆順にする</p>
-              <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
-                <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': descending,}"></div>
-              </div>
-            </div>
-          </template>
         </div>
       </form>
       
@@ -81,7 +83,7 @@
 <script>
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 
 export default {
   components: {
@@ -89,7 +91,7 @@ export default {
   },
   data() {
     return {
-      period: 3,
+      period: 7,
       stage: 'all',
       sorting: 'opponentId',
       order: true,
@@ -99,7 +101,7 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     recordsFiltered() {
       const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))

@@ -1,27 +1,116 @@
 <template>
   <div class="container">
     <div class="register">
-      <template v-if="isShowModal">
+      <template v-if="isShowAddModal">
         <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
       </template>
       <template v-if="!this.$store.state.notice">
         <Notice :notice="notice" />
       </template>
     </div>
+    <div class="edit">
+      <template v-if="isShowEditModal">
+        <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
+      </template>
+    </div>
+
     <div class="results">
+      <<<<<<< HEAD
       <p v-show="isLogin" class="results-number">
         本日の戦績: {{ resultsToday }}
       </p>
       <Button @onClick="openModal" label="戦績を登録する" />
+      =======
+      <p v-show="isLogin" class="results-number">
+        本日の戦績: {{ resultsToday }}
+      </p>
+      <Button @onClick="openAddModal" label="戦績を登録する" />
+      >>>>>>> 37feb388fd2f834f257953cdde56de61859693de
     </div>
+
     <div class="records">
-      <h2 class="records-title">直近10戦の戦績</h2>
-      <Records :records="records.slice(0, 10)" />
+      <div class="mx-auto py-2 px-1">
+        <div
+          class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
+          style="height: 100%"
+        >
+          <table
+            class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+          >
+            <thead>
+              <tr class="text-left">
+                <th
+                  v-for="heading in headings"
+                  :key="heading.id"
+                  class="bg-gray-100 sticky top-0 border-b border-gray-200 px-4 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+                >
+                  {{ heading }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="record in records" :key="record.id">
+                <td class="border-dashed border-t border-gray-200 px-3">
+                  <span class="text-gray-700 px-1 py-3 flex items-center">
+                    {{ record.createdAtString.slice(5, -3) }}
+                  </span>
+                </td>
+                <td class="border-dashed border-t border-gray-200">
+                  <FighterIcon :fighterId="record.fighterId" size="32px" />
+                </td>
+                <td class="border-dashed border-t border-gray-200">
+                  <FighterIcon :fighterId="record.opponentId" size="32px" />
+                </td>
+                <td class="border-dashed border-t border-gray-200">
+                  <span
+                    v-if="record.result"
+                    class="text-red-700 px-3 py-3 flex items-center"
+                    >勝ち</span
+                  >
+                  <span v-else class="text-blue-700 px-3 py-3 flex items-center"
+                    >負け</span
+                  >
+                </td>
+                <td
+                  class="border-dashed border-t border-gray-200 text-gray-600 text-xs"
+                >
+                  <button class="pt-1" @click="openEditModal(record)">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13L11 5ZM17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9V12.1716L17.5858 3.58579Z"
+                        stroke="#A0AEC0"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
     <p class="error text-xl py-2 mb-4 text-red-700">{{ error }}</p>
     <div v-show="error" class="border-b">
       <button @click="toNew">ログインはこちら</button>
     </div>
+
+    <!-- <div class="add-button shadow-lg">
+      <button @click="openModal">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.38293 0 0 5.38293 0 12C0 18.6171 5.38293 24 12 24C18.6171 24 24 18.6171 24 12C24 5.38293 18.6171 0 12 0ZM17.25 12.9999H12.9999V17.25C12.9999 17.8021 12.5521 18.2499 12 18.2499C11.4479 18.2499 11.0001 17.8021 11.0001 17.25V12.9999H6.75C6.19794 12.9999 5.75006 12.5521 5.75006 12C5.75006 11.4479 6.19794 11.0001 6.75 11.0001H11.0001V6.75C11.0001 6.19794 11.4479 5.75006 12 5.75006C12.5521 5.75006 12.9999 6.19794 12.9999 6.75V11.0001H17.25C17.8021 11.0001 18.2499 11.4479 18.2499 12C18.2499 12.5521 17.8021 12.9999 17.25 12.9999V12.9999Z" fill="#579AFF"/>
+        </svg>
+      </button>
+    </div> -->
   </div>
 </template>
 
@@ -31,20 +120,25 @@ import { now, date2string } from "@/utils/date.js";
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 import Button from "@/components/parts/Button.vue";
 import Records from "@/components/Records.vue";
-import AddRecordModal from "@/components/AddRecordModal.vue";
-import Notice from "@/components//Notice.vue";
+import FighterIcon from "@/components/parts/FighterIcon.vue";
+import AddRecordModal from "@/components/modals/AddRecordModal.vue";
+import EditRecordModal from "@/components/modals/EditRecordModal.vue";
 // import Cookies from "universal-cookie"
 
 export default {
   components: {
     Records,
     AddRecordModal,
+    EditRecordModal,
+    FighterIcon,
     Button,
-    Notice,
   },
   data() {
     return {
-      isShowModal: false,
+      isShowAddModal: false,
+      isShowEditModal: false,
+      headings: ["日付", "自分", "相手", "勝敗", "編集"],
+      editingRecord: {},
       now: now(),
       error: "",
     };
@@ -60,7 +154,9 @@ export default {
       return this.$store.state.user;
     },
     records() {
-      return this.$store.state.records;
+      return this.$store.state.records.filter(
+        (record) => record.roomType !== "arena"
+      );
     },
     isLogin() {
       return Boolean(this.$store.state.user.userId);
@@ -82,16 +178,26 @@ export default {
     },
   },
   methods: {
-    openModal() {
+    openAddModal() {
       this.error = "";
       if (!this.isLogin) {
         this.error = "登録するにはログインしてください";
         return;
       }
-      this.isShowModal = true;
+      this.isShowAddModal = true;
+    },
+    openEditModal(record) {
+      this.error = "";
+      if (!this.isLogin) {
+        this.error = "編集するにはログインしてください";
+        return;
+      }
+      this.isShowEditModal = true;
+      this.editingRecord = record;
     },
     closeModal() {
-      this.isShowModal = false;
+      this.isShowAddModal = false;
+      this.isShowEditModal = false;
     },
     toNew() {
       this.$router.push("/new");
@@ -146,4 +252,16 @@ export default {
     color: #4a5568;
   }
 }
+// .add-button {
+//   position: absolute;
+//   bottom: 50px;
+//   z-index: 10;
+//   border-radius: 50px;
+//   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.45);
+//   transition: all .5s ease;
+// }
+// .add-button:hover {
+//   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.75);
+//   bottom: 65px;
+// }
 </style>

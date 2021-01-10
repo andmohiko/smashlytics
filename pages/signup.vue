@@ -4,8 +4,8 @@
       <div class="form">
         <p class="error">{{ error }}</p>
         <form class="mb-4 px-4">
-          <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="userid" />
-          <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名" />
+          <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="5~15字の英数字で！" />
+          <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名は日本語ok🙆" />
           <TextField ref="twitterId" label="Twitter Id" placeholder="twitterId" />
         </form>
         <div class="fighter-selecter">
@@ -56,8 +56,8 @@
 <script>
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
-import TextField from '@/components/TextField.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import TextField from '@/components/input/TextField.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import firebase from '@/plugins/firebase'
 import { logEvent } from '@/utils/analytics.js'
 import Cookies from "universal-cookie"
@@ -111,7 +111,8 @@ export default {
         this.error = 'ユーザIDとユーザ名を入力してください'
         return
       }
-      if (this.userIds.includes(this.user.userId)) {
+      const nameExp = /^[a-zA-Z0-9_]{5,15}$/
+      if (!nameExp.test(this.user.userId) || this.userIds.includes(this.user.userId)) {
         this.error = '入力されたユーザIDは使用できません'
         return
       }

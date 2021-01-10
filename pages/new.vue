@@ -45,9 +45,15 @@
 
 <script>
 import Button from '@/components/parts/Button.vue'
+import { logEvent } from '@/utils/analytics.js'
+
 export default {
   components: {
     Button,
+  },
+  mounted() {
+    if (this.$store.state.user.userId) this.$router.push("/")
+    logEvent('viewNew', undefined)
   },
   computed: {
     isLogin() {

@@ -18,6 +18,19 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 1.0.0</h3>
+          <ul class="text-sm">
+            <li>公開しました！！！！！1</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 0.5.0</h3>
+          <ul class="text-sm">
+            <li>◎戦績の記録項目に連戦かどうかとVIPマッチかどうかを追加</li>
+            <li>◎プロフィールに主なプレイ時間・使用ボイチャを追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 0.4.0</h3>
           <ul class="text-sm">
             <li>◎プロフィールの公開</li>

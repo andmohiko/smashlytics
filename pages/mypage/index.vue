@@ -52,7 +52,7 @@
 <script>
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
-import FighterIcon from '@/components/FighterIcon.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import { userWinningPercentage } from '@/utils/records.js'
 
 export default {

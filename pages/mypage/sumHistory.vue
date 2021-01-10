@@ -45,7 +45,7 @@
 <script>
 import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
-import FighterSelecter from '@/components/FighterSelecter.vue'
+import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { today } from '@/utils/date.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
