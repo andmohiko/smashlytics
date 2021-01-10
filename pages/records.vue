@@ -83,8 +83,8 @@
 
 <script>
 import Button from "@/components/parts/Button.vue";
-import FighterIcon from "@/components/FighterIcon.vue";
-import EditRecordModal from "@/components/EditRecordModal.vue";
+import FighterIcon from "@/components/parts/FighterIcon.vue";
+import EditRecordModal from "@/components/modals/EditRecordModal.vue";
 import fighters from "@/assets/fighters.json";
 import Notice from "@/components//Notice.vue";
 

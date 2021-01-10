@@ -59,8 +59,16 @@
           >
           <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
           <StageSelecter ref="stage" :previousSelect="editingRecord.stage" />
-          <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIPマッチ" />
+          <Checkbox
+            ref="isRepeat"
+            :defaultValue="editingRecord.isRepeat"
+            label="連戦だった"
+          />
+          <Checkbox
+            ref="isVip"
+            :defaultValue="editingRecord.isVip"
+            label="VIPマッチ"
+          />
         </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
@@ -74,32 +82,18 @@
 </template>
 
 <script>
-<<<<<<< HEAD:components/EditRecordModal.vue
 import firebase from "@/plugins/firebase";
-import TextField from "@/components/TextField.vue";
+import TextField from "@/components/input/TextField.vue";
 import Button from "@/components/parts/Button.vue";
 import ResultButton from "@/components/parts/ResultButton.vue";
-import FighterSelecter from "@/components/FighterSelecter.vue";
+import FighterSelecter from "@/components/parts/FighterSelecter.vue";
 import StageSelecter from "@/components/parts/StageSelecter.vue";
+import Checkbox from "@/components/input/Checkbox.vue";
 import { now, date2string } from "@/utils/date.js";
 import fighters from "@/assets/fighters.json";
 import { updateUser } from "@/repositories/users.js";
 import { logEvent } from "@/utils/analytics.js";
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
-=======
-import firebase from '@/plugins/firebase'
-import TextField from '@/components/input/TextField.vue'
-import Button from '@/components/parts/Button.vue'
-import ResultButton from '@/components/parts/ResultButton.vue'
-import FighterSelecter from '@/components/parts/FighterSelecter.vue'
-import StageSelecter from '@/components/parts/StageSelecter.vue'
-import Checkbox from '@/components/input/Checkbox.vue'
-import { now, date2string } from '@/utils/date.js'
-import fighters from '@/assets/fighters.json'
-import { updateUser } from '@/repositories/users.js'
-import { logEvent } from '@/utils/analytics.js'
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
->>>>>>> 37feb388fd2f834f257953cdde56de61859693de:components/modals/EditRecordModal.vue
 
 export default {
   props: {
@@ -118,10 +112,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
-<<<<<<< HEAD:components/EditRecordModal.vue
-=======
-    Checkbox
->>>>>>> 37feb388fd2f834f257953cdde56de61859693de:components/modals/EditRecordModal.vue
+    Checkbox,
   },
   data() {
     return {
@@ -183,16 +174,10 @@ export default {
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
         stage: this.$refs.stage.input,
-<<<<<<< HEAD:components/EditRecordModal.vue
+        isRepeat: this.$refs.isRepeat.input,
+        isVip: this.$refs.isVip.input,
       };
       const db = firebase.firestore();
-
-=======
-        isRepeat: this.$refs.isRepeat.input,
-        isVip: this.$refs.isVip.input
-      }
-      const db = firebase.firestore()
->>>>>>> 37feb388fd2f834f257953cdde56de61859693de:components/modals/EditRecordModal.vue
       try {
         const sendingRecord = db
           .collection("records")

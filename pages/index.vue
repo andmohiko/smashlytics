@@ -15,17 +15,10 @@
     </div>
 
     <div class="results">
-      <<<<<<< HEAD
-      <p v-show="isLogin" class="results-number">
-        本日の戦績: {{ resultsToday }}
-      </p>
-      <Button @onClick="openModal" label="戦績を登録する" />
-      =======
       <p v-show="isLogin" class="results-number">
         本日の戦績: {{ resultsToday }}
       </p>
       <Button @onClick="openAddModal" label="戦績を登録する" />
-      >>>>>>> 37feb388fd2f834f257953cdde56de61859693de
     </div>
 
     <div class="records">
