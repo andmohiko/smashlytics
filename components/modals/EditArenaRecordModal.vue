@@ -34,7 +34,12 @@
         <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="editingRecord.stage" />
+          <StageSelecter
+            ref="stage"
+            :isShowSmamateStages="true"
+            :previousSelect="editingRecord.stage"
+            :isShowOptionEmpty="true"
+          />
           <TextField ref="against" :defaultValue="editingRecord.against" label="対戦相手" placeholder="もひこ" />
         </div>
         <div class="pb-4">
@@ -155,18 +160,18 @@ export default {
           return updatingRecord
         })
         this.$store.commit('setRecords', updatedRecords)
-        // if (this.originalResult !== updatingRecord.result) {
-        //   const updateUserDto = {
-        //     results: {
-        //       matches: this.user.results.matches,
-        //       wins: updatingRecord.result ? this.user.results.wins + 1 : this.user.results.wins - 1,
-        //       loses: updatingRecord.result ? this.user.results.loses - 1 : this.user.results.loses + 1,
-        //     }
-        //   }
-        //   updateUser(this.user, updateUserDto)
-        //   logEvent('reverseResult', undefined)
-        //   this.$store.dispatch('getUser', this.user.userId)
-        // }
+        if (this.originalResult !== updatingRecord.result) {
+          const updateUserDto = {
+            resultsArena: {
+              matches: this.user.resultsArena.matches,
+              wins: updatingRecord.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins - 1,
+              loses: updatingRecord.result ? this.user.resultsArena.loses - 1 : this.user.resultsArena.loses + 1,
+            }
+          }
+          updateUser(this.user, updateUserDto)
+          logEvent('reverseResult', undefined)
+          this.$store.dispatch('getUser', this.user.userId)
+        }
       } catch(error) {
         console.log('error in sending record', error)
       }
@@ -178,15 +183,15 @@ export default {
         db.collection("records").doc(this.editingRecord.docId).delete()
         const deletedRecords = this.records.filter(record => record.docId !== this.editingRecord.docId)
         this.$store.commit('setRecords', deletedRecords)
-        // const updateUserDto = {
-        //   results: {
-        //     matches: this.user.results.matches - 1,
-        //     wins: this.editingRecord.result ? this.user.results.wins - 1 : this.user.results.wins,
-        //     loses: this.editingRecord.result ? this.user.results.loses : this.user.results.loses - 1,
-        //   }
-        // }
-        // updateUser(this.user, updateUserDto)
-        // this.$store.dispatch('getUser', this.user.userId)
+        const updateUserDto = {
+          resultsArena: {
+            matches: this.user.resultsArena.matches - 1,
+            wins: this.editingRecord.result ? this.user.resultsArena.wins - 1 : this.user.resultsArena.wins,
+            loses: this.editingRecord.result ? this.user.resultsArena.loses : this.user.resultsArena.loses - 1,
+          }
+        }
+        updateUser(this.user, updateUserDto)
+        this.$store.dispatch('getUser', this.user.userId)
         logEvent('deleteResult', undefined)
         console.log('deleted record')
       } catch(error) {

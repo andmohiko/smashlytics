@@ -70,7 +70,7 @@
           name="kalosPokemnLeague"
           :value="'kalosPokemnLeague'"
         />
-        <label for="stage-empty" class="pr-2 whitespace-nowrap">カロスポケモンリーグ</label>
+        <label for="stage-empty" class="pr-2 whitespace-nowrap">カロス</label>
       </div>
       <div v-if="isShowSmamateStages" class="option pb-1">
         <input
@@ -80,7 +80,7 @@
           name="lylatCruise"
           :value="'lylatCruise'"
         />
-        <label for="stage-empty" class="pr-2">ライラットクルーズ</label>
+        <label for="stage-empty" class="pr-2">ライラット</label>
       </div>
       <div v-if="isShowOptionEmpty" class="option pb-1">
         <input

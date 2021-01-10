@@ -140,6 +140,11 @@ export default {
             wins: 0,
             loses: 0,
             matches: 0
+          },
+          resultsArena: {
+            wins: 0,
+            loses: 0,
+            matches: 0
           }
         }
         db.collection('users')

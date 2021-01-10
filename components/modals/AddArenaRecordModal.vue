@@ -35,6 +35,7 @@
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" :isShowOptionEmpty="false" />
+          <!-- <AgainstSelecter :fightedPlayers="fightedPlayers" :previousSelect="lastRecord.against" /> -->
           <TextField ref="against" :defaultValue="lastRecord.against" label="対戦相手" placeholder="もひこ" />
         </div>
         <div class="submit">
@@ -52,6 +53,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -72,7 +74,8 @@ export default {
     ResultButton,
     TextField,
     FighterSelecter,
-    StageSelecter
+    StageSelecter,
+    AgainstSelecter
   },
   data() {
     return {
@@ -96,7 +99,7 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType === 'arena')
     },
     usedFighterIds() {
       if (!this.records.length) return Object.keys(this.fighters).sort()
@@ -104,6 +107,13 @@ export default {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
+    },
+    fightedPlayers() {
+      if (!this.records.length) return []
+      const fighted = this.records.map(record => {
+        return record.against
+      })
+      return Array.from(new Set(fighted))
     }
   },
   methods: {
@@ -137,27 +147,27 @@ export default {
         stage: this.$refs.stage.input,
         against: this.$refs.against.input
       }
-      // const updateUserDto = {
-      //   resultsArena: {
-      //     matches: this.user.resultsArena.matches + 1,
-      //     wins: this.record.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins,
-      //     loses: this.record.result ? this.user.resultsArena.loses : this.user.resultsArena.loses + 1,
-      //   },
-      //   updatedAt: serverTimestamp
-      // }
+      const updateUserDto = {
+        resultsArena: {
+          matches: this.user.resultsArena.matches + 1,
+          wins: this.record.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins,
+          loses: this.record.result ? this.user.resultsArena.loses : this.user.resultsArena.loses + 1,
+        },
+        updatedAt: serverTimestamp
+      }
       const db = firebase.firestore()
       const batch = db.batch()
       try {
         const newRecordRef = db.collection('records').doc()
         batch.set(newRecordRef, newRecord)
-        // const userRef = db.collection('users').doc(this.user.userId)
-        // batch.update(userRef, updateUserDto)
+        const userRef = db.collection('users').doc(this.user.userId)
+        batch.update(userRef, updateUserDto)
         batch.commit().catch(function(error) {
           console.log("Error updating in batch:", error);
         })
         newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
-        // this.$store.dispatch('updateUser', updateUserDto)
+        this.$store.dispatch('updateUser', updateUserDto)
         logEvent('addResult', undefined)
         this.onClose()
       } catch(error) {
