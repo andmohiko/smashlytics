@@ -2,6 +2,8 @@ import firebase from '@/plugins/firebase'
 const analitics = firebase.analytics()
 
 // LogEvent = {
+  // 'getUser'
+  // 'getRecords'
 //   'addResult',
 //   'editResult',
 //   'deleteResult',
