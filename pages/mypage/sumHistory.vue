@@ -68,6 +68,9 @@ export default {
       fighters
     }
   },
+  mounted() {
+    this.$router.go(-1)
+  },
   computed: {
     user() {
       return this.$store.state.user

@@ -62,7 +62,8 @@
     </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="title text-center">戦績管理</p>
-      <div v-show="!isLogin" class="pb-20">
+      <span class="text-xs">ただいまメンテナンス中です🙇‍</span>
+      <!-- <div v-show="!isLogin" class="pb-20">
         <p class="error text-xl py-2 mb-4 text-red-700">登録するにはログインしてください</p>
         <div class="border-b">
           <button @click="toNew">ログインはこちら</button>
@@ -75,7 +76,7 @@
       <span class="text-xs">他の記録アプリから移行する際にお使いください。</span>
       <span class="text-xs">相手ファイターごとに勝敗数を入力してください</span>
       <span class="text-xs">(他アプリとこのアプリを行ったり来たりするのはちょっと面倒かもです🙇‍♀️)</span>
-      <span class="text-xs">今日の日付で記録されます。</span>
+      <span class="text-xs">今日の日付で記録されます。</span> -->
     </div>
   </div>
 </template>

@@ -112,8 +112,13 @@ export default {
         return
       }
       const nameExp = /^[a-zA-Z0-9_]{5,15}$/
+      const numExp = /^[0-9]{5,15}$/
       if (!nameExp.test(this.user.userId) || this.userIds.includes(this.user.userId)) {
         this.error = '入力されたユーザIDは使用できません'
+        return
+      }
+      if (numExp.test(this.user.userId)) {
+        this.error = '英字を含めてください'
         return
       }
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
