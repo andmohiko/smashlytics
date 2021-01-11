@@ -39,10 +39,16 @@ export default {
         isPrivateAccount: false
       }
     }
-
-    const pageUserId = route.path.replaceAll('/', '')
     // ユーザかどうか
     const myUserId = isLogin ? store.state.user.userId : null
+    let pageUserId = ''
+    try {
+      pageUserId = route.path.replaceAll('/', '')  
+    } catch(e) {
+      console.log('error at replacing /', e, route.path)
+      // route取得に失敗したのでマイページに飛ばすために自分のユーザIDを入れる
+      pageUserId = store.state.user.userId
+    }
 
     let pageData = {
       isMyUserPage: (myUserId === pageUserId)
