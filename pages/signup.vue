@@ -89,7 +89,7 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          this.userIds.push(doc.id)
+          this.userIds.push(doc.data().userOriginalId)
         })
       })
   },
@@ -99,6 +99,7 @@ export default {
     },
     submit () {
       console.log('submit')
+      this.error = ''
       const authId = this.$store.state.uid
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
@@ -137,6 +138,7 @@ export default {
           createdAt: serverTimestamp,
           updatedAt: serverTimestamp,
           authId,
+          userOriginalId: this.user.userId,
           username: this.user.username,
           twitterId: this.user.twitterId,
           main: this.user.mainFighterId,
@@ -149,14 +151,14 @@ export default {
           }
         }
         db.collection('users')
-          .doc(this.user.userId)
+          .doc(authId)
           .set(createUserDto)
           .catch(error => {
             console.error("Error creating document: ", error);
           })
         this.$store.commit('setUser', {
           ...createUserDto,
-          userId: this.user.userId
+          userId: authId
         })
         this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])

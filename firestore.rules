@@ -1,6 +1,9 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // match /{document=**} {
+    //   allow read, write;
+    // }
     function requestData() {
       return request.resource.data;
     }
@@ -24,6 +27,7 @@ service cloud.firestore {
       								&& 'createdAt' in requestData() && requestData().createdAt is timestamp
                       && 'updatedAt' in requestData() && requestData().updatedAt is timestamp
                       && 'authId' in requestData() && requestData().authId is string
+                      && 'userOriginalId' in requestData() && requestData().userOriginalId is string
                       && 'username' in requestData() && requestData().username is string;
       allow update: if isSignedIn()
       								&& 'updatedAt' in requestData() && requestData().updatedAt is timestamp;
@@ -34,6 +38,7 @@ service cloud.firestore {
                       && 'createdAt' in requestData() && requestData().createdAt is timestamp
                       && 'updatedAt' in requestData() && requestData().updatedAt is timestamp
                       && 'userId' in requestData() && requestData().userId is string
+                      && 'userOriginalId' in requestData() && requestData().userOriginalId is string
                       && 'fighter' in requestData() && requestData().fighter is string
                       && 'fighterId' in requestData() && requestData().fighterId is string
                       && 'opponent' in requestData() && requestData().opponent is string

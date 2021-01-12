@@ -24,7 +24,8 @@ const state = {
   notice: {
     noticeType: null,
     message: ''
-  }
+  },
+  version: 0
 }
 
 const actions = {
@@ -60,7 +61,7 @@ const actions = {
       this.$router.push("/signup")
       return
     }
-    const userId = authUser.userId
+    const userId = authId
     commit('setIsLogin', true)
     dispatch('getUser', userId)
     dispatch('getRecords', userId)
@@ -116,7 +117,10 @@ const mutations = {
   },
   setNotice(state, payload) {
     state.notice = payload
-  }
+  },
+  setVersion(state, payload) {
+    state.version = payload
+  },
 }
 
 const store = () => {

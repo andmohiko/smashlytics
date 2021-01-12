@@ -38,3 +38,30 @@ export async function updateUser(user, dto) {
       console.log("Error updating user in usecase:", error);
     })
 }
+
+export async function getUserByUserOriginalId(userOriginalId) {
+  const user = await db
+    .collection('users')
+    .where("userOriginalId", "==", userOriginalId)
+    .limit(1)
+    .get()
+    .then(querySnapshot => {
+      let userArray = []
+      querySnapshot.forEach(doc => {
+        userArray.push(doc.data())
+      })
+      return userArray[0]
+    }).catch(function(error) {
+      console.log("Error getting records in usecase:", error);
+    })
+  if (!user) return
+  const storageRef = storage.ref()
+  const profileImgRef = storageRef.child(user.profileImgPath)
+  if (!profileImgRef) return user
+  const profileImg = await profileImgRef.getDownloadURL()
+  return {
+    profileImg,
+    userId: user.authId,
+    ...user
+  }
+}
