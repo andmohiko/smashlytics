@@ -16,8 +16,7 @@ export default async function({ app, store }) {
         })
         return Number(versionsArray[0])
       })
-    console.log('now ver', version)
-    console.log('latest ver', latestVersion)
+    console.log('now ver', version, 'latest ver', latestVersion)
     // 期待するバージョン以上なら何もしない
     if (latestVersion <= version) return
     // 反映させるためにスーパーリロードを促す

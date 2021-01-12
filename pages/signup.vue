@@ -89,7 +89,7 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          this.userIds.push(doc.id)
+          this.userIds.push(doc.data().userOriginalId)
         })
       })
   },
@@ -99,6 +99,7 @@ export default {
     },
     submit () {
       console.log('submit')
+      this.error = ''
       const authId = this.$store.state.uid
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
