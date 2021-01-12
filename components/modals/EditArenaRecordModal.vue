@@ -40,7 +40,7 @@
             :previousSelect="editingRecord.stage"
             :isShowOptionEmpty="true"
           />
-          <TextField ref="against" :defaultValue="editingRecord.against" label="対戦相手" placeholder="もひこ" />
+          <AgainstSelecter ref="against" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
         </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
@@ -60,6 +60,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
 import fighters from '@/assets/fighters.json'
@@ -84,6 +85,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
+    AgainstSelecter,
     Checkbox
   },
   data() {
@@ -103,13 +105,20 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType === 'arena')
     },
     usedFighterIds() {
       const used = this.$store.state.records.map(record => {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
+    },
+    fightedPlayers() {
+      if (!this.records.length) return []
+      const fighted = this.records.map(record => {
+        return record.against
+      })
+      return Array.from(new Set(fighted))
     }
   },
   methods: {

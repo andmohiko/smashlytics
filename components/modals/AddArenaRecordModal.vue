@@ -35,8 +35,7 @@
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" :isShowOptionEmpty="false" />
-          <!-- <AgainstSelecter :fightedPlayers="fightedPlayers" :previousSelect="lastRecord.against" /> -->
-          <TextField ref="against" :defaultValue="lastRecord.against" label="対戦相手" placeholder="もひこ" />
+          <AgainstSelecter ref="against" :fightedPlayers="fightedPlayers" :previousSelect="''" />
         </div>
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
