@@ -7,7 +7,7 @@
       </div>
       <div class="name pb-4">
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
-        <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
+        <p class="userId text-xl text-gray-700">{{ user.userOriginalId }}</p>
         <p class="userId text-base pt-2 text-gray-700">{{ user.selfIntroduction }}</p>
         <div v-if="user.twitterId" class="twitter text-gray-700 flex items-center text-base my-2">
           <svg width="20" height="20" fill="#49A1F2" class="text-white opacity-40">

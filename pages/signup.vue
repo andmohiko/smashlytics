@@ -137,6 +137,7 @@ export default {
           createdAt: serverTimestamp,
           updatedAt: serverTimestamp,
           authId,
+          userOriginalId: this.user.userId,
           username: this.user.username,
           twitterId: this.user.twitterId,
           main: this.user.mainFighterId,
@@ -149,7 +150,7 @@ export default {
           }
         }
         db.collection('users')
-          .doc(this.user.userId)
+          .doc(authId)
           .set(createUserDto)
           .catch(error => {
             console.error("Error creating document: ", error);

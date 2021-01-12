@@ -135,6 +135,7 @@ export default {
         createdAt: serverTimestamp,
         updatedAt: serverTimestamp,
         userId: this.user.userId,
+        userOriginalId: this.user.userOriginalId,
         fighter: this.fighters[this.record.fighterId].name,
         fighterId: this.record.fighterId,
         opponent: this.fighters[this.record.opponentId].name,

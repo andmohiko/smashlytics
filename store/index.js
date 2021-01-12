@@ -60,7 +60,7 @@ const actions = {
       this.$router.push("/signup")
       return
     }
-    const userId = authUser.userId
+    const userId = authId
     commit('setIsLogin', true)
     dispatch('getUser', userId)
     dispatch('getRecords', userId)

@@ -8,7 +8,7 @@
       <div class="name pb-4">
         <p class="userId text-base pt-2 text-gray-700">非公開</p>
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
-        <p class="userId text-xl text-gray-700">{{ user.userId }}</p>
+        <p class="userId text-xl text-gray-700">{{ user.userOriginalId }}</p>
       </div>
     </div>
   </div>
