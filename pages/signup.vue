@@ -157,7 +157,7 @@ export default {
           })
         this.$store.commit('setUser', {
           ...createUserDto,
-          userId: this.user.userId
+          userId: authId
         })
         this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])
