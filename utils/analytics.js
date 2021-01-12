@@ -4,24 +4,27 @@ const analitics = firebase.analytics()
 // LogEvent = {
   // 'getUser'
   // 'getRecords'
-//   'addResult',
-//   'editResult',
-//   'deleteResult',
-//   'reverseResult'
+  // 'getRecordsInTop'
+  // 'getRecordsInAnalytics'
+  
+  // 'addResult',
+  // 'editResult',
+  // 'deleteResult',
+  // 'reverseResult'
 
-//   'viewTop'
-//   'viewRecords'
-//   'viewAnalytics'
-//   'viewMypage'
-//   'viewNew'
+  // 'viewTop'
+  // 'viewRecords'
+  // 'viewAnalytics'
+  // 'viewMypage'
+  // 'viewNew'
 
-//   'editProfile',
+  // 'editProfile',
 
-//   'shareOnTwitter'
+  // 'shareOnTwitter'
 
-//   'signup',
-//   'logoutFromSettings'
-//   'logoutFromSignup'
+  // 'signup',
+  // 'logoutFromSettings'
+  // 'logoutFromSignup'
 // }
 
 // import { logEvent } from '@/utils/analytics.js'
