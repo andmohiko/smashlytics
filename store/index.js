@@ -24,7 +24,8 @@ const state = {
   notice: {
     noticeType: null,
     message: ''
-  }
+  },
+  version: 0
 }
 
 const actions = {
@@ -116,7 +117,10 @@ const mutations = {
   },
   setNotice(state, payload) {
     state.notice = payload
-  }
+  },
+  setVersion(state, payload) {
+    state.version = payload
+  },
 }
 
 const store = () => {

@@ -60,9 +60,9 @@ export default {
       // analyticsDomainName: domain                 // アナリティクスと連携する場合のみ必要
     }]
   ],
-  // router: {
-  //   middleware: 'auth'
-  // },
+  router: {
+    middleware: 'version'
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
