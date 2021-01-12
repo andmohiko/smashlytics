@@ -16,6 +16,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+        'data-ad-client': process.env.GA_ADSENSE_ID,
+        async: true
+      }
     ]
   },
   /*
@@ -52,7 +59,13 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    ['@nuxtjs/google-adsense', {
+      id: process.env.GA_ADSENSE_ID,
+      pageLevelAds: true,
+      // analyticsUacct: process.env.GA_TRACKING_ID, // アナリティクスと連携する場合のみ必要
+      // analyticsDomainName: domain                 // アナリティクスと連携する場合のみ必要
+    }]
   ],
   // router: {
   //   middleware: 'auth'
