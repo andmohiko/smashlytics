@@ -23,7 +23,7 @@ import Mypage from "@/components/Mypage.vue";
 import PublicAccountPage from "@/components/PublicAccountPage.vue";
 import PrivateAccountPage from "@/components/PrivateAccountPage.vue";
 import UserNotFound from "@/components/UserNotFound.vue";
-import { getUser } from '@/repositories/users.js'
+import { getUserByUserOriginalId } from '@/repositories/users.js'
 import { getRecords } from '@/repositories/records.js'
 import { logEvent } from '@/utils/analytics.js'
 import Cookies from "universal-cookie"
@@ -49,7 +49,8 @@ export default {
     const myUserId = isLogin ? store.state.user.userOriginalId : null
     let pageUserId = ''
     try {
-      pageUserId = route.path.replaceAll('/', '')  
+      pageUserId = route.path.replaceAll('/', '')
+
     } catch(e) {
       console.log('error at replacing /', e, route.path)
       // route取得に失敗したのでマイページに飛ばすために自分のユーザIDを入れる
@@ -62,7 +63,7 @@ export default {
     // 自分のページ
     if (myUserId === pageUserId) return pageData
 
-    const pageUser = await getUser(pageUserId)
+    const pageUser = await getUserByUserOriginalId(pageUserId)
     // ユーザが見つかりませんでした
     if (!pageUser) {
       return {
