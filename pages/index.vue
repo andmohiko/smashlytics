@@ -11,6 +11,12 @@
       </template>
     </div>
 
+    <div class="text-red-800 text-base flex flex-col">
+      <span>今晩メンテします！！</span>
+      <span>しばらく使えなくなります！ごめんなさい！！</span>
+      <span>終わったらtwitter(<a href="https://twitter.com/mohiko_jair/" class="text-blue-900">@mohiko_jair</a>)で告知します🙇‍</span>
+      <span>応援しててください！！！！！！！！！！！れ！</span>
+    </div>
     <div class="results">
       <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openAddModal" label="戦績を登録する" />
