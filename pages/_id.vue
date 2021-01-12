@@ -12,6 +12,9 @@
     <div v-else>
       <UserNotFound />
     </div>
+    <!-- <div class="logout text-gray-500">
+      <button @click="logout">googleログアウト</button>
+    </div> -->
   </div>
 </template>
 
@@ -22,6 +25,9 @@ import PrivateAccountPage from "@/components/PrivateAccountPage.vue";
 import UserNotFound from "@/components/UserNotFound.vue";
 import { getUser } from '@/repositories/users.js'
 import { getRecords } from '@/repositories/records.js'
+import { logEvent } from '@/utils/analytics.js'
+import Cookies from "universal-cookie"
+
 
 export default {
   components: {
@@ -40,14 +46,14 @@ export default {
       }
     }
     // ユーザかどうか
-    const myUserId = isLogin ? store.state.user.userId : null
+    const myUserId = isLogin ? store.state.user.userOriginalId : null
     let pageUserId = ''
     try {
       pageUserId = route.path.replaceAll('/', '')  
     } catch(e) {
       console.log('error at replacing /', e, route.path)
       // route取得に失敗したのでマイページに飛ばすために自分のユーザIDを入れる
-      pageUserId = store.state.user.userId
+      pageUserId = store.state.user.userOriginalId
     }
 
     let pageData = {
@@ -88,6 +94,19 @@ export default {
   mounted() {
     if (!this.$store.state.isLogin) this.$router.push("/new")
   },
+  methods: {
+    logout(){
+      const cookie = new Cookies()
+      cookie.remove('smash_access_token')
+      this.$store.commit('setUid', '')
+      this.$store.commit('setIsLogin', false)
+      this.$store.commit('setUser', {})
+      this.$store.commit('setRecords', [])
+      window.localStorage.clear();
+      logEvent('logoutFromMypage', undefined)
+      this.$router.push("/new")
+    }
+  }
 }
 </script>
 
@@ -115,4 +134,15 @@ export default {
   color: black;
   letter-spacing: 1px;
 }
+.logout {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: right;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
 </style>
