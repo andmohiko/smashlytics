@@ -59,6 +59,7 @@ import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
+import { calcWinningPercentage } from '@/utils/records.js'
 import fighters from '@/assets/fighters.json'
 import { updateUser } from '@/repositories/users.js'
 import { logEvent } from '@/utils/analytics.js'
@@ -100,7 +101,7 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     usedFighterIds() {
       const used = this.$store.state.records.map(record => {
@@ -158,11 +159,12 @@ export default {
         })
         this.$store.commit('setRecords', updatedRecords)
         if (this.originalResult !== updatingRecord.result) {
+          const results = calcWinningPercentage(updatedRecords)
           const updateUserDto = {
             results: {
-              matches: this.user.results.matches,
-              wins: updatingRecord.result ? this.user.results.wins + 1 : this.user.results.wins - 1,
-              loses: updatingRecord.result ? this.user.results.loses - 1 : this.user.results.loses + 1,
+              matches: results.matches,
+              wins: results.wins,
+              loses: results.loses
             }
           }
           updateUser(this.user, updateUserDto)
@@ -180,11 +182,12 @@ export default {
         db.collection("records").doc(this.editingRecord.docId).delete()
         const deletedRecords = this.records.filter(record => record.docId !== this.editingRecord.docId)
         this.$store.commit('setRecords', deletedRecords)
+        const results = calcWinningPercentage(deletedRecords)
         const updateUserDto = {
           results: {
-            matches: this.user.results.matches - 1,
-            wins: this.editingRecord.result ? this.user.results.wins - 1 : this.user.results.wins,
-            loses: this.editingRecord.result ? this.user.results.loses : this.user.results.loses - 1,
+            matches: results.matches,
+            wins: results.wins,
+            loses: results.loses
           }
         }
         updateUser(this.user, updateUserDto)

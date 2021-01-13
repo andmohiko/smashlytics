@@ -23,7 +23,6 @@
           <FighterIcon :fighterId="record.fighterId" size="40px" />
           <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
           <span v-else class="text-2xl text-gray-800">--</span>
-          <!-- <span class="text-base text-gray-800">{{ winningPercentageByFighter(record.fighterId) }}</span> -->
         </div>
       </div>
 
@@ -87,7 +86,7 @@ import Button from '@/components/parts/Button.vue'
 import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
 import VoiceChat from '@/components/parts/VoiceChat.vue'
-import { userWinningPercentage, calcWinningPercentage } from '@/utils/records.js'
+import { userWinningPercentage } from '@/utils/records.js'
 import { logEvent } from '@/utils/analytics.js'
 
 export default {
@@ -142,11 +141,7 @@ export default {
     toNew() {
       this.$router.push("/new")
     },
-    userWinningPercentage,
-    winningPercentageByFighter(fighterId) {
-      const recordsByFighter = this.records.filter(record => record.fighterId === fighterId)
-      return calcWinningPercentage(recordsByFighter)
-    }
+    userWinningPercentage
   }
 }
 </script>

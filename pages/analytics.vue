@@ -51,7 +51,7 @@
       
       <p class="message">
         <span>{{ periodText }}の記録は {{ recordsFiltered.length }} 試合です。</span>
-        <span>({{ calcWinningPercentage(recordsFiltered) }})</span>
+        <span>({{ winningPercentageText(recordsFiltered) }})</span>
       </p>
       <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 100%;">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
@@ -158,10 +158,6 @@ export default {
         return record.fighterId === fighterId && record.opponentId === opponentId
       })
     },
-    winningPercentage(fighterId, opponentId) {
-      const specificRecords = this.getRecordsByFighters(fighterId, opponentId)
-      return calcWinningPercentage(specificRecords)
-    },
     inPeriod(date, period) {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
@@ -169,7 +165,10 @@ export default {
     toggle() {
       return this.descending = !this.descending
     },
-    calcWinningPercentage
+    winningPercentageText(records) {
+      const results = calcWinningPercentage(records)
+      return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    }
   }
 }
 </script>
