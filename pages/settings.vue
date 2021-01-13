@@ -18,9 +18,15 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 2.0.0</h3>
+          <ul class="text-sm">
+            <li>開発者の大きな過ちを修正しました。</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 1.0.0</h3>
           <ul class="text-sm">
-            <li>公開しました！！！！！1</li>
+            <li>公開しました！！！！！</li>
           </ul>
         </div>
         <div class="version text-left mb-4">
@@ -68,11 +74,14 @@
         <button @click="toAllRecords">管理者用 全戦績</button>
       </div>
       <Button @onClick="logout" label="ログアウト" />
+      <div class="logout text-gray-500">
+        Version 2.0.0
+      </div>
       <div class="copyright">
-      <p>
-        <small>© 2020 andmohiko</small>
-      </p>
-    </div>
+        <p>
+          <small>© 2020 andmohiko</small>
+        </p>
+      </div>
     </div>
   </div>
 </template>

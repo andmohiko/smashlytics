@@ -14,8 +14,9 @@
 
 - createdAt: Timestamp 作成した時間
 - updatedAt: Timestamp 更新した時間
-- userId: String
-- authId: String
+- userId: String ←使わない
+- authId: String ←document Id
+- userOriginalId: String マイページのURL
 - username: String
 - twitterId: String
 - main: String fighterId
@@ -58,7 +59,7 @@
 
 - createdAt: Timestamp 作成した時間
 - updatedAt: Timestamp 更新した時間
-- userId: String ユーザ名
+- userId: String authId
 - fighter: String 自分のファイター
 - fighterId: String 自分のファイターID
 - opponent: String 自分のファイター

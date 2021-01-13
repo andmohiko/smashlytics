@@ -40,7 +40,7 @@
           </nuxt-link>
         </li>
         <li v-if="user.userId">
-          <nuxt-link :to="{ name: 'id', params: { id: user.userId, trailingSlash: false }}">
+          <nuxt-link :to="{ name: 'id', params: { id: user.userOriginalId, trailingSlash: false }}">
             <div class="menu-item" @click="sendEventMypage">
               <div class="menu-icon">
                 <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

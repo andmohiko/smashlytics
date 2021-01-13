@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     console.log('path', this.$route.path.slice(1))
-    console.log(getUser(this.$route.path.slice(1)))
+    // console.log(getUser(this.$route.path.slice(1)))
   },
   computed: {
     user() {

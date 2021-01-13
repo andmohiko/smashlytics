@@ -42,7 +42,7 @@ export default {
       return this.$store.state.user
     },
     twitterShareText() {
-      return makeShareText(this.user.userId)
+      return makeShareText(this.user.userOriginalId)
     }
   },
   methods: {

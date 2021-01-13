@@ -135,6 +135,7 @@ export default {
         createdAt: serverTimestamp,
         updatedAt: serverTimestamp,
         userId: this.user.userId,
+        userOriginalId: this.user.userOriginalId,
         roomType: 'online',
         fighter: this.fighters[this.record.fighterId].name,
         fighterId: this.record.fighterId,
@@ -159,7 +160,7 @@ export default {
       try {
         const newRecordRef = db.collection('records').doc()
         batch.set(newRecordRef, newRecord)
-        const userRef = db.collection('users').doc(this.user.userId)
+        const userRef = db.collection('users').doc(this.user.authId)
         batch.update(userRef, updateUserDto)
         batch.commit().catch(function(error) {
           console.log("Error updating in batch:", error);

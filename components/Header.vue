@@ -33,6 +33,8 @@
 
 
 <script>
+import { logEvent } from '@/utils/analytics.js'
+
 export default {
   computed: {
     user() {
@@ -57,7 +59,7 @@ export default {
     },
     isSettingsiconPage() {
       const route = this.$route.path.replaceAll('/', '')
-      return (route === this.user.userId)
+      return (route === this.user.userOriginalId)
     },
     routename() {
       return this.$route.name
@@ -103,6 +105,8 @@ export default {
     },
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
+      if (this.$route.path === '/') logEvent('getRecordsInTop', undefined)
+      if (this.$route.path === '/analytics' || this.$route.path === '/analytics/') logEvent('getRecordsInAnalytics', undefined)
     },
   }
 }

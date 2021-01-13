@@ -4,8 +4,8 @@
       <div class="form">
         <p class="error">{{ error }}</p>
         <form class="mb-4 px-4">
-          <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="userid" />
-          <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名" />
+          <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="5~15字の英数字で！" />
+          <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名は日本語ok🙆" />
           <TextField ref="twitterId" label="Twitter Id" placeholder="twitterId" />
         </form>
         <div class="fighter-selecter">
@@ -89,7 +89,7 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          this.userIds.push(doc.id)
+          this.userIds.push(doc.data().userOriginalId)
         })
       })
   },
@@ -99,6 +99,7 @@ export default {
     },
     submit () {
       console.log('submit')
+      this.error = ''
       const authId = this.$store.state.uid
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
@@ -111,8 +112,14 @@ export default {
         this.error = 'ユーザIDとユーザ名を入力してください'
         return
       }
-      if (this.userIds.includes(this.user.userId)) {
+      const nameExp = /^[a-zA-Z0-9_]{5,15}$/
+      const numExp = /^[0-9]{5,15}$/
+      if (!nameExp.test(this.user.userId) || this.userIds.includes(this.user.userId)) {
         this.error = '入力されたユーザIDは使用できません'
+        return
+      }
+      if (numExp.test(this.user.userId)) {
+        this.error = '英字を含めてください'
         return
       }
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
@@ -131,6 +138,7 @@ export default {
           createdAt: serverTimestamp,
           updatedAt: serverTimestamp,
           authId,
+          userOriginalId: this.user.userId,
           username: this.user.username,
           twitterId: this.user.twitterId,
           main: this.user.mainFighterId,
@@ -148,14 +156,14 @@ export default {
           }
         }
         db.collection('users')
-          .doc(this.user.userId)
+          .doc(authId)
           .set(createUserDto)
           .catch(error => {
             console.error("Error creating document: ", error);
           })
         this.$store.commit('setUser', {
           ...createUserDto,
-          userId: this.user.userId
+          userId: authId
         })
         this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])
