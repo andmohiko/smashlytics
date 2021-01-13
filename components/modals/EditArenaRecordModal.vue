@@ -159,7 +159,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-        logEvent('editResult', undefined)
+        logEvent('editArenaResult', undefined)
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
@@ -178,7 +178,7 @@ export default {
             }
           }
           updateUser(this.user, updateUserDto)
-          logEvent('reverseResult', undefined)
+          logEvent('reverseArenaResult', undefined)
           this.$store.dispatch('getUser', this.user.userId)
         }
       } catch(error) {
@@ -201,7 +201,7 @@ export default {
         }
         updateUser(this.user, updateUserDto)
         this.$store.dispatch('getUser', this.user.userId)
-        logEvent('deleteResult', undefined)
+        logEvent('deleteArenaResult', undefined)
         console.log('deleted record')
       } catch(error) {
         console.log('error deleting record', error)

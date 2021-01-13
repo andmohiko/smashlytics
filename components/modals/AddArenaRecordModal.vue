@@ -167,7 +167,7 @@ export default {
         newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
         this.$store.dispatch('updateUser', updateUserDto)
-        logEvent('addResult', undefined)
+        logEvent('addArenaResult', undefined)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)

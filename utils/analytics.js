@@ -11,6 +11,10 @@ const analitics = firebase.analytics()
   // 'editResult',
   // 'deleteResult',
   // 'reverseResult'
+  // 'addArenaResult'
+  // 'editArenaResult'
+  // 'deleteArenaResult'
+  // 'reverseArenaResult'
 
   // 'viewTop'
   // 'viewRecords'
