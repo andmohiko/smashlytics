@@ -12,7 +12,7 @@
     </div>
 
     <div class="results">
-      <!-- <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p> -->
+      <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openAddModal" label="戦績を登録する" />
     </div>
 
@@ -24,14 +24,14 @@
               <tr class="text-left">
                 <th
                   v-for="heading in headings" :key="heading.id"
-                  class="bg-gray-100 sticky top-0 border-b border-gray-200 px-4 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+                  class="bg-gray-100 sticky top-0 border-b border-gray-200 px-3 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
                 >{{ heading }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="record in records" :key="record.id">
                 <td class="border-dashed border-t border-gray-200 px-3">
-                  <span class="text-gray-700 px-1 py-3 flex items-center">
+                  <span class="text-gray-700 px-1 py-2 flex items-center">
                     {{ record.createdAtString.split(' ')[0].slice(5) }}
                   </span>
                 </td>
@@ -42,11 +42,11 @@
                   <FighterIcon :fighterId="record.opponentId" size="32px" />
                 </td>
                 <td class="border-dashed border-t border-gray-200">
-                  <span class="text-gray-700 px-3 py-3 flex items-center">{{ record.against }}</span>
+                  <span class="text-gray-700 px-2 py-3 flex items-center">{{ normalizeAgainstName(record.against) }}</span>
                 </td>
                 <td class="border-dashed border-t border-gray-200">
-                  <span v-if="record.result" class="text-red-700 px-3 py-3 flex items-center">勝ち</span>
-                  <span v-else class="text-blue-700 px-3 py-3 flex items-center">負け</span>
+                  <span v-if="record.result" class="text-red-700 px-2 py-3 flex items-center">勝ち</span>
+                  <span v-else class="text-blue-700 px-2 py-3 flex items-center">負け</span>
                 </td>
                 <td class="border-dashed border-t border-gray-200 text-gray-600 text-xs">
                   <button class="pt-1" @click="openEditModal(record)">
@@ -88,7 +88,8 @@ export default {
       headings: ['日付','自分','相手','','勝敗','編集'],
       isShowAddModal: false,
       isShowEditModal: false,
-      editingRecord: {}
+      editingRecord: {},
+      now: now()
     }
   },
   computed: {
@@ -118,6 +119,10 @@ export default {
   methods: {
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
+    },
+    normalizeAgainstName(name) {
+      if (name.length < 6) return name
+      return name.slice(0,4) + '...'
     },
     openAddModal() {
       this.isShowAddModal = true
@@ -157,4 +162,13 @@ export default {
   color: black;
   letter-spacing: 1px;
 }
+.results {
+  &-number {
+    font-size: 20px;
+    color: #4a5568;
+    letter-spacing: 2px;
+    margin: 4px 0 4px 0;
+  }
+}
+
 </style>

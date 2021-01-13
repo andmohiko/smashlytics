@@ -66,8 +66,8 @@ export default {
     },
     pageTitle() {
       switch (this.routename) {
-        case 'records': {
-          return '戦績一覧'
+        case 'arena': {
+          return '専用部屋'
         }
         case 'analytics': {
           return '戦績分析'
@@ -123,6 +123,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.arena {
+  background-color: #575dff;
 }
 .title {
   font-size: 24px;
