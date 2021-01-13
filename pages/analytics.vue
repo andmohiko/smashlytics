@@ -7,6 +7,17 @@
             <p class="text-l text-left pl-4">並べ替え</p>
             <div class="toggleDescending">
               <template>
+                <div class="flex justify-between items-center px-4 py-1" @click="group">
+                  <p class="text-right pr-2">まとめる</p>
+                  <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': groupSimilarFighters}">
+                    <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': groupSimilarFighters,}"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+            {{ groupSimilarFighters }}
+            <div class="toggleDescending">
+              <template>
                 <div class="flex justify-between items-center px-4 py-1" @click="toggle">
                   <p class="text-right pr-2">逆順</p>
                   <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
@@ -66,8 +77,10 @@
             <tr v-for="entry in entries" :key="entry.id">
               <td class="border-dashed border-t border-gray-200 px-3"
               ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
-              <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="entry.opponentId" size="32px" /></td>
+              <td class="border-dashed border-t border-gray-200 px-3 py-2 flex">
+                <FighterIcon :fighterId="entry.opponentId" size="32px" />
+                <FighterIcon :fighterId="entry.opponentId" v-if="showSimilarFighter(entry.opponentId)" size="32px" />
+              </td>
               <td class="border-dashed border-t border-gray-200 px-3"
               ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
               <td class="border-dashed border-t border-gray-200 px-3"
@@ -84,6 +97,7 @@
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import fighters from '@/assets/fighters.json'
 
 export default {
   components: {
@@ -94,21 +108,32 @@ export default {
       period: 7,
       stage: 'all',
       sorting: 'opponentId',
+      groupSimilarFighters: true,
       order: true,
       today: today(),
-      descending: false
+      descending: false,
+      fighters
     }
   },
   computed: {
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      return this.$store.state.records
+        .filter(record => record.roomType !== 'arena')
+        .slice()
+        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
     },
     recordsFiltered() {
-      const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
-      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
-      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
+      const recordsGrouped = this.groupSimilarFighters ? 
+        // this.records.map(record => {
+        //   record.opponentId = String(this.fighters[record.opponentId].family)
+        //   return record
+        // }) :
+        this.records :
+        this.records
+      if (this.period === 'whole' && this.stage === 'all') return recordsGrouped
+      if (this.period === 'whole' && this.stage !== 'all') return recordsGrouped.filter(record => record.stage === this.stage)
+      if (this.period !== 'whole' && this.stage === 'all') return recordsGrouped.filter(record => this.inPeriod(record.createdAt, this.period))
+      const recordsByStage = recordsGrouped.filter(record => record.stage === this.stage)
       return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
     },
     usedFighterIds() {
@@ -165,9 +190,18 @@ export default {
     toggle() {
       return this.descending = !this.descending
     },
+    group() {
+      return this.groupSimilarFighters != this.groupSimilarFighters
+    },
     winningPercentageText(records) {
       const results = calcWinningPercentage(records)
       return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    },
+    showSimilarFighter(fighterId) {
+      return (
+        this.groupSimilarFighters &&
+        fighterId != this.fighters[fighterId].family
+      )
     }
   }
 }
