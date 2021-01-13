@@ -17,7 +17,7 @@ const analitics = firebase.analytics()
   // 'reverseArenaResult'
 
   // 'viewTop'
-  // 'viewRecords'
+  // 'viewArena'
   // 'viewAnalytics'
   // 'viewMypage'
   // 'viewNew'
