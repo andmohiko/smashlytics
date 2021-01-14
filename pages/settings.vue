@@ -36,6 +36,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 2.1.0</h3>
+          <ul class="text-sm">
+            <li>◎戦績編集時の勝率のずれを修正</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 2.0.0</h3>
           <ul class="text-sm">
             <li>開発者の大きな過ちを修正しました。</li>
