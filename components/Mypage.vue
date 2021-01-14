@@ -110,7 +110,7 @@ export default {
       return Boolean(this.user.userId)
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     newestRecordsByFighter() {
       const newestRecords = this.usedFighterIds.map(fighterId => {

@@ -5,6 +5,7 @@ const analitics = firebase.analytics()
   // 'getUser'
   // 'getRecords'
   // 'getRecordsInTop'
+  // 'getRecordsInArena'
   // 'getRecordsInAnalytics'
   
   // 'addResult',

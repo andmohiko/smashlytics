@@ -102,7 +102,7 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     usedFighterIds() {
       if (!this.records.length) return Object.keys(this.fighters).sort()
