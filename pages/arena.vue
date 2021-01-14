@@ -142,9 +142,9 @@ export default {
 <style scoped lang="scss">
 .container {
   margin: 0 auto;
+  min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   text-align: center;
 }
