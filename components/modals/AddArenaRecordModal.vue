@@ -35,7 +35,9 @@
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" :isShowOptionEmpty="false" />
-          <AgainstSelecter ref="against" :fightedPlayers="fightedPlayers" :previousSelect="''" />
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="lastRecord.against" />
+          <span class="text-gray-700 text-sm">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
         </div>
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
@@ -109,9 +111,11 @@ export default {
     },
     fightedPlayers() {
       if (!this.records.length) return []
-      const fighted = this.records.map(record => {
-        return record.against
-      })
+      const fighted = this.records
+        .map(record => {
+          return record.against
+        })
+        .filter(player => Boolean(player))
       return Array.from(new Set(fighted))
     }
   },
@@ -130,21 +134,24 @@ export default {
       console.log('submit', this.record.fighterId, this.record.opponentId)
       this.error = ''
       if (!this.record.fighterId || !this.record.opponentId || this.record.result === null) {
-        this.error = '自分・相手・結果は入力してください'
+        this.error = '自分・相手のファイター・結果は入力してください'
         return
       }
+      // 選択入力を優先する
+      const against = this.$refs.againstSelect.input ? this.$refs.againstSelect.input : this.$refs.againstText.input
       const newRecord = {
         createdAt: serverTimestamp,
         updatedAt: serverTimestamp,
         roomType: 'arena',
         userId: this.user.userId,
+        userOriginalId: this.user.userOriginalId,
         fighter: this.fighters[this.record.fighterId].name,
         fighterId: this.record.fighterId,
         opponent: this.fighters[this.record.opponentId].name,
         opponentId: this.record.opponentId,
         result: this.record.result,
         stage: this.$refs.stage.input,
-        against: this.$refs.against.input
+        against
       }
       const updateUserDto = {
         resultsArena: {

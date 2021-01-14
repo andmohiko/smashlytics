@@ -4,13 +4,12 @@
     <span class="text-gray-700 text-sm">過去に対戦した人から選ぶ</span>
     <form class="mb-2 px-2 flex flex-wrap justify-start items-center stage-selecter border h-10">
       <select v-model="input" class="form-select block w-full mt-1">
+        <option :value="''"></option>
         <option v-for="player in fightedPlayers" :key="player.id">
           {{ player }}
         </option>
       </select>
     </form>
-    <span class="text-gray-700 text-sm">名前を入力する</span>
-    <TextField ref="input" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
   </div>
 </template>
 
@@ -39,7 +38,6 @@ export default {
     }
   },
   mounted() {
-    this.fightedPlayers.unshift('')
     this.input = this.previousSelect
   },
   computed: {

@@ -40,7 +40,9 @@
             :previousSelect="editingRecord.stage"
             :isShowOptionEmpty="true"
           />
-          <AgainstSelecter ref="against" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
+          <span class="text-gray-700 text-sm">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
         </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
@@ -105,7 +107,7 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'arena')
+      return this.$store.state.records
     },
     usedFighterIds() {
       const used = this.$store.state.records.map(record => {
@@ -114,8 +116,9 @@ export default {
       return Array.from(new Set(used)).sort()
     },
     fightedPlayers() {
-      if (!this.records.length) return []
-      const fighted = this.records.map(record => {
+      const arenaRecords = this.$store.state.records.filter(record => Boolean(record.against))
+      if (!arenaRecords.length) return []
+      const fighted = arenaRecords.map(record => {
         return record.against
       })
       return Array.from(new Set(fighted))
@@ -136,9 +139,11 @@ export default {
     async updateRecord () {
       this.error = ''
       if (!this.editingRecord.fighterId || !this.editingRecord.opponentId || this.editingRecord.result === null) {
-        this.error = '自分・相手・結果は入力してください'
+        this.error = '自分・相手のファイター・結果は入力してください'
         return
       }
+      // 選択入力を優先する
+      const against = this.$refs.againstSelect.input ? this.$refs.againstSelect.input : this.$refs.againstText.input
       let updatingRecord = {
         updatedAt: serverTimestamp,
         roomType: 'arena',
@@ -148,7 +153,7 @@ export default {
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
         stage: this.$refs.stage.input,
-        against: this.$refs.against.input
+        against
       }
       const db = firebase.firestore()
       try {
