@@ -18,6 +18,8 @@
           <li>◎記録した戦績を一覧で確認</li>
           <li>◎ファイターごとの勝率を計算</li>
           <li>◎期間を絞って勝率の変化を分析</li>
+          <li>◎プロフィールの公開</li>
+          <li>◎専用部屋の戦績の記録 ←new!!</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
@@ -25,13 +27,11 @@
         <ul class="text-left">
           <li>◎苦手な相手・ステージを把握して重点的に対策したい人</li>
           <li>◎対戦の記録を細かくつけたい人</li>
-          <!-- <li>◎ク○メイトが重くて使いづらいと思ってる人(小声)</li> -->
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-4">今後追加される機能🚀</h3>
         <ul class="text-left">
-          <li>◎専用部屋の戦績の記録</li>
           <li>◎戦闘力帯ごとのキャラの使用率</li>
           <li>◎他の人の勝率と比較</li>
         </ul>
