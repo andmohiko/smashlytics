@@ -44,7 +44,13 @@
       </div>
       <div class="mb-10">
         <span class="text-gray-700 px-1 py-3 flex items-center">※ユーザIDはあとから変更できません</span>
-        <Button @onClick="submit" label="登録する" />
+        <Button @onClick="submit" label="利用規約に同意して登録" />
+        <div class="rule mt-6">
+          <a class="rule-link text-gray-700 text-sm" @click="openTermsPage">
+            利用規約はこちら
+            <i class="material-icons text-base text-gray-700">open_in_new</i>
+          </a>
+        </div>
       </div>
       <div class="logout text-gray-500">
         <button @click="logout">googleログアウト</button>
@@ -183,6 +189,10 @@ export default {
       window.localStorage.clear();
       logEvent('logoutFromSignup', undefined)
       this.$router.push("/new")
+    },
+    openTermsPage() {
+      logEvent('view_terms', undefined)
+      window.open('https://www.notion.so/874f7e1046f94d959b61025c2f663ecd')
     }
   }
 }
