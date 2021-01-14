@@ -15,7 +15,8 @@ export default {
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }
     ]
   },
   /*
