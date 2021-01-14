@@ -48,9 +48,7 @@
         <div class="rule mt-6">
           <a class="rule-link text-gray-700 text-sm" @click="openTermsPage">
             利用規約はこちら
-            <i class="material-icons text-base text-gray-700">
-              open_in_new
-            </i>
+            <i class="material-icons text-base text-gray-700">open_in_new</i>
           </a>
         </div>
       </div>
