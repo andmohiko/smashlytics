@@ -36,6 +36,17 @@
   - skype: Boolean
   - listenOnly: Boolean
   - ng: Boolean
+<!-- - playStyle: map
+  - 
+  tournament/oneOnOne
+  - items: String on/off -->
+<!-- - privateSettings: Map
+  - isPrivate: Boolean
+  - showProfile: Boolean
+  - showLatestGlobalSmashPower: Boolean
+  - showWinningRate: Boolean
+  - showAnalytics: Boolean -->
+
 
 ## records
 
@@ -58,3 +69,8 @@
 - globalSmashPower: Number 世界戦闘力
 - isRepeat: Boolean 連戦かどうか
 - isVip: Boolean VIPかどうか
+<!-- - stocksTaken: map
+  - own: number 自分のストックを落とされた数
+  - opponent: number 相手のストックを落とした数 -->
+- roomType: String online|arena
+- against: String 相手の名前

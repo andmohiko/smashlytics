@@ -34,10 +34,15 @@
         <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
-          <StageSelecter ref="stage" :previousSelect="editingRecord.stage" />
-          <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIPマッチ" />
+          <StageSelecter
+            ref="stage"
+            :isShowSmamateStages="true"
+            :previousSelect="editingRecord.stage"
+            :isShowOptionEmpty="true"
+          />
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
+          <span class="text-gray-700 text-sm">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
         </div>
         <div class="pb-4">
           <Button @onClick="updateRecord" label="更新する" />
@@ -57,9 +62,9 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
-import { calcWinningPercentage } from '@/utils/records.js'
 import fighters from '@/assets/fighters.json'
 import { updateUser } from '@/repositories/users.js'
 import { logEvent } from '@/utils/analytics.js'
@@ -82,6 +87,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
+    AgainstSelecter,
     Checkbox
   },
   data() {
@@ -101,13 +107,21 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      return this.$store.state.records
     },
     usedFighterIds() {
       const used = this.$store.state.records.map(record => {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
+    },
+    fightedPlayers() {
+      const arenaRecords = this.$store.state.records.filter(record => Boolean(record.against))
+      if (!arenaRecords.length) return []
+      const fighted = arenaRecords.map(record => {
+        return record.against
+      })
+      return Array.from(new Set(fighted))
     }
   },
   methods: {
@@ -125,19 +139,21 @@ export default {
     async updateRecord () {
       this.error = ''
       if (!this.editingRecord.fighterId || !this.editingRecord.opponentId || this.editingRecord.result === null) {
-        this.error = '自分・相手・結果は入力してください'
+        this.error = '自分・相手のファイター・結果は入力してください'
         return
       }
+      // 選択入力を優先する
+      const against = this.$refs.againstSelect.input ? this.$refs.againstSelect.input : this.$refs.againstText.input
       let updatingRecord = {
         updatedAt: serverTimestamp,
+        roomType: 'arena',
         fighter: this.fighters[this.editingRecord.fighterId].name,
         fighterId: this.editingRecord.fighterId,
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
         stage: this.$refs.stage.input,
-        isRepeat: this.$refs.isRepeat.input,
-        isVip: this.$refs.isVip.input
+        against
       }
       const db = firebase.firestore()
       try {
@@ -148,28 +164,26 @@ export default {
           .catch(error => {
             console.log(error)
           })
-        logEvent('editResult', undefined)
+        logEvent('editArenaResult', undefined)
         const updatedRecords = this.records.map(record => {
           if (record.docId !== this.editingRecord.docId) return record
           updatingRecord.createdAt = this.editingRecord.createdAt
           updatingRecord.createdAtString = this.editingRecord.createdAtString
           updatingRecord.updatedAt = this.now
-          updatingRecord.roomType = 'online'
           updatingRecord.docId = this.editingRecord.docId
           return updatingRecord
         })
         this.$store.commit('setRecords', updatedRecords)
         if (this.originalResult !== updatingRecord.result) {
-          const results = calcWinningPercentage(updatedRecords)
           const updateUserDto = {
-            results: {
-              matches: results.matches,
-              wins: results.wins,
-              loses: results.loses
+            resultsArena: {
+              matches: this.user.resultsArena.matches,
+              wins: updatingRecord.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins - 1,
+              loses: updatingRecord.result ? this.user.resultsArena.loses - 1 : this.user.resultsArena.loses + 1,
             }
           }
           updateUser(this.user, updateUserDto)
-          logEvent('reverseResult', undefined)
+          logEvent('reverseArenaResult', undefined)
           this.$store.dispatch('getUser', this.user.userId)
         }
       } catch(error) {
@@ -183,17 +197,16 @@ export default {
         db.collection("records").doc(this.editingRecord.docId).delete()
         const deletedRecords = this.records.filter(record => record.docId !== this.editingRecord.docId)
         this.$store.commit('setRecords', deletedRecords)
-        const results = calcWinningPercentage(deletedRecords)
         const updateUserDto = {
-          results: {
-            matches: results.matches,
-            wins: results.wins,
-            loses: results.loses
+          resultsArena: {
+            matches: this.user.resultsArena.matches - 1,
+            wins: this.editingRecord.result ? this.user.resultsArena.wins - 1 : this.user.resultsArena.wins,
+            loses: this.editingRecord.result ? this.user.resultsArena.loses : this.user.resultsArena.loses - 1,
           }
         }
         updateUser(this.user, updateUserDto)
         this.$store.dispatch('getUser', this.user.userId)
-        logEvent('deleteResult', undefined)
+        logEvent('deleteArenaResult', undefined)
         console.log('deleted record')
       } catch(error) {
         console.log('error deleting record', error)
