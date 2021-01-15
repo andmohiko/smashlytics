@@ -39,6 +39,7 @@ service cloud.firestore {
                       && 'updatedAt' in requestData() && requestData().updatedAt is timestamp
                       && 'userId' in requestData() && requestData().userId is string
                       && 'userOriginalId' in requestData() && requestData().userOriginalId is string
+                      && 'roomType' in requestData() && requestData().roomType is string
                       && 'fighter' in requestData() && requestData().fighter is string
                       && 'fighterId' in requestData() && requestData().fighterId is string
                       && 'opponent' in requestData() && requestData().opponent is string
