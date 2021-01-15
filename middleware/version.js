@@ -2,6 +2,8 @@ import firebase from '@/plugins/firebase'
 const db = firebase.firestore()
 
 export default async function({ app, store }) {
+  // 未ログインは何もしない
+  if (!store.state.isLogin) return
   try {
     const version = store.state.version
     const latestVersion = await db
