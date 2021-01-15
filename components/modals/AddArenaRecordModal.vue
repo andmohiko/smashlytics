@@ -35,7 +35,7 @@
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" :isShowOptionEmpty="false" />
-          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="lastRecord.against" />
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
           <span class="text-gray-700 text-sm">名前を入力する</span>
           <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
         </div>
