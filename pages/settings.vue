@@ -105,7 +105,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="logout text-gray-500">
-        Version 2.0.0
+        Version 3.0.0
       </div>
       <div class="copyright">
         <p>
