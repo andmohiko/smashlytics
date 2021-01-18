@@ -36,6 +36,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.1.0</h3>
+          <ul class="text-sm">
+            <li>◎専用部屋の分析機能(β版)を追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.0.0</h3>
           <ul class="text-sm">
             <li>◎専用部屋の戦績記録機能を追加</li>
@@ -105,7 +111,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="logout text-gray-500">
-        Version 3.0.0
+        Version 3.1.0
       </div>
       <div class="copyright">
         <p>
