@@ -72,6 +72,9 @@ export default {
         case 'analytics': {
           return '戦績分析'
         }
+        case 'arenaAnalyticsBeta': {
+          return '専用部屋分析'
+        }
         case 'mypage': {
           return 'マイページ'
         }

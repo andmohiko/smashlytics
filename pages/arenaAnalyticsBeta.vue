@@ -1,26 +1,9 @@
 <template>
   <div class="container">
     <div class="winning-percentage">
-      <div class="flex flex-col items-end text-gray-500">
-        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析は<span class="text-gray-600">こちら</span>(β版)</nuxt-link>
-      </div>
       <form class="mb-2 px-4">
         <div class="input-radio pb-2">
-          <div class="sort flex justify-between items-center">
-            <p class="text-l text-left pl-4">並べ替え</p>
-            <div class="toggleDescending">
-              <template>
-                <div class="flex justify-between items-center px-4 py-1" @click="toggle">
-                  <p class="text-right pr-2">逆順</p>
-                  <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
-                    <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': descending,}"></div>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-          <input v-model="sorting" type="radio" name="fighterId" value="opponentId"/>
-          <label for="1">相手ファイター順</label>
+          <p class="text-l text-left pl-4">並べ替え</p>
           <input v-model="sorting" type="radio" name="matches" value="matches"/>
           <label for="3">試合数</label>
           <input v-model="sorting" type="radio" name="winningPercentage" value="winningPercentage"/>
@@ -39,17 +22,6 @@
           <input v-model="period" type="radio" name="whole" :value="'whole'"/>
           <label for="whole">全期間</label>
         </div>
-        <div class="input-radio mb-2">
-          <p class="text-l text-left pl-4">ステージ</p>
-          <input v-model="stage" type="radio" name="all" value="all"/>
-          <label for="all">全部</label>
-          <input v-model="stage" type="radio" name="finalDestination" value="finalDestination"/>
-          <label for="finalDestination">終点</label>
-          <input v-model="stage" type="radio" name="battleField" value="battleField"/>
-          <label for="battleField">戦場</label>
-          <input v-model="stage" type="radio" name="smallBattleField" value="smallBattleField"/>
-          <label for="smallBattleField">小戦場</label>
-        </div>
       </form>
       
       <p class="message">
@@ -60,7 +32,7 @@
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
           <thead>
             <tr class="text-left">
-              <th v-for="heading in ['自分', '相手', '勝敗数', '勝率']" :key="heading.id"
+              <th v-for="heading in ['相手', '　　', '勝敗数', '勝率']" :key="heading.id"
                 class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
               >{{ heading }}</th>
             </tr>
@@ -68,9 +40,12 @@
           <tbody>
             <tr v-for="entry in entries" :key="entry.id">
               <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
-              <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="entry.opponentId" size="32px" /></td>
+              >{{ entry.against }}</td>
+              <td class="border-dashed border-t border-gray-200 py-2 flex justify-center items-center flex-wrap">
+                <div v-for="fighterId in entry.opponentFighters" :key="fighterId.id">
+                  <FighterIcon :fighterId="fighterId" size="32px" />
+                </div>
+              </td>
               <td class="border-dashed border-t border-gray-200 px-3"
               ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
               <td class="border-dashed border-t border-gray-200 px-3"
@@ -96,23 +71,29 @@ export default {
     return {
       period: 7,
       stage: 'all',
-      sorting: 'opponentId',
+      sorting: 'matches',
       order: true,
-      today: today(),
-      descending: false
+      today: today()
     }
   },
   computed: {
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      return this.$store.state.records.filter(record => record.roomType === 'arena')
     },
     recordsFiltered() {
-      const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+      const recordsSorting = this.records.slice()
       if (this.period === 'whole' && this.stage === 'all') return recordsSorting
       if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
       if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
       const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
       return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
+    },
+    fightedAgainst() {
+      return Array.from(new Set(
+        this.recordsFiltered.map(record => {
+          return record.against
+        })
+      ))
     },
     usedFighterIds() {
       const used = this.recordsFiltered.map(record => {
@@ -128,27 +109,26 @@ export default {
     },
     entries() {
       let entries = []
-      this.usedFighterIds.map(fighterId => {
-        this.fightedFighterIds.map(opponentId => {
-          const specificRecords = this.getRecordsByFighters(fighterId, opponentId)
-          const wins = specificRecords.filter(record => record.result).length
-          if (!specificRecords.length) return
-          entries.push({
-            fighterId,
-            opponentId,
-            matches: specificRecords.length,
-            wins,
-            loses: specificRecords.length - wins,
-            winningPercentage: Math.round((wins/specificRecords.length)*100 * 10) / 10
-          })
+      this.fightedAgainst.map(against => {
+        if (!against) return
+        const againstRecords = this.records.filter(record => record.against === against)
+        if (!againstRecords) return
+        const opponentFighters = Array.from(new Set(
+          againstRecords.map(record => {
+            return record.opponentId
+          }).sort()
+        ))
+        const wins = againstRecords.filter(record => record.result).length
+        entries.push({
+          against,
+          opponentFighters,
+          matches: againstRecords.length,
+          wins,
+          loses: againstRecords.length - wins,
+          winningPercentage: Math.round((wins/againstRecords.length)*100 * 10) / 10
         })
       })
-      if (!this.descending) {
-        if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
-        return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
-      }
-      if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
-      return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
+      return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
     },
     periodText() {
       if (this.period === 'whole') return '全期間'
@@ -164,9 +144,6 @@ export default {
     inPeriod(date, period) {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
-    },
-    toggle() {
-      return this.descending = !this.descending
     },
     winningPercentageText(records) {
       const results = calcWinningPercentage(records)
