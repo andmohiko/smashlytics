@@ -20,6 +20,7 @@ const analitics = firebase.analytics()
   // 'viewTop'
   // 'viewArena'
   // 'viewAnalytics'
+  // 'viewArenaAnalytics'
   // 'viewMypage'
   // 'viewNew'
 

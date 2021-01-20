@@ -62,6 +62,7 @@
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import { logEvent } from '@/utils/analytics.js'
 
 export default {
   components: {
@@ -75,6 +76,9 @@ export default {
       order: true,
       today: today()
     }
+  },
+  mounted() {
+    logEvent('viewArenaAnalytics', undefined)
   },
   computed: {
     records() {
