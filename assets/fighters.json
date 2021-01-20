@@ -7,7 +7,8 @@
     "nickname": "マリオ",
     "name_en": "Mario",
     "number": 1,
-    "family": 1
+    "parent": null,
+    "child": "18"
   },
   "02": {
     "fighterId": "02",
@@ -17,7 +18,8 @@
     "nickname": "ドンキー",
     "name_en": "DonkeyKong",
     "number": 2,
-    "family": 2
+    "parent": null,
+    "child": null
   },
   "03": {
     "fighterId": "03",
@@ -27,7 +29,8 @@
     "nickname": "リンク",
     "name_en": "Link",
     "number": 3,
-    "family": 3
+    "parent": null,
+    "child": null
   },
   "04": {
     "fighterId": "04",
@@ -37,7 +40,8 @@
     "nickname": "サムス",
     "name_en": "Samus",
     "number": 4,
-    "family": 4
+    "parent": null,
+    "child": "04e"
   },
   "04e": {
     "fighterId": "04e",
@@ -47,7 +51,8 @@
     "nickname": "ダムス",
     "name_en": "DarkSamus",
     "number": 4,
-    "family": 4
+    "parent": "04",
+    "child": null
   },
   "05": {
     "fighterId": "05",
@@ -57,7 +62,8 @@
     "nickname": "ヨッシー",
     "name_en": "Yoshi",
     "number": 5,
-    "family": 5
+    "parent": null,
+    "child": null
   },
   "06": {
     "fighterId": "06",
@@ -67,7 +73,8 @@
     "nickname": "カービィ",
     "name_en": "Kirby",
     "number": 6,
-    "family": 6
+    "parent": null,
+    "child": null
   },
   "07": {
     "fighterId": "07",
@@ -77,7 +84,8 @@
     "nickname": "狐",
     "name_en": "Fox",
     "number": 7,
-    "family": 7
+    "parent": null,
+    "child": "20"
   },
   "08": {
     "fighterId": "08",
@@ -87,7 +95,8 @@
     "nickname": "ピカ",
     "name_en": "Pikachu",
     "number": 8,
-    "family": 8
+    "parent": null,
+    "child": "19"
   },
   "09": {
     "fighterId": "09",
@@ -97,7 +106,8 @@
     "nickname": "ルイージ",
     "name_en": "Luigi",
     "number": 9,
-    "family": 9
+    "parent": null,
+    "child": null
   },
   "10": {
     "fighterId": "10",
@@ -107,7 +117,8 @@
     "nickname": "ネス",
     "name_en": "Ness",
     "number": 10,
-    "family": 10
+    "parent": null,
+    "child": "37"
   },
   "11": {
     "fighterId": "11",
@@ -117,7 +128,8 @@
     "nickname": "CF",
     "name_en": "CaptainFalcon",
     "number": 11,
-    "family": 11
+    "parent": null,
+    "child": null
   },
   "12": {
     "fighterId": "12",
@@ -127,7 +139,8 @@
     "nickname": "プリン",
     "name_en": "Jigglypuff",
     "number": 12,
-    "family": 12
+    "parent": null,
+    "child": null
   },
   "13": {
     "fighterId": "13",
@@ -137,7 +150,8 @@
     "nickname": "ピーチ",
     "name_en": "Peach",
     "number": 13,
-    "family": 13
+    "parent": null,
+    "child": "13e"
   },
   "13e": {
     "fighterId": "13e",
@@ -147,7 +161,8 @@
     "nickname": "デイジー",
     "name_en": "Daisy",
     "number": 13,
-    "family": 13
+    "parent": "13",
+    "child": null
   },
   "14": {
     "fighterId": "14",
@@ -157,7 +172,8 @@
     "nickname": "クッパ",
     "name_en": "Bowser",
     "number": 14,
-    "family": 14
+    "parent": null,
+    "child": null
   },
   "15": {
     "fighterId": "15",
@@ -167,7 +183,8 @@
     "nickname": "アイクラ",
     "name_en": "IceClimbers",
     "number": 15,
-    "family": 15
+    "parent": null,
+    "child": null
   },
   "16": {
     "fighterId": "16",
@@ -177,7 +194,8 @@
     "nickname": "シーク",
     "name_en": "Sheik",
     "number": 16,
-    "family": 16
+    "parent": null,
+    "child": null
   },
   "17": {
     "fighterId": "17",
@@ -187,7 +205,8 @@
     "nickname": "ゼルダ",
     "name_en": "Zelda",
     "number": 17,
-    "family": 17
+    "parent": null,
+    "child": null
   },
   "18": {
     "fighterId": "18",
@@ -197,7 +216,8 @@
     "nickname": "DM",
     "name_en": "Dr.Mario",
     "number": 18,
-    "family": 1
+    "parent": "01",
+    "child": null
   },
   "19": {
     "fighterId": "19",
@@ -207,7 +227,8 @@
     "nickname": "ピチュー",
     "name_en": "Pichu",
     "number": 19,
-    "family": 8
+    "parent": "08",
+    "child": null
   },
   "20": {
     "fighterId": "20",
@@ -217,7 +238,8 @@
     "nickname": "焼き鳥",
     "name_en": "Falco",
     "number": 20,
-    "family": 7
+    "parent": "07",
+    "child": null
   },
   "21": {
     "fighterId": "21",
@@ -227,7 +249,8 @@
     "nickname": "マルス",
     "name_en": "Marth",
     "number": 21,
-    "family": 21
+    "parent": null,
+    "child": "21e"
   },
   "21e": {
     "fighterId": "21e",
@@ -237,7 +260,8 @@
     "nickname": "ルキナ",
     "name_en": "Lucina",
     "number": 21,
-    "family": 21
+    "parent": "21",
+    "child": null
   },
   "22": {
     "fighterId": "22",
@@ -247,7 +271,8 @@
     "nickname": "ヤンリン",
     "name_en": "YoungLink",
     "number": 22,
-    "family": 22
+    "parent": null,
+    "child": "43"
   },
   "23": {
     "fighterId": "23",
@@ -257,7 +282,8 @@
     "nickname": "ガノン",
     "name_en": "Ganondorf",
     "number": 23,
-    "family": 23
+    "parent": null,
+    "child": null
   },
   "24": {
     "fighterId": "24",
@@ -267,7 +293,8 @@
     "nickname": "M2",
     "name_en": "Mewtwo",
     "number": 24,
-    "family": 24
+    "parent": null,
+    "child": null
   },
   "25": {
     "fighterId": "25",
@@ -277,7 +304,8 @@
     "nickname": "ロイ",
     "name_en": "Roy",
     "number": 25,
-    "family": 25
+    "parent": null,
+    "child": "25e"
   },
   "25e": {
     "fighterId": "25e",
@@ -287,7 +315,8 @@
     "nickname": "クロム",
     "name_en": "Chrom",
     "number": 25,
-    "family": 25
+    "parent": "25",
+    "child": null
   },
   "26": {
     "fighterId": "26",
@@ -297,7 +326,8 @@
     "nickname": "ゲッチ",
     "name_en": "Mr.Game&Watch",
     "number": 26,
-    "family": 26
+    "parent": null,
+    "child": null
   },
   "27": {
     "fighterId": "27",
@@ -307,7 +337,8 @@
     "nickname": "メタ",
     "name_en": "MetaKnight",
     "number": 27,
-    "family": 27
+    "parent": null,
+    "child": null
   },
   "28": {
     "fighterId": "28",
@@ -317,7 +348,8 @@
     "nickname": "ピット",
     "name_en": "Pit",
     "number": 28,
-    "family": 28
+    "parent": null,
+    "child": "28e"
   },
   "28e": {
     "fighterId": "28e",
@@ -327,7 +359,8 @@
     "nickname": "ブラピ",
     "name_en": "DarkPit",
     "number": 28,
-    "family": 28
+    "parent": "28",
+    "child": null
   },
   "29": {
     "fighterId": "29",
@@ -337,7 +370,8 @@
     "nickname": "ゼロサム",
     "name_en": "ZeroSuitSamus",
     "number": 29,
-    "family": 29
+    "parent": null,
+    "child": null
   },
   "30": {
     "fighterId": "30",
@@ -347,7 +381,8 @@
     "nickname": "ワリオ",
     "name_en": "Wario",
     "number": 30,
-    "family": 30
+    "parent": null,
+    "child": null
   },
   "31": {
     "fighterId": "31",
@@ -357,7 +392,8 @@
     "nickname": "蛇",
     "name_en": "Snake",
     "number": 31,
-    "family": 31
+    "parent": null,
+    "child": null
   },
   "32": {
     "fighterId": "32",
@@ -367,7 +403,8 @@
     "nickname": "アイク",
     "name_en": "Ike",
     "number": 32,
-    "family": 32
+    "parent": null,
+    "child": null
   },
   "33": {
     "fighterId": "33",
@@ -377,7 +414,8 @@
     "nickname": "ポケトレ",
     "name_en": "PokémonTrainer",
     "number": 33,
-    "family": 33
+    "parent": null,
+    "child": null
   },
   "36": {
     "fighterId": "36",
@@ -387,7 +425,8 @@
     "nickname": "デデコン",
     "name_en": "DiddyKong",
     "number": 36,
-    "family": 36
+    "parent": null,
+    "child": null
   },
   "37": {
     "fighterId": "37",
@@ -397,7 +436,8 @@
     "nickname": "リュカ",
     "name_en": "Lucas",
     "number": 37,
-    "family": 10
+    "parent": "10",
+    "child": null
   },
   "38": {
     "fighterId": "38",
@@ -407,7 +447,8 @@
     "nickname": "ソニック",
     "name_en": "Sonic",
     "number": 38,
-    "family": 38
+    "parent": null,
+    "child": null
   },
   "39": {
     "fighterId": "39",
@@ -417,7 +458,8 @@
     "nickname": "デデデ",
     "name_en": "KingDedede",
     "number": 39,
-    "family": 39
+    "parent": null,
+    "child": null
   },
   "40": {
     "fighterId": "40",
@@ -427,7 +469,8 @@
     "nickname": "ピクオリ",
     "name_en": "Olimar",
     "number": 40,
-    "family": 40
+    "parent": null,
+    "child": null
   },
   "41": {
     "fighterId": "41",
@@ -437,7 +480,8 @@
     "nickname": "ルカリオ",
     "name_en": "Lucario",
     "number": 41,
-    "family": 41
+    "parent": null,
+    "child": null
   },
   "42": {
     "fighterId": "42",
@@ -447,7 +491,8 @@
     "nickname": "ロボ",
     "name_en": "R.O.B.",
     "number": 42,
-    "family": 42
+    "parent": null,
+    "child": null
   },
   "43": {
     "fighterId": "43",
@@ -457,7 +502,8 @@
     "nickname": "トリン",
     "name_en": "ToonLink",
     "number": 43,
-    "family": 22
+    "parent": "22",
+    "child": null
   },
   "44": {
     "fighterId": "44",
@@ -467,7 +513,8 @@
     "nickname": "ウルフ",
     "name_en": "Wolf",
     "number": 44,
-    "family": 44
+    "parent": null,
+    "child": null
   },
   "45": {
     "fighterId": "45",
@@ -477,7 +524,8 @@
     "nickname": "むらびと",
     "name_en": "Villager",
     "number": 45,
-    "family": 45
+    "parent": null,
+    "child": "68"
   },
   "46": {
     "fighterId": "46",
@@ -487,7 +535,8 @@
     "nickname": "ﾛｯｸﾏﾝ",
     "name_en": "MegaMan",
     "number": 46,
-    "family": 46
+    "parent": null,
+    "child": null
   },
   "47": {
     "fighterId": "47",
@@ -497,7 +546,8 @@
     "nickname": "ﾌｨｯﾄﾚ",
     "name_en": "WiiFitTrainer",
     "number": 47,
-    "family": 47
+    "parent": null,
+    "child": null
   },
   "48": {
     "fighterId": "48",
@@ -507,7 +557,8 @@
     "nickname": "ロゼチコ",
     "name_en": "Rosalina&Luma",
     "number": 48,
-    "family": 48
+    "parent": null,
+    "child": null
   },
   "49": {
     "fighterId": "49",
@@ -517,7 +568,8 @@
     "nickname": "トルマク",
     "name_en": "Little Mac",
     "number": 49,
-    "family": 49
+    "parent": null,
+    "child": null
   },
   "50": {
     "fighterId": "50",
@@ -527,7 +579,8 @@
     "nickname": "ゲコ",
     "name_en": "Greninja",
     "number": 50,
-    "family": 50
+    "parent": null,
+    "child": null
   },
   "51": {
     "fighterId": "51",
@@ -537,7 +590,8 @@
     "nickname": "格闘",
     "name_en": "MiiBrawler",
     "number": 51,
-    "family": 51
+    "parent": null,
+    "child": null
   },
   "52": {
     "fighterId": "52",
@@ -547,7 +601,8 @@
     "nickname": "剣術",
     "name_en": "MiiSwordfighter",
     "number": 52,
-    "family": 52
+    "parent": null,
+    "child": null
   },
   "53": {
     "fighterId": "53",
@@ -557,7 +612,8 @@
     "nickname": "射撃",
     "name_en": "MiiGunner",
     "number": 53,
-    "family": 53
+    "parent": null,
+    "child": null
   },
   "54": {
     "fighterId": "54",
@@ -567,7 +623,8 @@
     "nickname": "パルテナ",
     "name_en": "Palutena",
     "number": 54,
-    "family": 54
+    "parent": null,
+    "child": null
   },
   "55": {
     "fighterId": "55",
@@ -577,7 +634,8 @@
     "nickname": "ﾊﾟｯｸﾏﾝ",
     "name_en": "Pac-Man",
     "number": 55,
-    "family": 55
+    "parent": null,
+    "child": null
   },
   "56": {
     "fighterId": "56",
@@ -587,7 +645,8 @@
     "nickname": "ルフレ",
     "name_en": "Robin",
     "number": 56,
-    "family": 56
+    "parent": null,
+    "child": null
   },
   "57": {
     "fighterId": "57",
@@ -597,7 +656,8 @@
     "nickname": "シュルク",
     "name_en": "Shulk",
     "number": 57,
-    "family": 57
+    "parent": null,
+    "child": null
   },
   "58": {
     "fighterId": "58",
@@ -607,7 +667,8 @@
     "nickname": "クパJr",
     "name_en": "BowserJr.",
     "number": 58,
-    "family": 58
+    "parent": null,
+    "child": null
   },
   "59": {
     "fighterId": "59",
@@ -617,7 +678,8 @@
     "nickname": "ダクハン",
     "name_en": "DuckHunt",
     "number": 59,
-    "family": 59
+    "parent": null,
+    "child": null
   },
   "60": {
     "fighterId": "60",
@@ -627,7 +689,8 @@
     "nickname": "リュウ",
     "name_en": "Ryu",
     "number": 60,
-    "family": 60
+    "parent": null,
+    "child": "60e"
   },
   "60e": {
     "fighterId": "60e",
@@ -637,7 +700,8 @@
     "nickname": "ケン",
     "name_en": "Ken",
     "number": 60,
-    "family": 60
+    "parent": "60",
+    "child": null
   },
   "61": {
     "fighterId": "61",
@@ -647,7 +711,8 @@
     "nickname": "クラウド",
     "name_en": "Cloud",
     "number": 61,
-    "family": 61
+    "parent": null,
+    "child": null
   },
   "62": {
     "fighterId": "62",
@@ -657,7 +722,8 @@
     "nickname": "カムイ",
     "name_en": "Corrin",
     "number": 62,
-    "family": 62
+    "parent": null,
+    "child": null
   },
   "63": {
     "fighterId": "63",
@@ -667,7 +733,8 @@
     "nickname": "ベヨ",
     "name_en": "Bayonetta",
     "number": 63,
-    "family": 63
+    "parent": null,
+    "child": null
   },
   "64": {
     "fighterId": "64",
@@ -677,7 +744,8 @@
     "nickname": "イカ",
     "name_en": "Inkling",
     "number": 64,
-    "family": 64
+    "parent": null,
+    "child": null
   },
   "65": {
     "fighterId": "65",
@@ -687,7 +755,8 @@
     "nickname": "リドリー",
     "name_en": "Ridley",
     "number": 65,
-    "family": 65
+    "parent": null,
+    "child": null
   },
   "66": {
     "fighterId": "66",
@@ -697,7 +766,8 @@
     "nickname": "シモン",
     "name_en": "Simon",
     "number": 66,
-    "family": 66
+    "parent": null,
+    "child": "66e"
   },
   "66e": {
     "fighterId": "66e",
@@ -707,7 +777,8 @@
     "nickname": "リヒター",
     "name_en": "Richter",
     "number": 66,
-    "family": 66
+    "parent": "66",
+    "child": null
   },
   "67": {
     "fighterId": "67",
@@ -717,7 +788,8 @@
     "nickname": "キンクル",
     "name_en": "KingK.Rool",
     "number": 67,
-    "family": 67
+    "parent": null,
+    "child": null
   },
   "68": {
     "fighterId": "68",
@@ -727,7 +799,8 @@
     "nickname": "しずえ",
     "name_en": "Isabelle",
     "number": 68,
-    "family": 45
+    "parent": "45",
+    "child": null
   },
   "69": {
     "fighterId": "69",
@@ -737,7 +810,8 @@
     "nickname": "ガエン",
     "name_en": "Incineroar",
     "number": 69,
-    "family": 69
+    "parent": null,
+    "child": null
   },
   "70": {
     "fighterId": "70",
@@ -747,7 +821,8 @@
     "nickname": "パックン",
     "name_en": "PiranhaPlant",
     "number": 70,
-    "family": 70
+    "parent": null,
+    "child": null
   },
   "71": {
     "fighterId": "71",
@@ -757,7 +832,8 @@
     "nickname": "ｼﾞｮｰｶｰ",
     "name_en": "Joker",
     "number": 71,
-    "family": 71
+    "parent": null,
+    "child": null
   },
   "72": {
     "fighterId": "72",
@@ -767,7 +843,8 @@
     "nickname": "勇者",
     "name_en": "Hero",
     "number": 72,
-    "family": 72
+    "parent": null,
+    "child": null
   },
   "73": {
     "fighterId": "73",
@@ -777,7 +854,8 @@
     "nickname": "バンカズ",
     "name_en": "Banjo&Kazooie",
     "number": 73,
-    "family": 73
+    "parent": null,
+    "child": null
   },
   "74": {
     "fighterId": "74",
@@ -787,7 +865,8 @@
     "nickname": "テリー",
     "name_en": "Terry",
     "number": 74,
-    "family": 74
+    "parent": null,
+    "child": null
   },
   "75": {
     "fighterId": "75",
@@ -797,7 +876,8 @@
     "nickname": "ベレトス",
     "name_en": "Byleth",
     "number": 75,
-    "family": 75
+    "parent": null,
+    "child": null
   },
   "76": {
     "fighterId": "76",
@@ -807,7 +887,8 @@
     "nickname": "麺",
     "name_en": "MinMin",
     "number": 76,
-    "family": 76
+    "parent": null,
+    "child": null
   },
   "77": {
     "fighterId": "77",
@@ -817,7 +898,8 @@
     "nickname": "ｽﾃｨｰﾌﾞ",
     "name_en": "Steve",
     "number": 77,
-    "family": 77
+    "parent": null,
+    "child": null
   },
   "78": {
     "fighterId": "78",
@@ -827,6 +909,7 @@
     "nickname": "セフィ",
     "name_en": "Sephiroth",
     "number": 78,
-    "family": 78
+    "parent": null,
+    "child": null
   }
 }

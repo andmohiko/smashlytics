@@ -8,7 +8,7 @@
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
             <p class="text-l text-left pl-4">並べ替え</p>
-            <div class="toggleDescending">
+            <!-- <div class="toggleDescending">
               <template>
                 <div class="flex justify-between items-center px-4 py-1" @click="group">
                   <p class="text-right pr-2">まとめる</p>
@@ -18,7 +18,7 @@
                 </div>
               </template>
             </div>
-            {{ groupSimilarFighters }}
+            {{ groupSimilarFighters }} -->
             <div class="toggleDescending">
               <template>
                 <div class="flex justify-between items-center px-4 py-1" @click="toggle">
@@ -82,7 +82,7 @@
               ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
               <td class="border-dashed border-t border-gray-200 px-3 py-2 flex">
                 <FighterIcon :fighterId="entry.opponentId" size="32px" />
-                <FighterIcon :fighterId="entry.opponentId" v-if="showSimilarFighter(entry.opponentId)" size="32px" />
+                <FighterIcon :fighterId="fighters[entry.opponentId].child" v-if="showSimilarFighter(entry.opponentId)" size="32px" />
               </td>
               <td class="border-dashed border-t border-gray-200 px-3"
               ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
@@ -108,10 +108,10 @@ export default {
   },
   data() {
     return {
-      period: 7,
+      period: 30,
       stage: 'all',
       sorting: 'opponentId',
-      groupSimilarFighters: true,
+      groupSimilarFighters: false,
       order: true,
       today: today(),
       descending: false,
@@ -125,18 +125,26 @@ export default {
         .slice()
         .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
     },
+    groupedRecords() {
+      return this.$store.state.records
+        .filter(record => record.roomType !== 'arena')
+        .slice()
+        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+        .map(record => {
+          if (this.fighters[record.opponentId].parent) {
+            record.opponentId = this.fighters[record.opponentId].parent
+          }
+          return record
+        })
+    },
     recordsFiltered() {
-      const recordsGrouped = this.groupSimilarFighters ? 
-        // this.records.map(record => {
-        //   record.opponentId = String(this.fighters[record.opponentId].family)
-        //   return record
-        // }) :
-        this.records :
-        this.records
-      if (this.period === 'whole' && this.stage === 'all') return recordsGrouped
-      if (this.period === 'whole' && this.stage !== 'all') return recordsGrouped.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsGrouped.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsGrouped.filter(record => record.stage === this.stage)
+      // const recordsGrouped = this.groupSimilarFighters ? 
+      //   this.groupedRecords :
+      //   this.records
+      if (this.period === 'whole' && this.stage === 'all') return this.records
+      if (this.period === 'whole' && this.stage !== 'all') return this.records.filter(record => record.stage === this.stage)
+      if (this.period !== 'whole' && this.stage === 'all') return this.records.filter(record => this.inPeriod(record.createdAt, this.period))
+      const recordsByStage = this.records.filter(record => record.stage === this.stage)
       return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
     },
     usedFighterIds() {
@@ -203,7 +211,7 @@ export default {
     showSimilarFighter(fighterId) {
       return (
         this.groupSimilarFighters &&
-        fighterId != this.fighters[fighterId].family
+        this.fighters[fighterId].child
       )
     }
   }
