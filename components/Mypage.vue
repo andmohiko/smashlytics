@@ -109,7 +109,7 @@ export default {
       return Boolean(this.user.userId)
     },
     records() {
-      return this.$store.state.records
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     newestRecordsByFighter() {
       const newestRecords = this.usedFighterIds.map(fighterId => {
@@ -150,7 +150,7 @@ export default {
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  // width: 400px;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

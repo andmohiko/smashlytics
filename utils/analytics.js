@@ -5,16 +5,22 @@ const analitics = firebase.analytics()
   // 'getUser'
   // 'getRecords'
   // 'getRecordsInTop'
+  // 'getRecordsInArena'
   // 'getRecordsInAnalytics'
   
   // 'addResult',
   // 'editResult',
   // 'deleteResult',
   // 'reverseResult'
+  // 'addArenaResult'
+  // 'editArenaResult'
+  // 'deleteArenaResult'
+  // 'reverseArenaResult'
 
   // 'viewTop'
-  // 'viewRecords'
+  // 'viewArena'
   // 'viewAnalytics'
+  // 'viewArenaAnalytics'
   // 'viewMypage'
   // 'viewNew'
 

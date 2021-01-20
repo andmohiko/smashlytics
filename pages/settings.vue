@@ -4,7 +4,25 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">お問い合わせ</h2>
         <ul class="text-left">
-          <li>お問い合わせフォームは<a href="https://forms.gle/jbcq53PqTzPotSU96" target="_blank">こちら</a></li>
+          <li>
+            お問い合わせフォームは
+            <a href="https://forms.gle/jbcq53PqTzPotSU96" target="_blank">
+              こちら
+              <i class="material-icons text-base text-gray-700">open_in_new</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
+        <h2 class="text-xl mb-4">利用規約</h2>
+        <ul class="text-left">
+          <li>
+            利用規約は
+            <a class="" @click="openTermsPage">
+              こちら
+              <i class="material-icons text-base text-gray-700">open_in_new</i>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
@@ -17,6 +35,24 @@
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.1.0</h3>
+          <ul class="text-sm">
+            <li>◎専用部屋の分析機能(β版)を追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.0.0</h3>
+          <ul class="text-sm">
+            <li>◎専用部屋の戦績記録機能を追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 2.1.0</h3>
+          <ul class="text-sm">
+            <li>◎戦績編集時の勝率のずれを修正</li>
+          </ul>
+        </div>
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 2.0.0</h3>
           <ul class="text-sm">
@@ -75,7 +111,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="logout text-gray-500">
-        Version 2.0.0
+        Version 3.1.0
       </div>
       <div class="copyright">
         <p>
@@ -118,6 +154,10 @@ export default {
     },
     toAllRecords() {
       this.$router.push("/allRecords")
+    },
+    openTermsPage() {
+      logEvent('view_terms', undefined)
+      window.open('https://www.notion.so/874f7e1046f94d959b61025c2f663ecd')
     }
   }
 }
