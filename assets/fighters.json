@@ -85,7 +85,7 @@
     "name_en": "Fox",
     "number": 7,
     "parent": null,
-    "child": "20"
+    "child": null
   },
   "08": {
     "fighterId": "08",
@@ -118,7 +118,7 @@
     "name_en": "Ness",
     "number": 10,
     "parent": null,
-    "child": "37"
+    "child": null
   },
   "11": {
     "fighterId": "11",
@@ -238,7 +238,7 @@
     "nickname": "焼き鳥",
     "name_en": "Falco",
     "number": 20,
-    "parent": "07",
+    "parent": null,
     "child": null
   },
   "21": {
@@ -436,7 +436,7 @@
     "nickname": "リュカ",
     "name_en": "Lucas",
     "number": 37,
-    "parent": "10",
+    "parent": null,
     "child": null
   },
   "38": {
