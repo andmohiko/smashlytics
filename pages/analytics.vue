@@ -4,7 +4,8 @@
       <div class="flex flex-col items-end text-gray-500">
         <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析は<span class="text-gray-600">こちら</span>(β版)</nuxt-link>
       </div>
-      <form class="mb-2 px-4">
+      <button @click="showDetails" class="flex items-start pl-6 text-gray-900">▽分析を細かく設定する</button>
+      <form v-show="isShowDetails" class="mb-2 px-4">
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
             <p class="text-l text-left pl-4">並べ替え</p>
@@ -99,7 +100,8 @@ export default {
       sorting: 'opponentId',
       order: true,
       today: today(),
-      descending: false
+      descending: false,
+      isShowDetails: false
     }
   },
   computed: {
@@ -164,6 +166,9 @@ export default {
     inPeriod(date, period) {
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
+    },
+    showDetails() {
+      return this.isShowDetails = !this.isShowDetails
     },
     toggle() {
       return this.descending = !this.descending
