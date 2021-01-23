@@ -9,9 +9,9 @@
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
             <p class="text-l text-left pl-4">並べ替え</p>
-            <div class="toggleDescending">
+            <div class="toggleSort">
               <template>
-                <div class="flex justify-between items-center px-4 py-1" @click="toggle">
+                <div class="flex justify-between items-center px-4 py-1" @click="toggleSort">
                   <p class="text-right pr-2">逆順</p>
                   <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
                     <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': descending,}"></div>
@@ -40,10 +40,21 @@
           <input v-model="period" type="radio" name="whole" :value="'whole'"/>
           <label for="whole">全期間</label>
         </div>
+        <div class="input-radio mb-2 flex flex-col items-start">
+          <p class="text-l text-left pl-4">ファイターでまとめる</p>
+            <div class="pl-5">
+              <input v-model="groupSimilarFighters" type="radio" name="allFighters" :value="false"/>
+              <label for="allFighters">全ファイター表示</label>
+            </div>
+            <div class="pl-5">
+              <input v-model="groupSimilarFighters" type="radio" name="similar" :value="true"/>
+              <label for="similar">類似ファイターでまとめる</label>
+            </div>
+        </div>
         <div class="input-radio mb-2">
           <p class="text-l text-left pl-4">ステージ</p>
-          <input v-model="stage" type="radio" name="all" value="all"/>
-          <label for="all">全部</label>
+          <input v-model="stage" type="radio" name="allStages" value="all"/>
+          <label for="allStages">全部</label>
           <input v-model="stage" type="radio" name="finalDestination" value="finalDestination"/>
           <label for="finalDestination">終点</label>
           <input v-model="stage" type="radio" name="battleField" value="battleField"/>
@@ -70,8 +81,10 @@
             <tr v-for="entry in entries" :key="entry.id">
               <td class="border-dashed border-t border-gray-200 px-3"
               ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
-              <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="entry.opponentId" size="32px" /></td>
+              <td class="border-dashed border-t border-gray-200 px-3 py-2 flex">
+                <FighterIcon :fighterId="entry.opponentId" size="32px" />
+                <FighterIcon :fighterId="fighters[entry.opponentId].child" v-if="showSimilarFighter(entry.opponentId)" size="32px" />
+              </td>
               <td class="border-dashed border-t border-gray-200 px-3"
               ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
               <td class="border-dashed border-t border-gray-200 px-3"
@@ -88,6 +101,8 @@
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import fighters from '@/assets/fighters.json'
+import _ from 'lodash'
 
 export default {
   components: {
@@ -95,25 +110,39 @@ export default {
   },
   data() {
     return {
-      period: 7,
+      period: 30,
       stage: 'all',
       sorting: 'opponentId',
+      groupSimilarFighters: false,
       order: true,
       today: today(),
       descending: false,
-      isShowDetails: false
+      isShowDetails: false,
+      fighters
     }
   },
   computed: {
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      return this.$store.state.records
+        .filter(record => record.roomType !== 'arena')
+        .slice()
+        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+    },
+    groupedRecords() {
+      return _.cloneDeep(this.records)
+        .map(record => {
+          if (this.fighters[record.opponentId].parent) {
+            record.opponentId = this.fighters[record.opponentId].parent
+          }
+          return record
+        })
     },
     recordsFiltered() {
-      const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
-      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
-      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
+      const recordsGrouped = this.groupSimilarFighters ? this.groupedRecords : this.records
+      if (this.period === 'whole' && this.stage === 'all') return recordsGrouped
+      if (this.period === 'whole' && this.stage !== 'all') return recordsGrouped.filter(record => record.stage === this.stage)
+      if (this.period !== 'whole' && this.stage === 'all') return recordsGrouped.filter(record => this.inPeriod(record.createdAt, this.period))
+      const recordsByStage = recordsGrouped.filter(record => record.stage === this.stage)
       return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
     },
     usedFighterIds() {
@@ -170,12 +199,18 @@ export default {
     showDetails() {
       return this.isShowDetails = !this.isShowDetails
     },
-    toggle() {
+    toggleSort() {
       return this.descending = !this.descending
     },
     winningPercentageText(records) {
       const results = calcWinningPercentage(records)
       return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    },
+    showSimilarFighter(fighterId) {
+      return (
+        this.groupSimilarFighters &&
+        this.fighters[fighterId].child
+      )
     }
   }
 }
