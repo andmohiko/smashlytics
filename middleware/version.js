@@ -23,13 +23,13 @@ export default async function({ app, store }) {
         return Number(versionsArray[0])
       })
     console.log('now ver', version.versionNumber, 'latest ver', latestVersion)
-    // 期待するバージョン以上なら何もしない
-    if (latestVersion <= version.versionNumber) return
-    // 反映させるためにスーパーリロードを促す
     store.commit('setVersion', {
       versionNumber: latestVersion,
       refreshedAt: now
     })
+    // 期待するバージョン以上なら何もしない
+    if (latestVersion <= version.versionNumber) return
+    // 反映させるためにスーパーリロードを促す
     window.confirm('新しいバージョンが配信されているため最新バージョンに更新します。')
     location.reload(true)
   } catch(error) {
