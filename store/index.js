@@ -25,7 +25,10 @@ const state = {
     noticeType: null,
     message: ''
   },
-  version: 0
+  version: {
+    versionNumber: 0,
+    refreshedAt: null
+  }
 }
 
 const actions = {
