@@ -7,8 +7,7 @@ export default async function({ app, store }) {
   // 最新バージョン取得から3分以内なら更新しない
   const now = (new Date()).getTime()
   const version = store.state.version
-  console.log('refreshed', (now - version.refreshedAt) / 1000, 'secs before')
-  if ((now - version.refreshedAt) / 1000 < 60) return
+  if ((now - version.refreshedAt) / 1000 < 180) return
 
   try {
     const latestVersion = await db
