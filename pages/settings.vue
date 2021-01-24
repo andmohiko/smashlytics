@@ -36,6 +36,13 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.3.0</h3>
+          <ul class="text-sm">
+            <li>◎分析をより詳細に設定できる機能の追加</li>
+            <li>◎分析で自分のファイターで絞る機能の追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.2.0</h3>
           <ul class="text-sm">
             <li>◎分析で類似ファイターをまとめる機能を追加</li>
@@ -118,7 +125,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="logout text-gray-500">
-        Version 3.2.0
+        Version 3.3.0
       </div>
       <div class="copyright">
         <p>
