@@ -51,7 +51,7 @@
         </div>
         <div class="fighter-selecter pb-3">
           <p class="text-lg text-left pl-4">自分のファイターで絞る</p>
-          <button @click="selectAllFighters" class="flex items-start pl-4 text-gray-900">全ファイター表示</button>
+          <button @click="selectAllFighters" class="flex items-start pl-4 text-gray-700">全ファイター表示</button>
           <FighterSelecter
             @select="select"
             ref="fighter"
