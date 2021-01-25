@@ -21,6 +21,15 @@ const state = {
   isLogin: false,
   records: [],
   userIds: [],
+  analyticsSettings: {
+    sorting: 'opponentId',
+    period: 30,
+    selectedMyFighter: 'all',
+    groupSimilarFighters: false,
+    stage: 'all',
+    stocks: 'all',
+    filterRepeat: false
+  },
   notice: {
     noticeType: null,
     message: ''
@@ -117,6 +126,9 @@ const mutations = {
   },
   setUserIds(state, payload) {
     state.userIds = payload
+  },
+  setAnalyticsSettings(state, payload) {
+    state.analyticsSettings = payload
   },
   setNotice(state, payload) {
     state.notice = payload
