@@ -39,7 +39,7 @@
           <div class="pr-2">
             <input v-model="analyticsSettings.period" type="radio" name="1" :value="1"/>
             <label for="1">1日</label>
-            <input v-model="analyticsSettings.period" type="radio" name="3" :value="3"/>
+            <input v-model="analyticsSettings.period" type="radio" name="7" :value="7"/>
             <label for="7">7日</label>
             <input v-model="analyticsSettings.period" type="radio" name="30" :value="30"/>
             <label for="30">30日</label>
