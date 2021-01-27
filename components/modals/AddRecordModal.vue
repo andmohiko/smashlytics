@@ -1,13 +1,15 @@
 <template>
   <div class="modal-bg">
     <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
-      <div class="close" @click="onClose">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="modal-header">
+        <div class="close" @click="onClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="text-xl py-2 border-b">オンラインの戦績を登録する</h2>
       </div>
-      <div class="form">
-        <h2 class="text-xl py-2 border-b mb-4">オンラインの戦績を登録する</h2>
+      <div class="modal-content pt-2 overflow-auto">
         <p class="error">{{ error }}</p>
         <div class="fighter-selecter">
           <FighterSelecter
@@ -29,16 +31,19 @@
             label="相手のファイター"
           />
         </div>
-        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
         <div v-show="isShowInputDetails" class="details mt-20 mb-20 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" />
           <StageSelecter ref="stage" :isShowOptionEmpty="false" />
+          <StocksSelecter ref="stocksSelecter" :isShowOptionEmpty="false" />
           <Checkbox ref="isRepeat" label="連戦だった" />
           <Checkbox ref="isVip" :defaultValue="lastRecord.isVip" label="VIPマッチ" />
         </div>
+      </div>
+      <div class="modal-footer border-t pt-2">
+        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-4" />
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
         </div>
@@ -54,6 +59,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import StocksSelecter from '@/components/parts/StocksSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
@@ -76,6 +82,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
+    StocksSelecter,
     Checkbox
   },
   data() {
@@ -144,6 +151,7 @@ export default {
         result: this.record.result,
         stage: this.$refs.stage.input,
         globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
+        stocks: this.$refs.stocksSelecter.stocks,
         isRepeat: this.$refs.isRepeat.input,
         isVip: this.$refs.isVip.input
       }
