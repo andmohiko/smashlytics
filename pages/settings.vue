@@ -36,6 +36,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.1</h3>
+          <ul class="text-sm">
+            <li>◎専用部屋の戦績を編集できない不具合を修正</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.4.0</h3>
           <ul class="text-sm">
             <li>◎戦績登録時にストック数を入力欄を追加</li>
@@ -133,7 +139,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="logout text-gray-500">
-        Version 3.4.0
+        Version 3.4.1
       </div>
       <div class="copyright">
         <p>
