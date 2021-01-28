@@ -82,15 +82,12 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'arena')
+      return this.$store.state.records
+        .filter(record => record.roomType === 'arena')
+        .filter(record => this.inPeriod(record.createdAt, this.period))
     },
     recordsFiltered() {
-      const recordsSorting = this.records.slice()
-      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
-      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
-      return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
+      return this.stage === 'all' ? this.records : this.records.filter(record => record.stage === this.stage)
     },
     fightedAgainst() {
       return Array.from(new Set(
@@ -146,6 +143,7 @@ export default {
       })
     },
     inPeriod(date, period) {
+      if (this.period === 'whole') return true
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
     },
