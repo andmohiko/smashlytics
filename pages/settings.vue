@@ -134,11 +134,8 @@
           </ul>
         </div>
       </div>
-      <div v-show="isAdmin" class="logout text-gray-500">
-        <button @click="toAllRecords">管理者用 全戦績</button>
-      </div>
       <Button @onClick="logout" label="ログアウト" />
-      <div class="logout text-gray-500">
+      <div class="flex justify-end text-sm text-gray-500 pt-6 pr-2">
         Version 3.4.1
       </div>
       <div class="copyright">
@@ -163,11 +160,6 @@ export default {
   mounted() {
     const cookie = new Cookies()
   },
-  computed: {
-    isAdmin() {
-      return this.$store.state.user.userId === 'andmohiko'
-    }
-  },
   methods: {
     logout() {
       const cookie = new Cookies()
@@ -179,9 +171,6 @@ export default {
       window.localStorage.clear();
       logEvent('logoutFromSettings', undefined)
       this.$router.push("/new")
-    },
-    toAllRecords() {
-      this.$router.push("/allRecords")
     },
     openTermsPage() {
       logEvent('view_terms', undefined)
@@ -200,29 +189,17 @@ export default {
   align-items: center;
   text-align: center;
 }
-.goole-login {
-  margin: 16px 0;
-}
 .settings {
   li {
     margin: 4px 0;
   }
-}
-.logout {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: right;
-  font-size: 14px;
-  margin-bottom: 10px;
 }
 .copyright {
   display: flex;
   justify-content: center;
   align-items: center;
   p {
-    line-height: 40px;
+    line-height: 30px;
     color: #bbb;
     font-size: 12px;
   }
