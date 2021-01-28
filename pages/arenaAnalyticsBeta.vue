@@ -84,10 +84,14 @@ export default {
     records() {
       return this.$store.state.records
         .filter(record => record.roomType === 'arena')
-        .filter(record => this.inPeriod(record.createdAt, this.period))
     },
     recordsFiltered() {
-      return this.stage === 'all' ? this.records : this.records.filter(record => record.stage === this.stage)
+      return this.records
+        .filter(record => this.inPeriod(record.createdAt, this.period))
+        .filter(record => {
+          this.stage === 'all' ||
+          record.stage === this.stage
+        })
     },
     fightedAgainst() {
       return Array.from(new Set(
@@ -112,7 +116,7 @@ export default {
       let entries = []
       this.fightedAgainst.map(against => {
         if (!against) return
-        const againstRecords = this.records.filter(record => record.against === against)
+        const againstRecords = this.recordsFiltered.filter(record => record.against === against)
         if (!againstRecords) return
         const opponentFighters = Array.from(new Set(
           againstRecords.map(record => {

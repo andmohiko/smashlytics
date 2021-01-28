@@ -108,10 +108,7 @@ export default {
       return this.$store.state.analyticsSettings
     },
     records() {
-      return this.$store.state.records
-        .filter(record => record.roomType !== 'arena')
-        .slice()
-        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     groupedRecords() {
       return _.cloneDeep(this.records)
@@ -123,14 +120,22 @@ export default {
         })
     },
     recordsFiltered() {
-      let recordsGrouped = this.analyticsSettings.groupSimilarFighters ? this.groupedRecords : this.records
-      if (this.analyticsSettings.selectedMyFighter !== 'all') recordsGrouped = recordsGrouped.filter(record => record.fighterId === this.analyticsSettings.selectedMyFighter)
-      if (this.analyticsSettings.filterRepeat) recordsGrouped = recordsGrouped.filter(record => !record.isRepeat)
-      if (this.analyticsSettings.period === 'whole' && this.analyticsSettings.stage === 'all') return recordsGrouped
-      if (this.analyticsSettings.period === 'whole' && this.analyticsSettings.stage !== 'all') return recordsGrouped.filter(record => record.stage === this.analyticsSettings.stage)
-      if (this.analyticsSettings.period !== 'whole' && this.analyticsSettings.stage === 'all') return recordsGrouped.filter(record => this.inPeriod(record.createdAt, this.analyticsSettings.period))
-      const recordsByStage = recordsGrouped.filter(record => record.stage === this.analyticsSettings.stage)
-      return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.analyticsSettings.period))
+      const recordsGrouped = this.analyticsSettings.groupSimilarFighters ? this.groupedRecords : this.records
+      return recordsGrouped
+        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+        .filter(record => this.inPeriod(record.createdAt, this.analyticsSettings.period))
+        .filter(record =>
+          this.analyticsSettings.selectedMyFighter === 'all' ||
+          record.fighterId === this.analyticsSettings.selectedMyFighter
+        )
+        .filter(record => 
+          this.analyticsSettings.stage === 'all' ||
+          record.stage === this.analyticsSettings.stage
+        )
+        .filter(record =>
+          !this.analyticsSettings.filterRepeat ||
+          !record.isRepeat
+        )
     },
     usedFighterIds() {
       const used = this.recordsFiltered.map(record => {
@@ -181,6 +186,7 @@ export default {
       })
     },
     inPeriod(date, period) {
+      if (this.analyticsSettings.period === 'whole') return true
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
     },
