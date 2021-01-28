@@ -161,7 +161,7 @@ export default {
         result: this.editingRecord.result,
         stage: this.$refs.stage.input,
         against,
-        stocks: this.$refs.stocksSelecter.stocks
+        // stocks: this.$refs.stocksSelecter.stocks
       }
       const db = firebase.firestore()
       try {
