@@ -20,7 +20,7 @@ export default async function({ app, store }) {
         querySnapshot.forEach(doc => {
           versionsArray.push(doc.id)
         })
-        return Number(versionsArray[0])
+        return versionsArray[0]
       })
     console.log('now ver', version.versionNumber, 'latest ver', latestVersion)
     store.commit('setVersion', {
@@ -28,7 +28,7 @@ export default async function({ app, store }) {
       refreshedAt: now
     })
     // 期待するバージョン以上なら何もしない
-    if (latestVersion <= version.versionNumber) return
+    if (latestVersion === version.versionNumber) return
     // 反映させるためにスーパーリロードを促す
     window.confirm('新しいバージョンが配信されているため最新バージョンに更新します。')
     location.reload(true)
