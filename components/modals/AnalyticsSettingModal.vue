@@ -9,7 +9,7 @@
         </div>
         <h2 class="text-xl py-2 border-b">分析の詳細設定</h2>
       </div>
-      <div class="modal-content pt-2 overflow-auto">
+      <div class="modal-content pt-4 overflow-auto">
         <p class="error">{{ error }}</p>
         <div class="input-radio pb-6 flex flex-col items-start">
           <div class="sort flex justify-between items-center">
@@ -35,18 +35,32 @@
           </div>
         </div>
         <div class="input-radio pb-6 flex flex-col items-start">
-          <p class="text-lg text-left pl-4">期間(日)</p>
-          <div class="pl-4">
-            <input v-model="analyticsSettings.period" type="radio" name="1" :value="1"/>
-            <label for="1">1日</label>
-            <input v-model="analyticsSettings.period" type="radio" name="3" :value="3"/>
-            <label for="3">3日</label>
-            <input v-model="analyticsSettings.period" type="radio" name="7" :value="7"/>
-            <label for="7">7日</label>
-            <input v-model="analyticsSettings.period" type="radio" name="30" :value="30"/>
-            <label for="30">30日</label>
-            <input v-model="analyticsSettings.period" type="radio" name="whole" :value="'whole'"/>
-            <label for="whole">全期間</label>
+          <p class="text-lg text-left pl-4">期間(n日前まで)</p>
+          <div class="flex pl-4 pr-4 flex-wrap justify-start items-center">
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="today" :value="0"/>
+              <label for="today">本日</label>
+            </div>
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="1" :value="1"/>
+              <label for="1">1日</label>
+            </div>
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="3" :value="3"/>
+              <label for="3">3日</label>
+            </div>
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="7" :value="7"/>
+              <label for="7">7日</label>
+            </div>
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="30" :value="30"/>
+              <label for="30">30日</label>
+            </div>
+            <div class="option">
+              <input v-model="analyticsSettings.period" type="radio" name="whole" :value="'whole'"/>
+              <label for="whole">全期間</label>
+            </div>
           </div>
         </div>
         <div class="fighter-selecter pb-3">
@@ -181,7 +195,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .modal-bg {
   position: fixed;
   display: flex;
@@ -213,5 +227,12 @@ export default {
 }
 .details {
   margin: 20px 0 30px 0;
+}
+.option {
+  padding-bottom: 2px;
+}
+label {
+  white-space: nowrap;
+  padding-right: 8px;
 }
 </style>

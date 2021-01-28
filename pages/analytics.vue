@@ -7,15 +7,15 @@
       />
     </div>
     <div class="winning-percentage">
-      <div class="flex flex-col items-end text-gray-500 pb-2">
-        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析は<span class="text-gray-600">こちら</span>(β版)</nuxt-link>
+      <div class="flex justify-between text-gray-500 pb-2">
+        <button @click="resetSettings" class="flex items-end ml-6">設定をリセット</button>
+        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析(β版)</nuxt-link>
       </div>
       <Button @onClick="openModal" label="分析の詳細設定" />
-      <button @click="resetSettings" class="flex items-end ml-8 mt-1 py-1 text-gray-700">設定をリセット</button>
-      <form class="mb-2 px-4">
+      <form class="mb-2 mt-1 px-4">
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
-            <p class="text-l text-left pl-4">並べ替え</p>
+            <p class="text-l text-left pl-2">並べ替え</p>
             <div class="toggleSort">
               <template>
                 <div class="flex justify-between items-center px-4 py-1" @click="toggleSort">
@@ -35,10 +35,10 @@
           <label for="7">勝率</label>
         </div>
         <div class="input-radio mb-2 flex justify-between">
-          <span class="text-l text-left pl-4">期間(日)</span>
+          <p class="text-l text-left pl-2">期間</p>
           <div class="pr-2">
-            <input v-model="analyticsSettings.period" type="radio" name="1" :value="1"/>
-            <label for="1">1日</label>
+            <input v-model="analyticsSettings.period" type="radio" name="0" :value="0"/>
+            <label for="0">本日</label>
             <input v-model="analyticsSettings.period" type="radio" name="7" :value="7"/>
             <label for="7">7日</label>
             <input v-model="analyticsSettings.period" type="radio" name="30" :value="30"/>
@@ -169,6 +169,7 @@ export default {
       return entries.sort((a, b) => (a[this.analyticsSettings.sorting] < b[this.analyticsSettings.sorting] ? -1 : 1))
     },
     periodText() {
+      if (this.analyticsSettings.period === 0) return '本日'
       if (this.analyticsSettings.period === 'whole') return '全期間'
       return this.analyticsSettings.period + ' 日以内' 
     }
