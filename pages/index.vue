@@ -12,7 +12,7 @@
     </div>
 
     <div class="results">
-      <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
+      <p v-show="isLogin" class="my-2 text-xl text-gray-700 tracking-widest">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openAddModal" label="戦績を登録する" />
     </div>
     
@@ -177,14 +177,6 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
-}
-.results {
-  &-number {
-    font-size: 20px;
-    color: #4a5568;
-    letter-spacing: 2px;
-    margin: 4px 0 4px 0;
-  }
 }
 .add {
   // width: 400px;

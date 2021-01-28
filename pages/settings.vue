@@ -39,6 +39,7 @@
           <h3 class="text-base">Ver 3.4.1</h3>
           <ul class="text-sm">
             <li>◎専用部屋の戦績を編集できない不具合を修正</li>
+            <li>◎分析で期間を絞り込む選択肢に「本日」を追加</li>
           </ul>
         </div>
         <div class="version text-left mb-4">
