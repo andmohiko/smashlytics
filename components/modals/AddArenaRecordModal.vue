@@ -1,6 +1,6 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
+    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-4 mb-4 flex flex-col overflow-auto">
       <div class="modal-header">
         <div class="close" @click="onClose">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="modal-footer border-t pt-2">
-        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-4" />
+        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-2" />
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
         </div>
