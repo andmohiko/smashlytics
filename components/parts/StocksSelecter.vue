@@ -1,52 +1,13 @@
 <template>
-  <div class="w-full text-gray-700">
-    <p class="text-base text-left pb-1 pl-1">ストック数</p>
-    <!-- <div class="flex flex-col justify-center items-center"> -->
+  <div class="w-full pb-4 text-gray-700">
+    <p class="text-lg text-left pb-1">ストック数</p>
     <div>
-      <p class="text-sm text-left pb-1 pl-1">試合のルール</p>
-      <form class="mb-2 px-2 flex flex-wrap justify-start items-center">
-        <div class="option pb-1">
-          <input
-            id="stocks-2"
-            v-model="stocks.rule"
-            type="radio"
-            name="2"
-            :value="'2'"
-          />
-          <label for="stocks-2" class="pr-2 whitespace-nowrap">2スト</label>
-        </div>
-        <div class="option pb-1">
-          <input
-            id="stocks-3"
-            v-model="stocks.rule"
-            type="radio"
-            name="3"
-            :value="'3'"
-          />
-          <label for="stocks-3" class="pr-2 whitespace-nowrap">3スト</label>
-        </div>
-        <!-- <div class="option pb-1">
-          <input
-            id="stocks-other"
-            v-model="stocks.rule"
-            type="radio"
-            name="other"
-            :value="null"
-          />
-          <label for="stocks-other" class="pr-2 whitespace-nowrap">その他</label>
-        </div> -->
-        <!-- textbox -->
-        <div v-if="isShowOptionEmpty" class="option pb-1">
-          <input
-            id="stocks-empty"
-            v-model="stocks.rule"
-            type="radio"
-            name="null"
-            :value="null"
-          />
-          <label for="stocks-null" class="pr-2">登録しない</label>
-        </div>
-      </form>
+      <p class="text-base text-left pb-2">試合のルール</p>
+      <div class="flex">
+        <RadioButton v-model="stocks.rule" label="2スト" :value="2" />
+        <RadioButton v-model="stocks.rule" label="3スト" :value="3" />
+        <RadioButton v-if="isShowOptionEmpty" v-model="stocks.rule" label="登録しない" :value="null" />
+      </div>
     </div>
     <!-- <div class="custom-number-input">
       <label for="custom-input-number" class="text-gray-700 text-sm">試合結果</label>
@@ -66,6 +27,8 @@
 </template>
 
 <script>
+import RadioButton from '@/components/input/RadioButton.vue'
+
 export default {
   props: {
     defaultValue: {
@@ -76,6 +39,9 @@ export default {
       default: true,
       type: Boolean
     }
+  },
+  components: {
+    RadioButton
   },
   data() {
     return {
@@ -108,5 +74,5 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 </style>

@@ -58,10 +58,10 @@
       <TwitterShareButton />
       
       <Button @onClick="toEdit" label="編集する" />
-    </div>
+    <!-- </div>
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="title text-center">戦績管理</p>
-      <span class="text-xs">ただいまメンテナンス中です🙇‍</span>
+      <span class="text-xs">ただいまメンテナンス中です🙇‍</span> -->
       <!-- <div v-show="!isLogin" class="pb-20">
         <p class="error text-xl py-2 mb-4 text-red-700">登録するにはログインしてください</p>
         <div class="border-b">

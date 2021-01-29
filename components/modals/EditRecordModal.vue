@@ -37,7 +37,7 @@
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
-          <StageSelecter ref="stage" :previousSelect="editingRecord.stage" />
+          <StageSelecter ref="stageSelecter" :previousSelect="editingRecord.stage" />
           <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" />
           <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
           <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIPマッチ" />
@@ -142,7 +142,7 @@ export default {
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
-        stage: this.$refs.stage.input,
+        stage: this.$refs.stageSelecter.stage,
         stocks: this.$refs.stocksSelecter.stocks,
         isRepeat: this.$refs.isRepeat.input,
         isVip: this.$refs.isVip.input
