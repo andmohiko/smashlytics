@@ -144,7 +144,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="flex justify-end text-sm text-gray-500 pt-6 pr-2">
-        Version 3.4.1
+        Version 3.4.2
       </div>
       <div class="copyright">
         <p>
