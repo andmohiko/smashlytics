@@ -33,9 +33,9 @@
         </div>
         <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
-        <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
+        <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
           <StageSelecter ref="stageSelecter" :previousSelect="editingRecord.stage" />
           <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" />
@@ -64,7 +64,7 @@ import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import StocksSelecter from '@/components/parts/StocksSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
-import { now, date2string } from '@/utils/date.js'
+import { now } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import fighters from '@/assets/fighters.json'
 import { updateUser } from '@/repositories/users.js'
@@ -76,10 +76,6 @@ export default {
     editingRecord: {
       required: true,
       type: Object
-    },
-    isShowInputDetails: {
-      default: true,
-      type: Boolean
     }
   },
   components: {
@@ -207,9 +203,6 @@ export default {
         console.log('error deleting record', error)
       }
       this.onClose()
-    },
-    switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
     },
     onClose() {
       this.$emit('close')

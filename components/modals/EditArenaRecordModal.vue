@@ -33,18 +33,18 @@
         </div>
         <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
-        <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
+        <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
+          <span class="text-gray-700 text-base">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4" />
           <StageSelecter
             ref="stageSelecter"
             :isShowSmamateStages="true"
             :previousSelect="editingRecord.stage"
             :isShowOptionEmpty="true"
           />
-          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
-          <span class="text-gray-700 text-base">名前を入力する</span>
-          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-2" />
           <!-- <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" /> -->
         </div>
       </div>
@@ -81,10 +81,6 @@ export default {
     editingRecord: {
       required: true,
       type: Object
-    },
-    isShowInputDetails: {
-      default: true,
-      type: Boolean
     }
   },
   components: {
@@ -220,9 +216,6 @@ export default {
         console.log('error deleting record', error)
       }
       this.onClose()
-    },
-    switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
     },
     onClose() {
       this.$emit('close')

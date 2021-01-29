@@ -32,13 +32,13 @@
           />
         </div>
         
-        <div v-show="isShowInputDetails" class="details mt-20 mb-20 px-4">
+        <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" />
+          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
           <span class="text-gray-700 text-base">名前を入力する</span>
-          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-2"/>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4"/>
+          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" class="pb-4" />
           <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
         </div>
       </div>
@@ -70,10 +70,6 @@ export default {
     lastRecord: {
       default: null,
       type: Object
-    },
-    isShowInputDetails: {
-      default: true,
-      type: Boolean
     }
   },
   components: {
@@ -187,9 +183,6 @@ export default {
       } catch(error) {
         console.log('error in sending record', error)
       }
-    },
-    switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
     },
     onClose() {
       this.$emit('close')
