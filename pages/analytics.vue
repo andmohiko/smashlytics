@@ -132,6 +132,10 @@ export default {
           this.analyticsSettings.stage === 'all' ||
           record.stage === this.analyticsSettings.stage
         )
+        .filter(record => 
+          this.analyticsSettings.stocks === 'all' ||
+          (record.stocks && record.stocks.rule === this.analyticsSettings.stocks)
+        )
         .filter(record =>
           !this.analyticsSettings.filterRepeat ||
           !record.isRepeat
