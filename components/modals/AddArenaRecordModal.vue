@@ -35,9 +35,9 @@
         <div v-show="isShowInputDetails" class="details mt-20 mb-20 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" />
+          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" />
           <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
-          <span class="text-gray-700 text-sm">名前を入力する</span>
+          <span class="text-gray-700 text-base">名前を入力する</span>
           <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-2"/>
           <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
         </div>
@@ -157,7 +157,7 @@ export default {
         opponent: this.fighters[this.record.opponentId].name,
         opponentId: this.record.opponentId,
         result: this.record.result,
-        stage: this.$refs.stage.input,
+        stage: this.$refs.stageSelecter.stage,
         against,
         stocks: this.$refs.stocksSelecter.stocks
       }
