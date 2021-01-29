@@ -19,6 +19,13 @@
       <div>
         <h1 class="page-title">{{ pageTitle }}</h1>
       </div>
+      <template v-if="isMenuiconPage">
+        <button class="menu-btn" @click="openAnalyticsMenu">
+          <svg width="27" height="27" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="#eaecf0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </template>
       <template v-if="isSettingsiconPage">
         <button class="settings-btn" @click="toSettings">
           <svg width="27" height="27" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,6 +34,28 @@
         </button>
       </template>
     </header>
+    <div v-if="isShowAnalyticsMenu" class="menu-bg">
+      <template v-if="isMenuiconPage">
+        <button class="menu-btn" @click="openAnalyticsMenu">
+          <svg width="27" height="27" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="#eaecf0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </template>
+      <div class="menu">
+        <ul @click="openAnalyticsMenu">
+          <li class="menu-item">
+            <nuxt-link to="#">サマリー</nuxt-link>
+          </li>
+          <li class="menu-item" @click="sendEventAnalyticsChart">
+            <nuxt-link to="/analytics/chart">グラフ</nuxt-link>
+          </li>
+          <li class="menu-item">
+            <nuxt-link to="/arenaAnalyticsBeta">専門部屋分析</nuxt-link>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +65,11 @@
 import { logEvent } from '@/utils/analytics.js'
 
 export default {
+  data() {
+    return {
+      isShowAnalyticsMenu: false
+    }
+  },
   computed: {
     user() {
       return this.$store.state.user
@@ -60,6 +94,9 @@ export default {
     isSettingsiconPage() {
       const route = this.$route.path.replaceAll('/', '')
       return (route === this.user.userOriginalId)
+    },
+    isMenuiconPage() {
+      return (this.$route.path.match(/\/analytics$/))
     },
     routename() {
       return this.$route.name
@@ -103,6 +140,13 @@ export default {
     toSettings () {
       this.$router.push("/settings")
     },
+    openAnalyticsMenu() {
+      this.isShowAnalyticsMenu = !this.isShowAnalyticsMenu
+      console.log('menu', this.isShowAnalyticsMenu)
+    },
+    sendEventAnalyticsChart() {
+      logEvent('viewAnalyticsChart', undefined)
+    },
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
       if (this.$route.path === '/') logEvent('getRecordsInTop', undefined)
@@ -144,6 +188,36 @@ export default {
   align-items: center;
   margin-right: 40px;
 }
+.menu {
+  height: 100vh;
+  width: 150px;
+  background-color: #575dff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 30;
+  padding: 36px 0 0 4px;
+  color: #ffffff;
+  font-size: 1.4rem;
+
+  &-item {
+    border-bottom: solid 1px #ffffff;
+    padding: 8px 0;
+  }
+
+  &-bg {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(21, 28, 56, 0.568);
+    z-index: 20;
+  }
+}
 .back-btn {
   position: absolute;
   left: 5px;
@@ -156,5 +230,11 @@ export default {
   position: absolute;
   right: 8px;
   top: 10px;
+}
+.menu-btn {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+  z-index: 100;
 }
 </style>
