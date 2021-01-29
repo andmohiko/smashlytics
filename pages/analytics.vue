@@ -12,11 +12,11 @@
         <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析(β版)</nuxt-link>
       </div>
       <Button @onClick="openModal" label="分析の詳細設定" />
-      <form class="mb-2 mt-1 px-4">
+      <form class="mb-2 mt-2 px-4">
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
             <p class="text-l text-left pl-2">並べ替え</p>
-            <div class="toggleSort">
+            <!-- <div class="toggleSort">
               <template>
                 <div class="flex justify-between items-center px-4 py-1" @click="toggleSort">
                   <p class="text-right pr-2">逆順</p>
@@ -25,7 +25,7 @@
                   </div>
                 </div>
               </template>
-            </div>
+            </div> -->
           </div>
           <input v-model="analyticsSettings.sorting" type="radio" name="fighterId" value="opponentId"/>
           <label for="1">相手ファイター順</label>
