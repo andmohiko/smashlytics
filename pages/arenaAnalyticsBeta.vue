@@ -88,10 +88,6 @@ export default {
     recordsFiltered() {
       return this.records
         .filter(record => this.inPeriod(record.createdAt, this.period))
-        .filter(record => {
-          this.stage === 'all' ||
-          record.stage === this.stage
-        })
     },
     fightedAgainst() {
       return Array.from(new Set(
