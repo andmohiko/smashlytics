@@ -184,10 +184,11 @@ export default {
         updateUser(this.user, updateUserDto)
         this.$store.dispatch('updateUser', updateUserDto)
         // this.$store.dispatch('getUser', this.user.userId)
-        this.flashMessage = '保存しました。'
+        this.$store.commit('setNotice', { noticeType: 'success', message: '保存しました' })
+        window.setTimeout(() => this.$router.go(-1), 800)
       } catch(error) {
         console.log('updating error', error)
-        this.flashMessage = 'プロフィールの更新に失敗しました。'
+        this.$store.commit('setNotice', { noticeType: 'error', message: 'プロフィールの更新に失敗しました' })
       }
     }
   }
