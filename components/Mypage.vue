@@ -139,12 +139,12 @@ export default {
         .map(records => {
           if (!records.globalSmashPower) return
           if (newestGsp === 0) {
-            newestGsp = records.globalSmashPower
+            newestGsp = records.globalSmashPower/10000
           }
-          oldestGsp = records.globalSmashPower
+          oldestGsp = records.globalSmashPower/10000
         })
-      const arrow = newestGsp - oldestGsp > 0 ? '↑' : '↓'
-      return newestGsp + ' (' + arrow + ' ' + (newestGsp - oldestGsp) + ' )'
+      const arrow = newestGsp - oldestGsp >= 0 ? '↑' : '↓'
+      return newestGsp + '万 (' + arrow + ' ' + (newestGsp - oldestGsp) + '万 )'
     },
     toEdit () {
       logEvent('editProfile', undefined)
