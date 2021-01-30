@@ -66,6 +66,7 @@
           <span v-else class="text-2xl text-gray-800">--</span> -->
         </div>
       </div>
+      <span class="text-gray-600 text-xs px-1 pt-4 flex justify-center items-center">※この機能はそのうち分析に移動させるかも</span>
     </div>
   </div>
 </template>
