@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-full text-left">
+    <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-screen text-left">
       <div class="name pb-4">
         <p class="username text-base text-gray-800">ユーザは見つかりませんでした(´・ω・｀)</p>
       </div>
@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     console.log('path', this.$route.path.slice(1))
-    console.log(getUser(this.$route.path.slice(1)))
+    // console.log(getUser(this.$route.path.slice(1)))
   },
   computed: {
     user() {

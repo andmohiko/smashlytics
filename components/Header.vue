@@ -33,6 +33,8 @@
 
 
 <script>
+import { logEvent } from '@/utils/analytics.js'
+
 export default {
   computed: {
     user() {
@@ -52,32 +54,32 @@ export default {
       return (
         this.$route.path.match(/\/$/) ||
         this.$route.path.match(/\/analytics$/) ||
-        this.$route.path.match(/\/records$/)
+        this.$route.path.match(/\/arena$/)
       )
     },
     isSettingsiconPage() {
       const route = this.$route.path.replaceAll('/', '')
-      return (route === this.user.userId)
+      return (route === this.user.userOriginalId)
     },
     routename() {
       return this.$route.name
     },
     pageTitle() {
       switch (this.routename) {
-        case 'records': {
-          return '戦績一覧'
+        case 'arena': {
+          return '専用部屋'
         }
         case 'analytics': {
           return '戦績分析'
+        }
+        case 'arenaAnalyticsBeta': {
+          return '専用部屋分析'
         }
         case 'mypage': {
           return 'マイページ'
         }
         case 'edit': {
           return 'プロフィール編集'
-        }
-        case 'fighters': {
-          return 'ファイター追加'
         }
         case 'signup': {
           return 'ユーザ登録'
@@ -103,6 +105,9 @@ export default {
     },
     async getRecords() {
       await this.$store.dispatch('getRecords', this.user.userId)
+      if (this.$route.path === '/') logEvent('getRecordsInTop', undefined)
+      if (this.$route.path === '/arena' || this.$route.path === '/arena/') logEvent('getRecordsInArena', undefined)
+      if (this.$route.path === '/analytics' || this.$route.path === '/analytics/') logEvent('getRecordsInAnalytics', undefined)
     },
   }
 }
@@ -119,6 +124,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.arena {
+  background-color: #575dff;
 }
 .title {
   font-size: 24px;

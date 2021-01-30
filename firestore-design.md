@@ -14,8 +14,9 @@
 
 - createdAt: Timestamp 作成した時間
 - updatedAt: Timestamp 更新した時間
-- userId: String
-- authId: String
+- userId: String ←使わない
+- authId: String ←document Id
+- userOriginalId: String マイページのURL
 - username: String
 - twitterId: String
 - main: String fighterId
@@ -35,6 +36,17 @@
   - skype: Boolean
   - listenOnly: Boolean
   - ng: Boolean
+<!-- - playStyle: map
+  - 
+  tournament/oneOnOne
+  - items: String on/off -->
+<!-- - privateSettings: Map
+  - isPrivate: Boolean
+  - showProfile: Boolean
+  - showLatestGlobalSmashPower: Boolean
+  - showWinningRate: Boolean
+  - showAnalytics: Boolean -->
+
 
 ## records
 
@@ -47,7 +59,7 @@
 
 - createdAt: Timestamp 作成した時間
 - updatedAt: Timestamp 更新した時間
-- userId: String ユーザ名
+- userId: String authId
 - fighter: String 自分のファイター
 - fighterId: String 自分のファイターID
 - opponent: String 自分のファイター
@@ -57,3 +69,8 @@
 - globalSmashPower: Number 世界戦闘力
 - isRepeat: Boolean 連戦かどうか
 - isVip: Boolean VIPかどうか
+<!-- - stocksTaken: map
+  - own: number 自分のストックを落とされた数
+  - opponent: number 相手のストックを落とした数 -->
+- roomType: String online|arena
+- against: String 相手の名前

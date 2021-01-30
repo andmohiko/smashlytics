@@ -44,7 +44,13 @@
       </div>
       <div class="mb-10">
         <span class="text-gray-700 px-1 py-3 flex items-center">※ユーザIDはあとから変更できません</span>
-        <Button @onClick="submit" label="登録する" />
+        <Button @onClick="submit" label="利用規約に同意して登録" />
+        <div class="rule mt-6">
+          <a class="rule-link text-gray-700 text-sm" @click="openTermsPage">
+            利用規約はこちら
+            <i class="material-icons text-base text-gray-700">open_in_new</i>
+          </a>
+        </div>
       </div>
       <div class="logout text-gray-500">
         <button @click="logout">googleログアウト</button>
@@ -89,7 +95,7 @@ export default {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          this.userIds.push(doc.id)
+          this.userIds.push(doc.data().userOriginalId)
         })
       })
   },
@@ -99,6 +105,7 @@ export default {
     },
     submit () {
       console.log('submit')
+      this.error = ''
       const authId = this.$store.state.uid
       this.user.userId = this.$refs.userId.input
       this.user.username = this.$refs.username.input
@@ -112,8 +119,13 @@ export default {
         return
       }
       const nameExp = /^[a-zA-Z0-9_]{5,15}$/
+      const numExp = /^[0-9]{5,15}$/
       if (!nameExp.test(this.user.userId) || this.userIds.includes(this.user.userId)) {
         this.error = '入力されたユーザIDは使用できません'
+        return
+      }
+      if (numExp.test(this.user.userId)) {
+        this.error = '英字を含めてください'
         return
       }
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
@@ -132,6 +144,7 @@ export default {
           createdAt: serverTimestamp,
           updatedAt: serverTimestamp,
           authId,
+          userOriginalId: this.user.userId,
           username: this.user.username,
           twitterId: this.user.twitterId,
           main: this.user.mainFighterId,
@@ -141,17 +154,22 @@ export default {
             wins: 0,
             loses: 0,
             matches: 0
+          },
+          resultsArena: {
+            wins: 0,
+            loses: 0,
+            matches: 0
           }
         }
         db.collection('users')
-          .doc(this.user.userId)
+          .doc(authId)
           .set(createUserDto)
           .catch(error => {
             console.error("Error creating document: ", error);
           })
         this.$store.commit('setUser', {
           ...createUserDto,
-          userId: this.user.userId
+          userId: authId
         })
         this.$store.commit('setIsLogin', true)
         this.$store.commit('setRecords', [])
@@ -171,6 +189,10 @@ export default {
       window.localStorage.clear();
       logEvent('logoutFromSignup', undefined)
       this.$router.push("/new")
+    },
+    openTermsPage() {
+      logEvent('view_terms', undefined)
+      window.open('https://www.notion.so/874f7e1046f94d959b61025c2f663ecd')
     }
   }
 }

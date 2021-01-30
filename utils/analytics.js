@@ -2,24 +2,35 @@ import firebase from '@/plugins/firebase'
 const analitics = firebase.analytics()
 
 // LogEvent = {
-//   'addResult',
-//   'editResult',
-//   'deleteResult',
-//   'reverseResult'
+  // 'getUser'
+  // 'getRecords'
+  // 'getRecordsInTop'
+  // 'getRecordsInArena'
+  // 'getRecordsInAnalytics'
+  
+  // 'addResult',
+  // 'editResult',
+  // 'deleteResult',
+  // 'reverseResult'
+  // 'addArenaResult'
+  // 'editArenaResult'
+  // 'deleteArenaResult'
+  // 'reverseArenaResult'
 
-//   'viewTop'
-//   'viewRecords'
-//   'viewAnalytics'
-//   'viewMypage'
-//   'viewNew'
+  // 'viewTop'
+  // 'viewArena'
+  // 'viewAnalytics'
+  // 'viewArenaAnalytics'
+  // 'viewMypage'
+  // 'viewNew'
 
-//   'editProfile',
+  // 'editProfile',
 
-//   'shareOnTwitter'
+  // 'shareOnTwitter'
 
-//   'signup',
-//   'logoutFromSettings'
-//   'logoutFromSignup'
+  // 'signup',
+  // 'logoutFromSettings'
+  // 'logoutFromSignup'
 // }
 
 // import { logEvent } from '@/utils/analytics.js'

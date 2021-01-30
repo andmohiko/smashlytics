@@ -5,7 +5,7 @@ import { now, date2string } from '@/utils/date.js'
 import { getUser } from '@/repositories/users.js'
 import { getRecords } from '@/repositories/records.js'
 import createPersistedState from "vuex-persistedstate"
-
+import { logEvent } from '@/utils/analytics.js'
 
 
 const db = firebase.firestore()
@@ -21,9 +21,22 @@ const state = {
   isLogin: false,
   records: [],
   userIds: [],
+  analyticsSettings: {
+    sorting: 'opponentId',
+    period: 30,
+    selectedMyFighter: 'all',
+    groupSimilarFighters: false,
+    stage: 'all',
+    stocks: 'all',
+    filterRepeat: false
+  },
   notice: {
     noticeType: null,
     message: ''
+  },
+  version: {
+    versionNumber: 0,
+    refreshedAt: null
   }
 }
 
@@ -60,7 +73,7 @@ const actions = {
       this.$router.push("/signup")
       return
     }
-    const userId = authUser.userId
+    const userId = authId
     commit('setIsLogin', true)
     dispatch('getUser', userId)
     dispatch('getRecords', userId)
@@ -72,10 +85,12 @@ const actions = {
       userId,
       ...user
     })
+    logEvent('getUser', undefined)
   },
   async getRecords({ commit }, userId) {
     const records = await getRecords(userId)
     commit('setRecords', records)
+    logEvent('getRecords', undefined)
   },
   addRecords({ commit, state }, newRecord) {
     newRecord.createdAt = new Date(now())
@@ -117,9 +132,15 @@ const mutations = {
   setUserIds(state, payload) {
     state.userIds = payload
   },
+  setAnalyticsSettings(state, payload) {
+    state.analyticsSettings = payload
+  },
   setNotice(state, payload) {
     state.notice = payload
-  }
+  },
+  setVersion(state, payload) {
+    state.version = payload
+  },
 }
 
 const store = () => {

@@ -16,23 +16,23 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script>
+
 export default {
   computed: {
     notice() {
-      return this.$store.state.notice;
+      return this.$store.state.notice
     },
   },
   methods: {
     closeNotice() {
-      this.$store.dispatch("setNotice", { noticeType: null, message: "" });
+      this.$store.dispatch('setNotice', { noticeType: null, message: '' })
     },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 p {
   margin: 0;
 }
@@ -65,8 +65,8 @@ p {
     z-index: z(Middle);
   }
   &-inner::after {
-    content: "close";
-    font-family: "Material Icons";
+    content: 'close';
+    font-family: 'Material Icons';
     color: black;
     position: absolute;
     right: 10px;

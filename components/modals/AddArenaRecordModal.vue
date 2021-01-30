@@ -7,7 +7,7 @@
             <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h2 class="text-xl py-2 border-b">オンラインの戦績を登録する</h2>
+        <h2 class="text-xl py-2 border-b">専用部屋の戦績を登録する</h2>
       </div>
       <div class="modal-content pt-2 overflow-auto">
         <p class="error">{{ error }}</p>
@@ -35,11 +35,11 @@
         <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" class="pb-2" />
-          <StageSelecter ref="stageSelecter" :isShowOptionEmpty="false" />
-          <StocksSelecter ref="stocksSelecter" :isShowOptionEmpty="false" />
-          <Checkbox ref="isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="lastRecord.isVip" label="VIPマッチ" />
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
+          <span class="text-gray-700 text-base">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4"/>
+          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" class="pb-4" />
+          <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
         </div>
       </div>
       <div class="modal-footer border-t pt-2">
@@ -60,7 +60,7 @@ import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import StocksSelecter from '@/components/parts/StocksSelecter.vue'
-import Checkbox from '@/components/input/Checkbox.vue'
+import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -68,7 +68,7 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 export default {
   props: {
     lastRecord: {
-      required: false,
+      default: null,
       type: Object
     }
   },
@@ -79,7 +79,7 @@ export default {
     FighterSelecter,
     StageSelecter,
     StocksSelecter,
-    Checkbox
+    AgainstSelecter
   },
   data() {
     return {
@@ -87,7 +87,6 @@ export default {
         fighterId: null,
         opponentId: null,
         result: true,
-        globalSmashPower: null,
         stage: ''
       },
       error: '',
@@ -98,14 +97,13 @@ export default {
     if (!this.lastRecord) return
     this.record.fighterId = this.lastRecord.fighterId
     this.record.opponentId = this.lastRecord.opponentId
-    // if (this.lastRecord.stage || this.lastRecord.globalSmashPower) this.isShowInputDetails = true
   },
   computed: {
     user() {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      return this.$store.state.records.filter(record => record.roomType === 'arena')
     },
     usedFighterIds() {
       if (!this.records.length) return Object.keys(this.fighters).sort()
@@ -113,6 +111,15 @@ export default {
         return record.fighterId
       })
       return Array.from(new Set(used)).sort()
+    },
+    fightedPlayers() {
+      if (!this.records.length) return []
+      const fighted = this.records
+        .map(record => {
+          return record.against
+        })
+        .filter(player => Boolean(player))
+      return Array.from(new Set(fighted))
     }
   },
   methods: {
@@ -129,33 +136,32 @@ export default {
     async submit () {
       console.log('submit', this.record.fighterId, this.record.opponentId)
       this.error = ''
-      this.record.globalSmashPower = this.$refs.globalSmashPower.input
       if (!this.record.fighterId || !this.record.opponentId || this.record.result === null) {
-        this.error = '自分・相手・結果は入力してください'
+        this.error = '自分・相手のファイター・結果は入力してください'
         return
       }
+      // 選択入力を優先する
+      const against = this.$refs.againstSelect.input ? this.$refs.againstSelect.input : this.$refs.againstText.input
       const newRecord = {
         createdAt: serverTimestamp,
         updatedAt: serverTimestamp,
+        roomType: 'arena',
         userId: this.user.userId,
         userOriginalId: this.user.userOriginalId,
-        roomType: 'online',
         fighter: this.fighters[this.record.fighterId].name,
         fighterId: this.record.fighterId,
         opponent: this.fighters[this.record.opponentId].name,
         opponentId: this.record.opponentId,
         result: this.record.result,
         stage: this.$refs.stageSelecter.stage,
-        globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
-        stocks: this.$refs.stocksSelecter.stocks,
-        isRepeat: this.$refs.isRepeat.input,
-        isVip: this.$refs.isVip.input
+        against,
+        stocks: this.$refs.stocksSelecter.stocks
       }
       const updateUserDto = {
-        results: {
-          matches: this.user.results.matches + 1,
-          wins: this.record.result ? this.user.results.wins + 1 : this.user.results.wins,
-          loses: this.record.result ? this.user.results.loses : this.user.results.loses + 1,
+        resultsArena: {
+          matches: this.user.resultsArena.matches + 1,
+          wins: this.record.result ? this.user.resultsArena.wins + 1 : this.user.resultsArena.wins,
+          loses: this.record.result ? this.user.resultsArena.loses : this.user.resultsArena.loses + 1,
         },
         updatedAt: serverTimestamp
       }
@@ -164,7 +170,7 @@ export default {
       try {
         const newRecordRef = db.collection('records').doc()
         batch.set(newRecordRef, newRecord)
-        const userRef = db.collection('users').doc(this.user.authId)
+        const userRef = db.collection('users').doc(this.user.userId)
         batch.update(userRef, updateUserDto)
         batch.commit().catch(function(error) {
           console.log("Error updating in batch:", error);
@@ -172,7 +178,7 @@ export default {
         newRecord.docId = newRecordRef.id
         this.$store.dispatch('addRecords', newRecord)
         this.$store.dispatch('updateUser', updateUserDto)
-        logEvent('addResult', undefined)
+        logEvent('addArenaResult', undefined)
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
