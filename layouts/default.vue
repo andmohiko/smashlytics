@@ -10,9 +10,9 @@
     </div>
     <Footer />
 
-    <!-- <template v-if="notice.noticeType">
+    <template v-if="notice.noticeType">
       <Notice />
-    </template> -->
+    </template>
   </div>
 </template>
 
