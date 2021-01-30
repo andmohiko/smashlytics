@@ -1,107 +1,119 @@
 <template>
   <div class="container">
     グラフ
+    {{ recordsByFighter[0] }}
   </div>
 </template>
 
 <script>
-import { now, date2string } from '@/utils/date.js'
+import AnalyticsSettingModal from '@/components/modals/AnalyticsSettingModal.vue'
 import Button from '@/components/parts/Button.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import { today } from '@/utils/date.js'
+import { calcWinningPercentage } from '@/utils/records.js'
 import fighters from '@/assets/fighters.json'
+import _ from 'lodash'
+
+import { Bar } from 'vue-chartjs'
 
 export default {
   components: {
-    FighterIcon,
-    Button
+    AnalyticsSettingModal,
+    Button,
+    FighterIcon
   },
   data() {
     return {
+      today: today(),
+      isShowModal: false,
       fighters,
-      headings: ['日付','自分','相手','','勝敗','編集'],
-      isShowAddModal: false,
-      isShowEditModal: false,
-      editingRecord: {},
-      now: now()
+      selectedFighter: 25
     }
   },
+  extends: Bar,
+  mounted () {
+    this.renderChart(data, options)
+  },
   computed: {
-    user() {
-      return this.$store.state.user
+    analyticsSettings() {
+      return this.$store.state.analyticsSettings
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'arena')
+      return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
-    isLogin() {
-      return Boolean(this.$store.state.user.userId)
+    recordsByFighter() {
+      return this.records.filter(record => record.fighterId === this.selectedFighter)
     },
-    lastRecord() {
-      if (this.records.length) return this.records[0]
-      return {
-        fighterId: '01',
-        opponentId: '01',
-      }
+    usedFighterIds() {
+      const used = this.recordsFiltered.map(record => {
+        return record.fighterId
+      })
+      return Array.from(new Set(used))
     },
-    resultsToday() {
-      const today = date2string(this.now).split(' ')[0]
-      const recordsToday = this.records.filter(record => record.createdAtString.split(' ')[0] === today)
-      const wins = recordsToday.filter(record => record.result).length
-      return wins + '勝' + (recordsToday.length - wins) + '敗'
+    periodText() {
+      if (this.analyticsSettings.period === 0) return '本日'
+      if (this.analyticsSettings.period === 'whole') return '全期間'
+      return this.analyticsSettings.period + ' 日以内' 
     }
   },
   methods: {
-    async getRecords() {
-      await this.$store.dispatch('getRecords', this.user.userId)
+    getRecordsByFighters(fighterId, opponentId) {
+      return this.recordsFiltered.filter(record => {
+        return record.fighterId === fighterId && record.opponentId === opponentId
+      })
     },
-    normalizeAgainstName(name) {
-      if (name.length < 6) return name
-      return name.slice(0,4) + '...'
+    inPeriod(date, period) {
+      if (this.analyticsSettings.period === 'whole') return true
+      const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
+      return date > targetDate
     },
-    openAddModal() {
-      this.isShowAddModal = true
+    winningPercentageText(records) {
+      const results = calcWinningPercentage(records)
+      return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
     },
-    openEditModal(record) {
-      this.isShowEditModal = true
-      this.editingRecord = record
+    resetSettings() {
+      this.$store.commit('setAnalyticsSettings', {
+        sorting: 'opponentId',
+        period: 30,
+        selectedMyFighter: 'all',
+        groupSimilarFighters: false,
+        stage: 'all',
+        stocks: 'all',
+        filterRepeat: false
+      })
+    },
+    openModal() {
+      this.isShowModal = true
     },
     closeModal() {
-      this.isShowAddModal = false
-      this.isShowEditModal = false
-    }
+      this.isShowModal = false
+    },
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .container {
   margin: 0 auto;
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
-.get {
-  span {
-    display: inline-block;
-  }
-}
-.records {
+.table {
   margin: 10px 0;
 }
-.title {
-  margin: 40px 0;
-  font-size: 24px;
-  color: black;
-  letter-spacing: 1px;
-}
-.results {
-  &-number {
-    font-size: 20px;
-    color: #4a5568;
-    letter-spacing: 2px;
-    margin: 4px 0 4px 0;
+.message {
+  font-size: 18px;
+  margin-bottom: 8px;
+  span {
+    display: block;
   }
 }
-
+.table-byFighter {
+  display: grid;
+  grid-template-rows: 40px;
+  grid-template-columns:50px 50px 1fr;
+}
 </style>
