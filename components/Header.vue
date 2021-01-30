@@ -81,9 +81,6 @@ export default {
         case 'edit': {
           return 'プロフィール編集'
         }
-        case 'fighters': {
-          return 'ファイター追加'
-        }
         case 'signup': {
           return 'ユーザ登録'
         }

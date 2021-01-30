@@ -1,57 +1,53 @@
 <template>
   <div class="container">
+    <div v-if="isShowModal">
+      <AnalyticsSettingModal
+        :analyticsSettings="analyticsSettings"
+        @close="closeModal"
+      />
+    </div>
     <div class="winning-percentage">
-      <div class="flex flex-col items-end text-gray-500">
-        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析は<span class="text-gray-600">こちら</span>(β版)</nuxt-link>
+      <div class="flex justify-between text-gray-500 pb-2">
+        <button @click="resetSettings" class="flex items-end ml-6">設定をリセット</button>
+        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析(β版)</nuxt-link>
       </div>
-      <form class="mb-2 px-4">
+      <Button @onClick="openModal" label="分析の詳細設定" />
+      <form class="mb-2 mt-2 px-4">
         <div class="input-radio pb-2">
           <div class="sort flex justify-between items-center">
-            <p class="text-l text-left pl-4">並べ替え</p>
-            <div class="toggleDescending">
+            <p class="text-l text-left pl-2">並べ替え</p>
+            <!-- <div class="toggleSort">
               <template>
-                <div class="flex justify-between items-center px-4 py-1" @click="toggle">
+                <div class="flex justify-between items-center px-4 py-1" @click="toggleSort">
                   <p class="text-right pr-2">逆順</p>
-                  <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': descending}">
-                    <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': descending,}"></div>
+                  <div class="w-10 h-5 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-400': analyticsSettings.descending}">
+                    <div class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-6': analyticsSettings.descending,}"></div>
                   </div>
                 </div>
               </template>
-            </div>
+            </div> -->
           </div>
-          <input v-model="sorting" type="radio" name="fighterId" value="opponentId"/>
+          <input v-model="analyticsSettings.sorting" type="radio" name="fighterId" value="opponentId"/>
           <label for="1">相手ファイター順</label>
-          <input v-model="sorting" type="radio" name="matches" value="matches"/>
+          <input v-model="analyticsSettings.sorting" type="radio" name="matches" value="matches"/>
           <label for="3">試合数</label>
-          <input v-model="sorting" type="radio" name="winningPercentage" value="winningPercentage"/>
+          <input v-model="analyticsSettings.sorting" type="radio" name="winningPercentage" value="winningPercentage"/>
           <label for="7">勝率</label>
         </div>
-        <div class="input-radio mb-2">
-          <p class="text-l text-left pl-4">期間(日)</p>
-          <input v-model="period" type="radio" name="1" :value="1"/>
-          <label for="1">1日</label>
-          <input v-model="period" type="radio" name="3" :value="3"/>
-          <label for="3">3日</label>
-          <input v-model="period" type="radio" name="7" :value="7"/>
-          <label for="7">7日</label>
-          <input v-model="period" type="radio" name="30" :value="30"/>
-          <label for="30">30日</label>
-          <input v-model="period" type="radio" name="whole" :value="'whole'"/>
-          <label for="whole">全期間</label>
-        </div>
-        <div class="input-radio mb-2">
-          <p class="text-l text-left pl-4">ステージ</p>
-          <input v-model="stage" type="radio" name="all" value="all"/>
-          <label for="all">全部</label>
-          <input v-model="stage" type="radio" name="finalDestination" value="finalDestination"/>
-          <label for="finalDestination">終点</label>
-          <input v-model="stage" type="radio" name="battleField" value="battleField"/>
-          <label for="battleField">戦場</label>
-          <input v-model="stage" type="radio" name="smallBattleField" value="smallBattleField"/>
-          <label for="smallBattleField">小戦場</label>
+        <div class="input-radio mb-2 flex justify-between">
+          <p class="text-l text-left pl-2">期間</p>
+          <div class="pr-2">
+            <input v-model="analyticsSettings.period" type="radio" name="0" :value="0"/>
+            <label for="0">本日</label>
+            <input v-model="analyticsSettings.period" type="radio" name="7" :value="7"/>
+            <label for="7">7日</label>
+            <input v-model="analyticsSettings.period" type="radio" name="30" :value="30"/>
+            <label for="30">30日</label>
+            <input v-model="analyticsSettings.period" type="radio" name="whole" :value="'whole'"/>
+            <label for="whole">全期間</label>
+          </div>
         </div>
       </form>
-      
       <p class="message">
         <span>{{ periodText }}の記録は {{ recordsFiltered.length }} 試合です。</span>
         <span>({{ winningPercentageText(recordsFiltered) }})</span>
@@ -69,8 +65,10 @@
             <tr v-for="entry in entries" :key="entry.id">
               <td class="border-dashed border-t border-gray-200 px-3"
               ><FighterIcon :fighterId="entry.fighterId" size="32px" /></td>
-              <td class="border-dashed border-t border-gray-200 px-3"
-              ><FighterIcon :fighterId="entry.opponentId" size="32px" /></td>
+              <td class="border-dashed border-t border-gray-200 px-3 py-2 flex">
+                <FighterIcon :fighterId="entry.opponentId" size="32px" />
+                <FighterIcon :fighterId="fighters[entry.opponentId].child" v-if="showSimilarFighter(entry.opponentId)" size="32px" />
+              </td>
               <td class="border-dashed border-t border-gray-200 px-3"
               ><span class="text-gray-700 px-3 py-3 flex items-center">{{ entry.wins }}勝{{ entry.loses }}敗</span></td>
               <td class="border-dashed border-t border-gray-200 px-3"
@@ -84,35 +82,64 @@
 </template>
 
 <script>
+import AnalyticsSettingModal from '@/components/modals/AnalyticsSettingModal.vue'
+import Button from '@/components/parts/Button.vue'
+import FighterIcon from '@/components/parts/FighterIcon.vue'
 import { today } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
-import FighterIcon from '@/components/parts/FighterIcon.vue'
+import fighters from '@/assets/fighters.json'
+import _ from 'lodash'
 
 export default {
   components: {
+    AnalyticsSettingModal,
+    Button,
     FighterIcon
   },
   data() {
     return {
-      period: 7,
-      stage: 'all',
-      sorting: 'opponentId',
-      order: true,
       today: today(),
-      descending: false
+      isShowModal: false,
+      fighters
     }
   },
   computed: {
+    analyticsSettings() {
+      return this.$store.state.analyticsSettings
+    },
     records() {
       return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
+    groupedRecords() {
+      return _.cloneDeep(this.records)
+        .map(record => {
+          if (this.fighters[record.opponentId].parent) {
+            record.opponentId = this.fighters[record.opponentId].parent
+          }
+          return record
+        })
+    },
     recordsFiltered() {
-      const recordsSorting = this.records.slice().sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
-      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
-      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
-      return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
+      const recordsGrouped = this.analyticsSettings.groupSimilarFighters ? this.groupedRecords : this.records
+      return recordsGrouped
+        .sort((a, b) => (a.opponentId < b.opponentId ? -1 : 1))
+        .filter(record => this.inPeriod(record.createdAt, this.analyticsSettings.period))
+        .filter(record =>
+          this.analyticsSettings.selectedMyFighter === 'all' ||
+          record.fighterId === this.analyticsSettings.selectedMyFighter
+        )
+        .filter(record => 
+          this.analyticsSettings.stage === 'all' ||
+          record.stage === this.analyticsSettings.stage
+        )
+        .filter(record => 
+          this.analyticsSettings.stocks === 'all' ||
+          (record.stocks && record.stocks.rule === this.analyticsSettings.stocks)
+        )
+        .filter(record =>
+          !this.analyticsSettings.filterRepeat ||
+          !record.isRepeat
+        )
     },
     usedFighterIds() {
       const used = this.recordsFiltered.map(record => {
@@ -143,16 +170,17 @@ export default {
           })
         })
       })
-      if (!this.descending) {
-        if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
-        return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
+      if (!this.analyticsSettings.descending) {
+        if (this.analyticsSettings.sorting === 'opponentId') return entries.sort((a, b) => (a[this.analyticsSettings.sorting] < b[this.analyticsSettings.sorting] ? -1 : 1))
+        return entries.sort((a, b) => (a[this.analyticsSettings.sorting] > b[this.analyticsSettings.sorting] ? -1 : 1))
       }
-      if (this.sorting === 'opponentId') return entries.sort((a, b) => (a[this.sorting] > b[this.sorting] ? -1 : 1))
-      return entries.sort((a, b) => (a[this.sorting] < b[this.sorting] ? -1 : 1))
+      if (this.analyticsSettings.sorting === 'opponentId') return entries.sort((a, b) => (a[this.analyticsSettings.sorting] > b[this.analyticsSettings.sorting] ? -1 : 1))
+      return entries.sort((a, b) => (a[this.analyticsSettings.sorting] < b[this.analyticsSettings.sorting] ? -1 : 1))
     },
     periodText() {
-      if (this.period === 'whole') return '全期間'
-      return this.period + ' 日以内' 
+      if (this.analyticsSettings.period === 0) return '本日'
+      if (this.analyticsSettings.period === 'whole') return '全期間'
+      return this.analyticsSettings.period + ' 日以内' 
     }
   },
   methods: {
@@ -162,16 +190,43 @@ export default {
       })
     },
     inPeriod(date, period) {
+      if (this.analyticsSettings.period === 'whole') return true
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
     },
-    toggle() {
-      return this.descending = !this.descending
+    showDetails() {
+      return this.isShowDetails = !this.isShowDetails
+    },
+    toggleSort() {
+      return this.analyticsSettings.descending = !this.analyticsSettings.descending
     },
     winningPercentageText(records) {
       const results = calcWinningPercentage(records)
       return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
-    }
+    },
+    showSimilarFighter(fighterId) {
+      return (
+        this.analyticsSettings.groupSimilarFighters &&
+        this.fighters[fighterId].child
+      )
+    },
+    resetSettings() {
+      this.$store.commit('setAnalyticsSettings', {
+        sorting: 'opponentId',
+        period: 30,
+        selectedMyFighter: 'all',
+        groupSimilarFighters: false,
+        stage: 'all',
+        stocks: 'all',
+        filterRepeat: false
+      })
+    },
+    openModal() {
+      this.isShowModal = true
+    },
+    closeModal() {
+      this.isShowModal = false
+    },
   }
 }
 </script>
@@ -182,7 +237,6 @@ export default {
   min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   text-align: center;
 }

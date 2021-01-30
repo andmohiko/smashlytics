@@ -1,13 +1,15 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
-      <div class="close" @click="onClose">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-4 mb-4 flex flex-col overflow-auto">
+      <div class="modal-header">
+        <div class="close" @click="onClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="text-xl py-2 border-b">専用部屋の戦績を登録する</h2>
       </div>
-      <div class="form">
-        <h2 class="text-xl py-2 border-b mb-4">専用部屋の戦績を登録する</h2>
+      <div class="modal-content pt-2 overflow-auto">
         <p class="error">{{ error }}</p>
         <div class="fighter-selecter">
           <FighterSelecter
@@ -29,16 +31,19 @@
             label="相手のファイター"
           />
         </div>
-        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
-        <div v-show="isShowInputDetails" class="details mt-20 mb-20 px-4">
+        <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <StageSelecter ref="stage" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" :isShowOptionEmpty="false" />
+          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
-          <span class="text-gray-700 text-sm">名前を入力する</span>
-          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
+          <span class="text-gray-700 text-base">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4"/>
+          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" class="pb-4" />
+          <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
         </div>
+      </div>
+      <div class="modal-footer border-t pt-2">
+        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-2" />
         <div class="submit">
           <Button @onClick="submit" label="登録する" />
         </div>
@@ -54,6 +59,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import StocksSelecter from '@/components/parts/StocksSelecter.vue'
 import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import fighters from '@/assets/fighters.json'
 import { logEvent } from '@/utils/analytics.js'
@@ -64,10 +70,6 @@ export default {
     lastRecord: {
       default: null,
       type: Object
-    },
-    isShowInputDetails: {
-      default: true,
-      type: Boolean
     }
   },
   components: {
@@ -76,6 +78,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
+    StocksSelecter,
     AgainstSelecter
   },
   data() {
@@ -150,8 +153,9 @@ export default {
         opponent: this.fighters[this.record.opponentId].name,
         opponentId: this.record.opponentId,
         result: this.record.result,
-        stage: this.$refs.stage.input,
-        against
+        stage: this.$refs.stageSelecter.stage,
+        against,
+        stocks: this.$refs.stocksSelecter.stocks
       }
       const updateUserDto = {
         resultsArena: {
@@ -168,20 +172,23 @@ export default {
         batch.set(newRecordRef, newRecord)
         const userRef = db.collection('users').doc(this.user.userId)
         batch.update(userRef, updateUserDto)
-        batch.commit().catch(function(error) {
-          console.log("Error updating in batch:", error);
+        batch
+        .commit()
+        .then(() => {
+          newRecord.docId = newRecordRef.id
+          this.$store.dispatch('addRecords', newRecord)
+          this.$store.dispatch('updateUser', updateUserDto)
+          logEvent('addArenaResult', undefined)
         })
-        newRecord.docId = newRecordRef.id
-        this.$store.dispatch('addRecords', newRecord)
-        this.$store.dispatch('updateUser', updateUserDto)
-        logEvent('addArenaResult', undefined)
+        .catch(function(error) {
+          console.log("Error updating in batch:", error);
+          this.$store.commit('setNotice', { noticeType: 'error', message: "戦績の登録に失敗しました。\nリロードして再度試してください" })
+        })
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
+        this.$store.commit('setNotice', { noticeType: 'error', message: "戦績の登録に失敗しました。\nリロードして再度試してください" })
       }
-    },
-    switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
     },
     onClose() {
       this.$emit('close')

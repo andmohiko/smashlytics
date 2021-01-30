@@ -1,13 +1,15 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 flex flex-col overflow-auto">
-      <div class="close" @click="onClose">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-4 mb-4 flex flex-col overflow-auto">
+      <div class="modal-header">
+        <div class="close" @click="onClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="text-xl py-2 border-b">戦績を更新する</h2>
       </div>
-      <div class="form">
-        <h2 class="text-xl py-2 border-b mb-4">戦績を更新する</h2>
+      <div class="modal-content pt-2 overflow-auto">
         <p class="error">{{ error }}</p>
         <div class="fighter-selecter">
           <FighterSelecter
@@ -31,23 +33,26 @@
         </div>
         <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
         
-        <div v-show="isShowInputDetails" class="details mt-15 mb-25 px-4">
+        <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-3 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
+          <span class="text-gray-700 text-base">名前を入力する</span>
+          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4" />
           <StageSelecter
-            ref="stage"
+            ref="stageSelecter"
             :isShowSmamateStages="true"
             :previousSelect="editingRecord.stage"
             :isShowOptionEmpty="true"
           />
-          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="editingRecord.against" />
-          <span class="text-gray-700 text-sm">名前を入力する</span>
-          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" />
+          <!-- <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" /> -->
         </div>
-        <div class="pb-4">
+      </div>
+      <div class="modal-footer border-t pt-2">
+        <div class="pb-1">
           <Button @onClick="updateRecord" label="更新する" />
         </div>
-        <div class="pt-4">
+        <div class="pt-1">
           <Button @onClick="deleteRecord" label="削除する" />
         </div>
       </div>
@@ -62,6 +67,7 @@ import Button from '@/components/parts/Button.vue'
 import ResultButton from '@/components/parts/ResultButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
+import StocksSelecter from '@/components/parts/StocksSelecter.vue'
 import AgainstSelecter from '@/components/parts/AgainstSelecter.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
 import { now, date2string } from '@/utils/date.js'
@@ -75,10 +81,6 @@ export default {
     editingRecord: {
       required: true,
       type: Object
-    },
-    isShowInputDetails: {
-      default: true,
-      type: Boolean
     }
   },
   components: {
@@ -87,6 +89,7 @@ export default {
     TextField,
     FighterSelecter,
     StageSelecter,
+    StocksSelecter,
     AgainstSelecter,
     Checkbox
   },
@@ -152,8 +155,9 @@ export default {
         opponent: this.fighters[this.editingRecord.opponentId].name,
         opponentId: this.editingRecord.opponentId,
         result: this.editingRecord.result,
-        stage: this.$refs.stage.input,
-        against
+        stage: this.$refs.stageSelecter.stage,
+        against,
+        // stocks: this.$refs.stocksSelecter.stocks
       }
       const db = firebase.firestore()
       try {
@@ -212,9 +216,6 @@ export default {
         console.log('error deleting record', error)
       }
       this.onClose()
-    },
-    switchShowDetails() {
-      this.isShowInputDetails = !this.isShowInputDetailss
     },
     onClose() {
       this.$emit('close')

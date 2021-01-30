@@ -4,8 +4,12 @@ const db = firebase.firestore()
 export default async function({ app, store }) {
   // 未ログインは何もしない
   if (!store.state.isLogin) return
+  // 最新バージョン取得から3分以内なら更新しない
+  const now = (new Date()).getTime()
+  const version = store.state.version
+  if ((now - version.refreshedAt) / 1000 < 180) return
+
   try {
-    const version = store.state.version
     const latestVersion = await db
       .collection('versions')
       .orderBy('startDate', 'desc')
@@ -16,13 +20,16 @@ export default async function({ app, store }) {
         querySnapshot.forEach(doc => {
           versionsArray.push(doc.id)
         })
-        return Number(versionsArray[0])
+        return versionsArray[0]
       })
-    console.log('now ver', version, 'latest ver', latestVersion)
+    console.log('now ver', version.versionNumber, 'latest ver', latestVersion)
+    store.commit('setVersion', {
+      versionNumber: latestVersion,
+      refreshedAt: now
+    })
     // 期待するバージョン以上なら何もしない
-    if (latestVersion <= version) return
+    if (latestVersion === version.versionNumber) return
     // 反映させるためにスーパーリロードを促す
-    store.commit('setVersion', latestVersion)
     window.confirm('新しいバージョンが配信されているため最新バージョンに更新します。')
     location.reload(true)
   } catch(error) {

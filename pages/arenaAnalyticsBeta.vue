@@ -82,15 +82,12 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'arena')
+      return this.$store.state.records
+        .filter(record => record.roomType === 'arena')
     },
     recordsFiltered() {
-      const recordsSorting = this.records.slice()
-      if (this.period === 'whole' && this.stage === 'all') return recordsSorting
-      if (this.period === 'whole' && this.stage !== 'all') return recordsSorting.filter(record => record.stage === this.stage)
-      if (this.period !== 'whole' && this.stage === 'all') return recordsSorting.filter(record => this.inPeriod(record.createdAt, this.period))
-      const recordsByStage = recordsSorting.filter(record => record.stage === this.stage)
-      return recordsByStage.filter(record => this.inPeriod(record.createdAt, this.period))
+      return this.records
+        .filter(record => this.inPeriod(record.createdAt, this.period))
     },
     fightedAgainst() {
       return Array.from(new Set(
@@ -115,7 +112,7 @@ export default {
       let entries = []
       this.fightedAgainst.map(against => {
         if (!against) return
-        const againstRecords = this.records.filter(record => record.against === against)
+        const againstRecords = this.recordsFiltered.filter(record => record.against === against)
         if (!againstRecords) return
         const opponentFighters = Array.from(new Set(
           againstRecords.map(record => {
@@ -146,6 +143,7 @@ export default {
       })
     },
     inPeriod(date, period) {
+      if (this.period === 'whole') return true
       const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
       return date > targetDate
     },

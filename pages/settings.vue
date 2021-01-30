@@ -36,6 +36,42 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.2</h3>
+          <ul class="text-sm">
+            <li>◎ラジオボタンのデザイン変更</li>
+            <li>◎専用部屋の分析で期間が絞り込まれない不具合を修正</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.1</h3>
+          <ul class="text-sm">
+            <li>◎専用部屋の戦績を編集できない不具合を修正</li>
+            <li>◎分析で期間を絞り込む選択肢に「本日」を追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.0</h3>
+          <ul class="text-sm">
+            <li>◎戦績登録時にストック数を入力欄を追加</li>
+            <li>◎その他デザインの修正</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.3.0</h3>
+          <ul class="text-sm">
+            <li>◎分析をより詳細に設定できる機能の追加</li>
+            <li>◎分析で自分のファイターで絞る機能の追加</li>
+            <li>◎その他デザインの修正</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.2.0</h3>
+          <ul class="text-sm">
+            <li>◎分析で類似ファイターをまとめる機能を追加</li>
+            <li>◎専門部屋の戦績登録で直前の相手の名前を直接選択できる機能を追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.1.0</h3>
           <ul class="text-sm">
             <li>◎専用部屋の分析機能(β版)を追加</li>
@@ -106,12 +142,9 @@
           </ul>
         </div>
       </div>
-      <div v-show="isAdmin" class="logout text-gray-500">
-        <button @click="toAllRecords">管理者用 全戦績</button>
-      </div>
       <Button @onClick="logout" label="ログアウト" />
-      <div class="logout text-gray-500">
-        Version 3.1.0
+      <div class="flex justify-end text-sm text-gray-500 pt-6 pr-2">
+        Version 3.4.2
       </div>
       <div class="copyright">
         <p>
@@ -135,11 +168,6 @@ export default {
   mounted() {
     const cookie = new Cookies()
   },
-  computed: {
-    isAdmin() {
-      return this.$store.state.user.userId === 'andmohiko'
-    }
-  },
   methods: {
     logout() {
       const cookie = new Cookies()
@@ -151,9 +179,6 @@ export default {
       window.localStorage.clear();
       logEvent('logoutFromSettings', undefined)
       this.$router.push("/new")
-    },
-    toAllRecords() {
-      this.$router.push("/allRecords")
     },
     openTermsPage() {
       logEvent('view_terms', undefined)
@@ -172,29 +197,17 @@ export default {
   align-items: center;
   text-align: center;
 }
-.goole-login {
-  margin: 16px 0;
-}
 .settings {
   li {
     margin: 4px 0;
   }
-}
-.logout {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: right;
-  font-size: 14px;
-  margin-bottom: 10px;
 }
 .copyright {
   display: flex;
   justify-content: center;
   align-items: center;
   p {
-    line-height: 40px;
+    line-height: 30px;
     color: #bbb;
     font-size: 12px;
   }

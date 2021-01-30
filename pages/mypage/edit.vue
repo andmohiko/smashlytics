@@ -45,29 +45,13 @@
               label="サブも選べるよ"
             />
           </div>
-          <form class="mb-4 px-4">
-            <p>プロフィールを公開します？</p>
-            <div class="input-radio mb-1">
-              <input
-                id="isPrivateAccount-public"
-                v-model="editUser.isPrivateAccount"
-                type="radio"
-                name="isPublic"
-                :value="false"
-              />
-              <label for="isPublic">公開する</label>
+          <div class="my-4">
+            <p class="text-lg pb-4">プロフィールを公開します？</p>
+            <div class="flex justify-center items-center">
+              <RadioButton v-model="editUser.isPrivateAccount" label="公開する" :value="false" />
+              <RadioButton v-model="editUser.isPrivateAccount" label="公開しない" :value="true" />
             </div>
-            <div class="input-radio">
-              <input
-                id="isPrivateAccount-private"
-                v-model="editUser.isPrivateAccount"
-                type="radio"
-                name="isPrivate"
-                :value="true"
-              />
-              <label for="isPrivate">公開しない</label>
-            </div>
-          </form>
+          </div>
           <p class="flash-message">{{ flashMessage }}</p>
         </div>
         <div class="submit">
@@ -84,6 +68,7 @@ import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/input/TextField.vue'
 import TextArea from '@/components/input/TextArea.vue'
 import Checkbox from '@/components/input/Checkbox.vue'
+import RadioButton from '@/components/input/RadioButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import { updateUser } from '@/repositories/users.js'
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
@@ -94,7 +79,8 @@ export default {
     TextField,
     TextArea,
     Checkbox,
-    FighterSelecter
+    FighterSelecter,
+    RadioButton
   },
   data () {
     return {
@@ -198,10 +184,11 @@ export default {
         updateUser(this.user, updateUserDto)
         this.$store.dispatch('updateUser', updateUserDto)
         // this.$store.dispatch('getUser', this.user.userId)
-        this.flashMessage = '保存しました。'
+        this.$store.commit('setNotice', { noticeType: 'success', message: '保存しました' })
+        window.setTimeout(() => this.$router.go(-1), 800)
       } catch(error) {
         console.log('updating error', error)
-        this.flashMessage = 'プロフィールの更新に失敗しました。'
+        this.$store.commit('setNotice', { noticeType: 'error', message: 'プロフィールの更新に失敗しました' })
       }
     }
   }
