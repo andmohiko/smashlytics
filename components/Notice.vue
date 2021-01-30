@@ -22,12 +22,12 @@ export default {
   computed: {
     notice() {
       return this.$store.state.notice
-    },
+    }
   },
   methods: {
     closeNotice() {
       this.$store.dispatch('setNotice', { noticeType: null, message: '' })
-    },
+    }
   },
 }
 </script>

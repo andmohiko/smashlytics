@@ -200,16 +200,4 @@ export default {
     color: #4a5568;
   }
 }
-// .add-button {
-//   position: absolute;
-//   bottom: 50px;
-//   z-index: 10;
-//   border-radius: 50px;
-//   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.45);
-//   transition: all .5s ease;
-// }
-// .add-button:hover {
-//   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.75);
-//   bottom: 65px;
-// }
 </style>

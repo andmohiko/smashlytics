@@ -30,7 +30,7 @@ export default {
   // mounted() {
   //   this.$store.commit('setNotice', {
   //     noticeType: 'error',
-  //     message: 'ふぁlせ'
+  //     message: 'message'
   //   })
   // },
   computed: {
