@@ -45,6 +45,9 @@
       <div class="menu">
         <ul @click="openAnalyticsMenu">
           <li class="menu-item">
+            <nuxt-link to="/analytics">分析</nuxt-link>
+          </li>
+          <li class="menu-item">
             <nuxt-link to="#">サマリー</nuxt-link>
           </li>
           <li class="menu-item" @click="sendEventAnalyticsChart">
@@ -96,7 +99,10 @@ export default {
       return (route === this.user.userOriginalId)
     },
     isMenuiconPage() {
-      return (this.$route.path.match(/\/analytics$/))
+      return (
+        this.$route.path.match(/\/analytics$/) ||
+        this.$route.path.match(/\/analytics\/chart$/)
+      )
     },
     routename() {
       return this.$route.name
