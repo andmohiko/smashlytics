@@ -176,6 +176,10 @@ export default {
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
       this.$store.commit('setIsLogin', false)
+      this.$store.commit('setVersion', {
+        versionNumber: 0,
+        refreshedAt: null
+      })
       window.localStorage.clear();
       logEvent('logoutFromSettings', undefined)
       this.$router.push("/new")
