@@ -3,7 +3,7 @@ const db = firebase.firestore()
 
 export default async function({ app, store }) {
   // 未ログインは何もしない
-  if (!store.state.isLogin) return
+  // if (!store.state.isLogin) return
   // 最新バージョン取得から3分以内なら更新しない
   const now = (new Date()).getTime()
   const version = store.state.version
