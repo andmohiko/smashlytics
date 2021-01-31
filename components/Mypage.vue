@@ -54,7 +54,8 @@
 
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
       <p class="text-2xl text-center text-gray-700 pb-4">記録したファイターの勝率</p>
-      <div class="fightersInfo text-xl text-gray-700">
+      <span v-if="records.length === 0" class="pl-3 text-gray-700">まずは戦績を記録してね！</span>
+      <div v-else class="fightersInfo text-xl text-gray-700">
         <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
           <FighterIcon :fighterId="record.fighterId" size="40px" />
           <div class="fighterStats flex flex-col">
