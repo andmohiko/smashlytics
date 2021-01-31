@@ -58,21 +58,23 @@
         <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
           <FighterIcon :fighterId="record.fighterId" size="40px" />
           <div class="fighterStats flex flex-col">
-            <span class="text-xl pb-2">{{ winningPercentageText(record.fighterId) }}</span>
-            <span class="text-base pb-1">今週の世界戦闘力変動</span>
-            <span class="text-base pb-1">{{ gspDiffText(record.fighterId) }}</span>
+            <span class="text-lg pb-1">全体</span>
+            <span class="text-xl pb-4 text-gray-900">{{ winningPercentageText(record.fighterId) }}</span>
+            <span class="text-lg pb-1">過去7日間</span>
+            <span class="text-xl pb-2 text-gray-900">{{ winningPercentageThisWeekText(record.fighterId) }}</span>
+            <span class="text-sm pb-1">世界戦闘力変動</span>
+            <span class="text-lg pb-1 text-gray-900">{{ gspDiffText(record.fighterId) }}</span>
           </div>
           <!-- <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
           <span v-else class="text-2xl text-gray-800">--</span> -->
         </div>
       </div>
-      <span class="text-gray-600 text-xs px-1 pt-4 flex justify-center items-center">※この機能はそのうち分析に移動させるかも</span>
+      <span class="text-gray-600 text-xs px-1 pt-4 flex justify-center items-center">※この機能はそのうち分析に移動させるかもです</span>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
 import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
@@ -131,6 +133,12 @@ export default {
       )
       return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
     },
+    winningPercentageThisWeekText(fighterId) {
+      const results = calcWinningPercentage(
+        this.recordsThisWeek.filter(record => record.fighterId === fighterId)
+      )
+      return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    },
     gspDiffText(fighterId) {
       let newestGsp = 0
       let oldestGsp = 0
@@ -144,7 +152,8 @@ export default {
           oldestGsp = records.globalSmashPower/10000
         })
       const arrow = newestGsp - oldestGsp >= 0 ? '↑' : '↓'
-      return newestGsp + '万 (' + arrow + ' ' + (newestGsp - oldestGsp) + '万 )'
+      if (newestGsp === 0) return '-'
+      return newestGsp + '万 (' + arrow + ' ' + (newestGsp - oldestGsp) + '万)'
     },
     toEdit () {
       logEvent('editProfile', undefined)
@@ -214,7 +223,7 @@ export default {
   margin-bottom: 10px;
   .fighter {
     display: grid;
-    grid-template-rows:120px;
+    grid-template-rows: 240px;
     grid-template-columns: 80px 1fr;
     // align-items: center;
   }
