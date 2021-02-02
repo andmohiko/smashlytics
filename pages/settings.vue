@@ -179,7 +179,8 @@ export default {
     Button
   },
   mounted() {
-    const cookie = new Cookies()
+    // const cookie = new Cookies()
+    if (!this.$store.state.user.userId) this.$router.push("/new")
   },
   methods: {
     logout() {
