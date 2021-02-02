@@ -6,10 +6,10 @@
       </h2>
       <div class="goole-login">
         <Button @onClick="login" label="googleでログイン" />
-        <!-- <p v-show="isLogin" class="text-xl py-4 text-red-700">
+        <p v-if="isLogin" class="text-xl py-4 text-red-700">
           <span>ログイン済みです！</span>
           <span>ホームへGO🏃‍♂️</span>
-        </p> -->
+        </p>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-2">できること👍</h3>
@@ -61,9 +61,9 @@ export default {
   },
   computed: {
     isLogin() {
-      if (this.$store.state.user.userId) {
-        this.$router.push("/")
-      }
+      // if (this.$store.state.user.userId) {
+      //   this.$router.push("/")
+      // }
       return Boolean(this.$store.state.user.userId)
     },
   },
