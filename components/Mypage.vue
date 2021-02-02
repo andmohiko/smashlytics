@@ -14,23 +14,15 @@
             <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
           </svg>
           <span class="pl-2">@{{ user.twitterId }}</span>
-        </div>
-        
+        </div>  
       </div>
-      <p class="text-base text-gray-700 pt-1">記録したファイターの世界戦闘力</p>
-      <div class="fightersInfo">
-        <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
-          <FighterIcon :fighterId="record.fighterId" size="40px" />
-          <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
-          <span v-else class="text-2xl text-gray-800">--</span>
-        </div>
-      </div>
-
-      <p class="text-xl text-gray-800">{{ userWinningPercentage(user.results) }}</p>
 
       <div class="pt-6 pb-6">
         <h3 class="text-xl text-gray-700 pt-2">プレイヤー情報</h3>
-
+        <div v-if="user.results.matches">
+          <p class="text-sm text-gray-700 pt-4 border-b w-7/12">総合戦績</p>
+          <p class="text-xl py-2 text-gray-700">{{ userWinningPercentage(user.results) }}</p>
+        </div>
         <div v-if="Boolean(user.main)">
           <p class="text-sm text-gray-700 pt-1 border-b w-7/12">使用ファイター</p>
           <div class="flex pt-3">
@@ -58,35 +50,38 @@
       <TwitterShareButton />
       
       <Button @onClick="toEdit" label="編集する" />
-    <!-- </div>
+    </div>
+
     <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col w-full text-left">
-      <p class="title text-center">戦績管理</p>
-      <span class="text-xs">ただいまメンテナンス中です🙇‍</span> -->
-      <!-- <div v-show="!isLogin" class="pb-20">
-        <p class="error text-xl py-2 mb-4 text-red-700">登録するにはログインしてください</p>
-        <div class="border-b">
-          <button @click="toNew">ログインはこちら</button>
+      <p class="text-2xl text-center text-gray-700 pb-4">記録したファイターの勝率</p>
+      <span v-if="records.length === 0" class="pl-3 text-gray-700">まずは戦績を記録してね！</span>
+      <div v-else class="fightersInfo text-xl text-gray-700">
+        <div v-for="record in newestRecordsByFighter" :key="record.id" class="fighter">
+          <FighterIcon :fighterId="record.fighterId" size="40px" />
+          <div class="fighterStats flex flex-col">
+            <span class="text-lg pb-1">全体</span>
+            <span class="text-xl pb-4 text-gray-900">{{ winningPercentageText(record.fighterId) }}</span>
+            <span class="text-lg pb-1">過去7日間</span>
+            <span class="text-xl pb-2 text-gray-900">{{ winningPercentageThisWeekText(record.fighterId) }}</span>
+            <span class="text-sm pb-1">世界戦闘力変動</span>
+            <span class="text-lg pb-1 text-gray-900">{{ gspDiffText(record.fighterId) }}</span>
+          </div>
+          <!-- <span v-if="record.globalSmashPower" class="text-2xl text-gray-800">{{ record.globalSmashPower/10000 }}万</span>
+          <span v-else class="text-2xl text-gray-800">--</span> -->
         </div>
       </div>
-      <div>
-        <button @click="toSumHistory">▷ 戦績を一括登録</button>
-      </div>
-      <br>
-      <span class="text-xs">他の記録アプリから移行する際にお使いください。</span>
-      <span class="text-xs">相手ファイターごとに勝敗数を入力してください</span>
-      <span class="text-xs">(他アプリとこのアプリを行ったり来たりするのはちょっと面倒かもです🙇‍♀️)</span>
-      <span class="text-xs">今日の日付で記録されます。</span> -->
+      <span class="text-gray-600 text-xs px-1 pt-4 flex justify-center items-center">※この機能はそのうち分析に移動させるかもです</span>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
 import Button from '@/components/parts/Button.vue'
 import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
 import VoiceChat from '@/components/parts/VoiceChat.vue'
-import { userWinningPercentage } from '@/utils/records.js'
+import { userWinningPercentage, calcWinningPercentage } from '@/utils/records.js'
+import { today } from '@/utils/date.js'
 import { logEvent } from '@/utils/analytics.js'
 
 export default {
@@ -98,7 +93,8 @@ export default {
   },
   data() {
     return {
-      error: ''
+      error: '',
+      today: today()
     }
   },
   computed: {
@@ -122,9 +118,44 @@ export default {
         return record.fighterId
       })
       return Array.from(new Set(used))
-    }
+    },
+    recordsThisWeek() {
+      return this.records.filter(record => this.inPeriod(record.createdAt, 7))
+    },
   },
   methods: {
+    inPeriod(date, period) {
+      const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
+      return date > targetDate
+    },
+    winningPercentageText(fighterId) {
+      const results = calcWinningPercentage(
+        this.records.filter(record => record.fighterId === fighterId)
+      )
+      return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    },
+    winningPercentageThisWeekText(fighterId) {
+      const results = calcWinningPercentage(
+        this.recordsThisWeek.filter(record => record.fighterId === fighterId)
+      )
+      return results.wins + '勝' + results.loses + '敗 勝率' + results.percentage + '%'
+    },
+    gspDiffText(fighterId) {
+      let newestGsp = 0
+      let oldestGsp = 0
+      this.recordsThisWeek
+        .filter(record => record.fighterId === fighterId)
+        .map(records => {
+          if (!records.globalSmashPower) return
+          if (newestGsp === 0) {
+            newestGsp = records.globalSmashPower/10000
+          }
+          oldestGsp = records.globalSmashPower/10000
+        })
+      const arrow = newestGsp - oldestGsp >= 0 ? '↑' : '↓'
+      if (newestGsp === 0) return '-'
+      return newestGsp + '万 (' + arrow + ' ' + (newestGsp - oldestGsp) + '万)'
+    },
     toEdit () {
       logEvent('editProfile', undefined)
       this.$router.push("/mypage/edit")
@@ -193,9 +224,9 @@ export default {
   margin-bottom: 10px;
   .fighter {
     display: grid;
-    grid-template-rows: 50px;
-    grid-template-columns: 60px 80px 1fr;
-    align-items: center;
+    grid-template-rows: 240px;
+    grid-template-columns: 80px 1fr;
+    // align-items: center;
   }
 }
 </style>

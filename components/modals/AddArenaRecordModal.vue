@@ -172,16 +172,22 @@ export default {
         batch.set(newRecordRef, newRecord)
         const userRef = db.collection('users').doc(this.user.userId)
         batch.update(userRef, updateUserDto)
-        batch.commit().catch(function(error) {
-          console.log("Error updating in batch:", error);
+        batch
+        .commit()
+        .then(() => {
+          newRecord.docId = newRecordRef.id
+          this.$store.dispatch('addRecords', newRecord)
+          this.$store.dispatch('updateUser', updateUserDto)
+          logEvent('addArenaResult', undefined)
         })
-        newRecord.docId = newRecordRef.id
-        this.$store.dispatch('addRecords', newRecord)
-        this.$store.dispatch('updateUser', updateUserDto)
-        logEvent('addArenaResult', undefined)
+        .catch(function(error) {
+          console.log("Error updating in batch:", error);
+          this.$store.commit('setNotice', { noticeType: 'error', message: "戦績の登録に失敗しました。\nリロードして再度試してください" })
+        })
         this.onClose()
       } catch(error) {
         console.log('error in sending record', error)
+        this.$store.commit('setNotice', { noticeType: 'error', message: "戦績の登録に失敗しました。\nリロードして再度試してください" })
       }
     },
     onClose() {

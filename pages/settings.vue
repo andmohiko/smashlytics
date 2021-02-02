@@ -36,6 +36,19 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.4</h3>
+          <ul class="text-sm">
+            <li>◎マイページに今週の世界戦闘力の変動を表示</li>
+            <li>◎マイページに各キャラの総合勝率を表示</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 3.4.3</h3>
+          <ul class="text-sm">
+            <li>◎エラー通知の追加</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.4.2</h3>
           <ul class="text-sm">
             <li>◎ラジオボタンのデザイン変更</li>
@@ -144,7 +157,7 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="flex justify-end text-sm text-gray-500 pt-6 pr-2">
-        Version 3.4.2
+        Version 3.4.4
       </div>
       <div class="copyright">
         <p>
@@ -166,7 +179,8 @@ export default {
     Button
   },
   mounted() {
-    const cookie = new Cookies()
+    // const cookie = new Cookies()
+    if (!this.$store.state.user.userId) this.$router.push("/new")
   },
   methods: {
     logout() {
@@ -176,6 +190,10 @@ export default {
       this.$store.commit('setUser', {})
       this.$store.commit('setRecords', [])
       this.$store.commit('setIsLogin', false)
+      this.$store.commit('setVersion', {
+        versionNumber: 0,
+        refreshedAt: null
+      })
       window.localStorage.clear();
       logEvent('logoutFromSettings', undefined)
       this.$router.push("/new")

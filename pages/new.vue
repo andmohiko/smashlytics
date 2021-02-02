@@ -6,10 +6,10 @@
       </h2>
       <div class="goole-login">
         <Button @onClick="login" label="googleでログイン" />
-        <!-- <p v-show="isLogin" class="text-xl py-4 text-red-700">
+        <p v-if="isLogin" class="text-xl py-4 text-red-700">
           <span>ログイン済みです！</span>
           <span>ホームへGO🏃‍♂️</span>
-        </p> -->
+        </p>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h3 class="text-xl mb-2">できること👍</h3>
@@ -40,12 +40,16 @@
     <div class="goole-login">
       <Button @onClick="login" label="googleでログイン" />
     </div>
+    <div class="logout text-gray-500">
+      <button @click="logout">googleログアウト</button>
+    </div>
   </div>
 </template>
 
 <script>
 import Button from '@/components/parts/Button.vue'
 import { logEvent } from '@/utils/analytics.js'
+import Cookies from "universal-cookie"
 
 export default {
   components: {
@@ -57,15 +61,26 @@ export default {
   },
   computed: {
     isLogin() {
-      if (this.$store.state.user.userId) {
-        this.$router.push("/")
-      }
+      // if (this.$store.state.user.userId) {
+      //   this.$router.push("/")
+      // }
       return Boolean(this.$store.state.user.userId)
     },
   },
   methods: {
     login() {
       this.$store.dispatch("loginGoogle")
+    },
+    logout(){
+      const cookie = new Cookies()
+      cookie.remove('smash_access_token')
+      this.$store.commit('setUid', '')
+      this.$store.commit('setIsLogin', false)
+      this.$store.commit('setUser', {})
+      this.$store.commit('setRecords', [])
+      window.localStorage.clear();
+      // logEvent('logoutFromSignup', undefined)
+      this.$router.push("/new")
     },
   },
 };
@@ -80,6 +95,7 @@ export default {
   // justify-content: center;
   align-items: center;
   text-align: center;
+  width: 100%;
 }
 .goole-login {
   margin: 16px 0;
@@ -94,5 +110,14 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
+}
+.logout {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: right;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 </style>
