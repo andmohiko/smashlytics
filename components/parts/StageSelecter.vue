@@ -9,7 +9,7 @@
       <RadioButton v-if="isShowSmamateStages" v-model="stage" label="ポケスタ2" value="pokemonStadium2" />
       <RadioButton v-if="isShowSmamateStages" v-model="stage" label="村と街" value="townAndVillage" />
       <RadioButton v-if="isShowSmamateStages" v-model="stage" label="すま村" value="smashville" />
-      <RadioButton v-if="isShowSmamateStages" v-model="stage" label="カロス" value="unovaPokemonLeague" />
+      <RadioButton v-if="isShowSmamateStages" v-model="stage" label="カロス" value="kalosPokemonLeague" />
       <RadioButton v-if="isShowSmamateStages" v-model="stage" label="ライラット" value="lylatCruise" />
       <RadioButton v-if="isShowOptionEmpty" v-model="stage" label="登録しない" value="" />
     </div>
