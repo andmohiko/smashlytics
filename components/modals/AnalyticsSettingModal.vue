@@ -29,15 +29,39 @@
             <RadioButton v-model="analyticsSettings.sorting" label="勝率" value="winningPercentage" />
           </div>
         </div>
-        <div class="pl-4 pb-6">
-          <p class="text-lg text-left pb-2">期間(n日前まで)</p>
-          <div class="flex pr-4 flex-wrap justify-start items-center">
-            <RadioButton v-model="analyticsSettings.period" label="本日" :value="0" />
-            <RadioButton v-model="analyticsSettings.period" label="1日" :value="1" />
-            <RadioButton v-model="analyticsSettings.period" label="3日" :value="3" />
-            <RadioButton v-model="analyticsSettings.period" label="7日" :value="7" />
-            <RadioButton v-model="analyticsSettings.period" label="30日" :value="30" />
-            <RadioButton v-model="analyticsSettings.period" label="全期間" value="whole" />
+        <div class="pl-4 pb-10 flex flex-col">
+          <p class="text-lg text-left pb-2">期間</p>
+          <form class="mb-4 text-gray-800 flex flex-wrap justify-start items-center">
+            <div class="option pb-1">
+            <input
+              id="selectMethod-period"
+              v-model="selectMethod"
+              type="radio"
+              name="period"
+              :value="'period'"
+            />
+            <label for="selectMethod-period" class="pr-2 whitespace-nowrap">日数で絞る(n日前まで)</label>
+            </div>
+            <div class="option pb-1">
+            <input
+              id="selectMethod-date"
+              v-model="selectMethod"
+              type="radio"
+              name="date"
+              :value="'date'"
+            />
+            <label for="selectMethod-date" class="pr-2 whitespace-nowrap">日付を指定して絞る(m月n日以降)</label>
+            </div>
+          </form>
+          <div class="h-20 flex justify-start">
+            <div v-if="selectMethod === 'period'" class="flex pr-4 flex-wrap justify-start items-center">
+              <RadioButton v-model="analyticsSettings.period" label="本日" :value="0" />
+              <RadioButton v-model="analyticsSettings.period" label="1日" :value="1" />
+              <RadioButton v-model="analyticsSettings.period" label="7日" :value="7" />
+              <RadioButton v-model="analyticsSettings.period" label="30日" :value="30" />
+              <RadioButton v-model="analyticsSettings.period" label="全期間" value="whole" />
+            </div>
+            <date-picker v-else-if="selectMethod === 'date'" v-model="selectDate" valueType="format"></date-picker>
           </div>
         </div>
         <div class="fighter-selecter pb-3">
@@ -98,6 +122,7 @@ import RadioButton from '@/components/input/RadioButton.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import StageSelecter from '@/components/parts/StageSelecter.vue'
 import fighters from '@/assets/fighters.json'
+import { today } from '@/utils/date.js'
 import { logEvent } from '@/utils/analytics.js'
 
 export default {
@@ -118,7 +143,10 @@ export default {
   data() {
     return {
       error: '',
-      fighters
+      fighters,
+      today: today(),
+      selectDate: null,
+      selectMethod: 'period'
     }
   },
   computed: {
@@ -148,6 +176,10 @@ export default {
       return this.analyticsSettings.descending = !this.analyticsSettings.descending
     },
     save() {
+      if (this.selectMethod === 'date') {
+        const selectDate = new Date(Number(this.selectDate.slice(0,4)), Number(this.selectDate.slice(5,7)) - 1, Number(this.selectDate.slice(8,10)))
+        this.analyticsSettings.period = Math.round((this.today - selectDate)/1000/60/60/24)
+      }
       this.analyticsSettings.fighterId = this.fighterId
       this.analyticsSettings.stage = this.$refs.stageSelecter.stage
       this.$store.commit('setAnalyticsSettings', {
