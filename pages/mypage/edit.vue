@@ -1,62 +1,60 @@
 <template>
   <div class="edit-container">
     <div class="edit">
-      <div class="form">
-        <div class="input">
-          <p class="flash-message">{{ flashMessage }}</p>
-          <form class="mb-4 px-4">
-            <label class="text-gray-700 flex text-left">アイコンを選択する</label>
-            <input type="file" @change="selectIcon">
-            <TextField ref="username" label="ユーザ名" :defaultValue="user.username" placeholder="username" />
-            <TextField ref="twitterId" label="Twitter Id" :defaultValue="user.twitterId" placeholder="@twitterId" />
-            <TextArea ref="selfIntroduction" label="自己紹介" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ"  />
-            <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
-            <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
-            <TextField ref="mainPlayingTime" label="主にプレイしている時間帯" :defaultValue="user.mainPlayingTime" placeholder="平日の21時~24時が多いです！" />
-            <div class="voiceChat flex flex-col">
-              <label class="text-gray-700 text-left">ボイスチャット</label>
-              <div class="options flex flex-wrap items-start">
-                <Checkbox ref="discord" :defaultValue="editUser.voiceChat.discord" label="Discord" />
-                <Checkbox ref="nintendoSwitchOnline" :defaultValue="editUser.voiceChat.nintendoSwitchOnline" label="Nintendo Switch Online" />
-                <Checkbox ref="line" :defaultValue="editUser.voiceChat.line" label="Line" />
-                <Checkbox ref="skype" :defaultValue="editUser.voiceChat.skype" label="Skype" />
-                <Checkbox ref="listenOnly" :defaultValue="editUser.voiceChat.listenOnly" label="聞き専" />
-                <Checkbox ref="ng" :defaultValue="editUser.voiceChat.ng" label="NG" />
-              </div>
-            </div>
-          </form>
-          <div class="fighter-selecter">
-            <FighterSelecter
-              @select="select"
-              ref="mainFighter"
-              :previouslySelected="user.main"
-              :isShowName="true"
-              iconSize="48px"
-              label="メインファイターを選ぶ"
-            />
-          </div>
-          <div class="fighter-selecter">
-            <FighterSelecter
-              @select="select"
-              ref="subFighter"
-              :previouslySelected="user.sub"
-              :isShowName="true"
-              iconSize="48px"
-              label="サブも選べるよ"
-            />
-          </div>
-          <div class="my-4">
-            <p class="text-lg pb-4">プロフィールを公開します？</p>
-            <div class="flex justify-center items-center">
-              <RadioButton v-model="editUser.isPrivateAccount" label="公開する" :value="false" />
-              <RadioButton v-model="editUser.isPrivateAccount" label="公開しない" :value="true" />
+      <div class="input w-full">
+        <p class="flash-message">{{ flashMessage }}</p>
+        <form class="mb-4 px-4 w-full">
+          <label class="text-gray-700 flex text-left">アイコンを選択する</label>
+          <input type="file" @change="selectIcon">
+          <TextField ref="username" label="ユーザ名" :defaultValue="user.username" placeholder="username" />
+          <TextField ref="twitterId" label="Twitter Id" :defaultValue="user.twitterId" placeholder="twitterId" prefix="@" />
+          <TextArea ref="selfIntroduction" label="自己紹介" :defaultValue="user.selfIntroduction" placeholder="1日1メテオ"  />
+          <TextField ref="friendCode" label="フレンドコード" :defaultValue="user.friendCode" placeholder="SW-xxxx-xxxx-xxxx" />
+          <TextField ref="smashmateRating" label="スマメイト 最高レーティング" :defaultValue="user.smashmateRating" placeholder="1500" />
+          <TextArea ref="mainPlayingTime" label="主にプレイしている時間帯" :defaultValue="user.mainPlayingTime" placeholder="平日の21時~24時が多いです！" />
+          <div class="voiceChat flex flex-col">
+            <label class="text-gray-700 text-left">ボイスチャット</label>
+            <div class="options flex flex-wrap items-start">
+              <Checkbox ref="discord" :defaultValue="editUser.voiceChat.discord" label="Discord" />
+              <Checkbox ref="nintendoSwitchOnline" :defaultValue="editUser.voiceChat.nintendoSwitchOnline" label="Nintendo Switch Online" />
+              <Checkbox ref="line" :defaultValue="editUser.voiceChat.line" label="Line" />
+              <Checkbox ref="skype" :defaultValue="editUser.voiceChat.skype" label="Skype" />
+              <Checkbox ref="listenOnly" :defaultValue="editUser.voiceChat.listenOnly" label="聞き専" />
+              <Checkbox ref="ng" :defaultValue="editUser.voiceChat.ng" label="NG" />
             </div>
           </div>
-          <p class="flash-message">{{ flashMessage }}</p>
+        </form>
+        <div class="fighter-selecter">
+          <FighterSelecter
+            @select="select"
+            ref="mainFighter"
+            :previouslySelected="user.main"
+            :isShowName="true"
+            iconSize="48px"
+            label="メインファイターを選ぶ"
+          />
         </div>
-        <div class="submit">
-          <Button @onClick="submit" label="保存する" />
+        <div class="fighter-selecter">
+          <FighterSelecter
+            @select="select"
+            ref="subFighter"
+            :previouslySelected="user.sub"
+            :isShowName="true"
+            iconSize="48px"
+            label="サブも選べるよ"
+          />
         </div>
+        <div class="my-4">
+          <p class="text-lg pb-4">プロフィールを公開します？</p>
+          <div class="flex justify-center items-center">
+            <RadioButton v-model="editUser.isPrivateAccount" label="公開する" :value="false" />
+            <RadioButton v-model="editUser.isPrivateAccount" label="公開しない" :value="true" />
+          </div>
+        </div>
+        <p class="flash-message">{{ flashMessage }}</p>
+      </div>
+      <div class="submit">
+        <Button @onClick="submit" label="保存する" />
       </div>
     </div>
   </div>
@@ -212,9 +210,6 @@ export default {
   justify-content: center;
   align-items: center;
   width: 400px;
-}
-.title {
-  margin: 20px 0;
 }
 .flash-message {
   color: red;

@@ -6,7 +6,7 @@
         <form class="mb-4 px-4">
           <TextField ref="userId" :allowEmpty="false" label="ユーザID (*)" placeholder="5~15字の英数字で！" />
           <TextField ref="username" :allowEmpty="false" label="ユーザ名 (*)" placeholder="ユーザ名は日本語ok🙆" />
-          <TextField ref="twitterId" label="Twitter Id" placeholder="twitterId" />
+          <TextField ref="twitterId" label="Twitter Id" placeholder="twitterId" prefix="@" />
         </form>
         <div class="fighter-selecter">
           <FighterSelecter

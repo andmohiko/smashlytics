@@ -75,9 +75,7 @@
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
 import { now, date2string } from '@/utils/date.js'
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 import Button from '@/components/parts/Button.vue'
 import Records from '@/components/Records.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
