@@ -11,7 +11,7 @@
       </template>
     </div>
 
-    <div class="results">
+    <div class="results pt-2">
       <p v-show="isLogin" class="results-number">本日の戦績: {{ resultsToday }}</p>
       <Button @onClick="openAddModal" label="戦績を登録する" />
     </div>

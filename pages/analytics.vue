@@ -7,7 +7,7 @@
       />
     </div>
     <div class="winning-percentage">
-      <div class="flex justify-between text-gray-500 pb-2">
+      <div class="flex justify-between text-gray-500 py-2">
         <button @click="resetSettings" class="flex items-end ml-6">設定をリセット</button>
         <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析(β版)</nuxt-link>
       </div>

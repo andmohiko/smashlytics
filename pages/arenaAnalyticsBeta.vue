@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pt-2">
     <div class="winning-percentage">
       <form class="mb-2 px-4">
         <div class="input-radio pb-2">
@@ -158,7 +158,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   margin: 0 auto;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
   // justify-content: center;

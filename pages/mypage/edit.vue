@@ -1,6 +1,6 @@
 <template>
   <div class="edit-container">
-    <div class="edit">
+    <div class="edit pt-2">
       <div class="input w-full">
         <p class="flash-message">{{ flashMessage }}</p>
         <form class="mb-4 px-4 w-full">
@@ -209,7 +209,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  // width: 400px;
 }
 .flash-message {
   color: red;
