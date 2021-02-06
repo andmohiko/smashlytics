@@ -8,6 +8,10 @@ export default {
     recordsSummary: {
       default: [],
       type: Array
+    },
+    chartdata: {
+      default: {},
+      type: Object
     }
   },
   data () {
@@ -18,27 +22,11 @@ export default {
           {
             label: '対戦数',
             data: this.recordsSummary.map(day => day.records),
-        //     backgroundColor: [
-        //       'rgba(255, 99, 132, 0.2)',
-        //       'rgba(54, 162, 235, 0.2)',
-        //       'rgba(255, 206, 86, 0.2)',
-        //       'rgba(75, 192, 192, 0.2)',
-        //       'rgba(153, 102, 255, 0.2)',
-        //       'rgba(255, 159, 64, 0.2)'
-        //     ],
-        //     borderColor: [
-        //       'rgba(255, 99, 132, 1)',
-        //       'rgba(54, 162, 235, 1)',
-        //       'rgba(255, 206, 86, 1)',
-        //       'rgba(75, 192, 192, 1)',
-        //       'rgba(153, 102, 255, 1)',
-        //       'rgba(255, 159, 64, 1)'
-        //     ],
-        //     borderWidth: 1
+            borderWidth: 1
           },
           {
             label: '勝ち数',
-            data: this.recordsSummary.map(day => day.wins),
+            data: this.recordsSummary.map(day => day.winsSum),
             borderColor: '#579aff',
             fill: false,
             type: 'line',
@@ -65,8 +53,19 @@ export default {
     }
   },
   mounted () {
-    console.log(this.recordsSummary)
-    this.renderChart(this.data, this.options)
+    this.render()
+  },
+  // watch: {
+  //   data: function(recordsSummary) {
+  //     console.log(recordsSummary)
+  //     this.renderChart(this.data, this.options)
+  //   }
+  // },
+  methods: {
+    render() {
+      // console.log(this.recordsSummary)
+      this.renderChart(this.data, this.options)
+    }
   }
 }
 </script>
