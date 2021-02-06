@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div>
-      グラフ
+      対戦数
     </div>
     <div>
-      <Chart :records="recordsThisWeek" />
+      <Chart :recordsSummary="recordsThisWeek" />
+      <!-- days, {{ recordsThisWeek }} -->
     </div>
   </div>
 </template>
@@ -14,7 +15,7 @@ import AnalyticsSettingModal from '@/components/modals/AnalyticsSettingModal.vue
 import Button from '@/components/parts/Button.vue'
 import Chart from '@/components/Chart.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
-import { today } from '@/utils/date.js'
+import { today, subtractDays, date2string } from '@/utils/date.js'
 import { calcWinningPercentage } from '@/utils/records.js'
 import fighters from '@/assets/fighters.json'
 import _ from 'lodash'
@@ -38,7 +39,15 @@ export default {
       return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     recordsThisWeek() {
-      return this.records.filter(r => this.inPeriod(r.createdAt, 7))
+      let recordsWeek = []
+      for (let day = 6; day >= 0; day--) {
+        recordsWeek.push({
+          date: date2string(subtractDays(this.today, day)).split(' ')[0].slice(5),
+          records: this.records.filter(r => this.inPeriod(r.createdAt, day+1, day)).length,
+          wins: this.records.filter(r => this.inPeriod(r.createdAt, 6, day)).filter(r => r.result).length,
+        })
+      }
+      return recordsWeek
     },
     usedFighterIds() {
       const used = this.recordsFiltered.map(record => {
@@ -53,9 +62,10 @@ export default {
     }
   },
   methods: {
-    inPeriod(date, period) {
-      const targetDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(period))
-      return date > targetDate
+    inPeriod(date, start, end) {
+      const startDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(start))
+      const endDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - Number(end))
+      return (startDate < date && date < endDate)
     },
     winningPercentageText(records) {
       const results = calcWinningPercentage(records)
