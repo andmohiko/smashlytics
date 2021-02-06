@@ -35,7 +35,7 @@
         <div class="my-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" class="pb-2" />
+          <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="504" suffix="万" width="90px" class="pb-2" />
           <StageSelecter ref="stageSelecter" :isShowOptionEmpty="false" />
           <StocksSelecter ref="stocksSelecter" :isShowOptionEmpty="false" />
           <Checkbox ref="isRepeat" label="連戦だった" />
