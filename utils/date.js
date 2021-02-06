@@ -6,6 +6,10 @@ export function date2string(datetime) {
   return date + ' ' + time
 }
 
+export function subtractDays(date, days) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days)
+}
+
 export const now = () => {
   return new Date(
     new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' })
