@@ -55,12 +55,12 @@ export default {
   mounted () {
     this.render()
   },
-  // watch: {
-  //   data: function(recordsSummary) {
-  //     console.log(recordsSummary)
-  //     this.renderChart(this.data, this.options)
-  //   }
-  // },
+  watch: {
+    data: function(recordsSummary) {
+      console.log(recordsSummary)
+      this.renderChart(this.data, this.options)
+    }
+  },
   methods: {
     render() {
       // console.log(this.recordsSummary)
