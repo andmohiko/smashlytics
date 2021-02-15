@@ -7,7 +7,7 @@
         :recordsSummary="recordsThisWeek"
         class="w-full px-1"
       />
-      <WinnningPercentageChart
+      <WinningPercentageChart
         v-else-if="chartType === 'winningPercentage'"
         :recordsSummary="recordsThisWeek"
         class="w-full px-1"
@@ -195,7 +195,6 @@ export default {
       this.fighterId = String(this.$refs.fighter.get())
     },
     selectChartType() {
-      console.log('selectChartType')
       this.$store.commit('setChartType', this.chartType)
     }
   }
