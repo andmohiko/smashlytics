@@ -54,7 +54,8 @@ export default {
       return (
         this.$route.path.match(/\/$/) ||
         this.$route.path.match(/\/analytics$/) ||
-        this.$route.path.match(/\/arena$/)
+        this.$route.path.match(/\/arena$/) ||
+        this.$route.path.match(/\/chart$/)
       )
     },
     isSettingsiconPage() {
@@ -71,6 +72,9 @@ export default {
         }
         case 'analytics': {
           return '戦績分析'
+        }
+        case 'chart': {
+          return 'グラフ'
         }
         case 'arenaAnalyticsBeta': {
           return '専用部屋分析'

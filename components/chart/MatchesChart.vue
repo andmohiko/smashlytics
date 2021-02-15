@@ -8,10 +8,6 @@ export default {
     recordsSummary: {
       default: [],
       type: Array
-    },
-    chartdata: {
-      default: {},
-      type: Object
     }
   },
   data () {
@@ -30,7 +26,7 @@ export default {
             borderColor: '#579aff',
             fill: false,
             type: 'line',
-            lineTension: 0.1,
+            lineTension: 0,
           }
         ]
       },
@@ -57,13 +53,11 @@ export default {
   },
   watch: {
     data: function(recordsSummary) {
-      console.log(recordsSummary)
-      this.renderChart(this.data, this.options)
+      this.render()
     }
   },
   methods: {
     render() {
-      // console.log(this.recordsSummary)
       this.renderChart(this.data, this.options)
     }
   }
