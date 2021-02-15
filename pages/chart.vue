@@ -1,14 +1,30 @@
 <template>
   <div class="container overflow-y-auto">
     <div class="flex flex-col items-center pb-6 w-full">
-      <p class="my-2 text-2xl text-gray-700 tracking-widest">{{ chartTypeLabel[chartType] }}</p>
-      <Chart :recordsSummary="recordsThisWeek" :chartdata="chartdata" class="w-full px-1" />
+      <p class="my-2 text-3xl text-gray-700 tracking-widest">{{ chartTypeLabel[chartType] }}</p>
+      <MatchesChart
+        v-if="chartType === 'matches'"
+        :recordsSummary="recordsThisWeek"
+        class="w-full px-1"
+      />
+      <WinnningPercentageChart
+        v-else-if="chartType === 'winningPercentage'"
+        :recordsSummary="recordsThisWeek"
+        class="w-full px-1"
+      />
     </div>
-    <!-- <div class="flex">
-      <RadioButton v-model="chartType" :label="chartTypeLabel.matches" value="matches" />
-      <RadioButton v-model="chartType" :label="chartTypeLabel.winningPercentage" value="winningPercentage" />
-      <RadioButton v-model="chartType" :label="chartTypeLabel.globalSmashPower" value="globalSmashPower" />
-    </div> -->
+    <div class="flex flex-col items-start w-full pl-3 pb-2">
+      <p class="text-gray-700 text-lg text-left pb-2">グラフを表示</p>
+      <div class="flex items-center">
+        <button @click="selectChartType" class="focus:outline-none">
+          <RadioButton v-model="chartType" :label="chartTypeLabel.matches" value="matches" />
+        </button>
+        <button @click="selectChartType" class="focus:outline-none">
+          <RadioButton v-model="chartType" :label="chartTypeLabel.winningPercentage" value="winningPercentage" />
+        </button>
+        <!-- <RadioButton v-model="chartType" :label="chartTypeLabel.globalSmashPower" value="globalSmashPower" /> -->
+      </div>
+    </div>
     <!-- <div>
       <p class="my-2 pl-4 text-xl text-gray-700 text-width text-left">使用したファイター</p>
       <FighterSelecter
@@ -60,7 +76,8 @@
 <script>
 import AnalyticsSettingModal from '@/components/modals/AnalyticsSettingModal.vue'
 import Button from '@/components/parts/Button.vue'
-import Chart from '@/components/Chart.vue'
+import MatchesChart from '@/components/chart/MatchesChart.vue'
+import WinningPercentageChart from '@/components/chart/WinningPercentageChart.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
 import RadioButton from '@/components/input/RadioButton.vue'
@@ -73,7 +90,8 @@ export default {
   components: {
     AnalyticsSettingModal,
     Button,
-    Chart,
+    MatchesChart,
+    WinningPercentageChart,
     FighterIcon,
     FighterSelecter,
     RadioButton
@@ -81,9 +99,8 @@ export default {
   data() {
     return {
       today: today(),
-      isShowModal: false,
       fighters,
-      chartType: 'matches',
+      chartType: '',
       chartTypeLabel: {
         matches: '対戦数',
         winningPercentage: '勝率',
@@ -91,6 +108,9 @@ export default {
       },
       headings: ['日付', '対戦数', '勝ち数', '勝率', '使用ファイター']
     }
+  },
+  mounted() {
+    this.chartType = this.$store.state.chartType
   },
   computed: {
     records() {
@@ -108,7 +128,7 @@ export default {
           records: recordsByDay.length,
           winsSum: this.records.filter(r => this.inPeriod(r.createdAt, 6, day-1)).filter(r => r.result).length,
           wins: recordsByDay.filter(r => r.result).length,
-          winningPercentage: recordsByDay.filter(r => r.result).length / recordsByDay.length,
+          winningPercentage: recordsByDay.filter(r => r.result).length / recordsByDay.length * 100 || 0,
           userdFighters: this.getUsedFighters(recordsByDay)
         })
       }
@@ -124,22 +144,22 @@ export default {
     chartdata() {
       return {
         data: {
-        labels: this.recordsThisWeek.map(day => day.date),
-        datasets: [
-          {
-            label: '対戦数',
-            data: this.recordsThisWeek.map(day => day.records),
-          },
-          {
-            label: '勝ち数',
-            data: this.recordsThisWeek.map(day => day.wins),
-            borderColor: '#579aff',
-            fill: false,
-            type: 'line',
-            lineTension: 0.1,
-          }
-        ]
-      },
+          labels: this.recordsThisWeek.map(day => day.date),
+          datasets: [
+            {
+              label: '対戦数',
+              data: this.recordsThisWeek.map(day => day.records),
+            },
+            {
+              label: '勝ち数',
+              data: this.recordsThisWeek.map(day => day.wins),
+              borderColor: '#579aff',
+              fill: false,
+              type: 'line',
+              lineTension: 0.1,
+            }
+          ]
+        }
       }
     },
     usedFighterIds() {
@@ -174,12 +194,10 @@ export default {
     select() {
       this.fighterId = String(this.$refs.fighter.get())
     },
-    openModal() {
-      this.isShowModal = true
-    },
-    closeModal() {
-      this.isShowModal = false
-    },
+    selectChartType() {
+      console.log('selectChartType')
+      this.$store.commit('setChartType', this.chartType)
+    }
   }
 }
 </script>
