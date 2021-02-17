@@ -33,6 +33,13 @@
           </svg>
         </button>
       </template>
+      <template v-if="isTopiconPage">
+        <button class="settings-btn" @click="toTop">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.6667 16.6667V5L6.66669 23.3333H18.3334V35L33.3334 16.6667H21.6667Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </template>
     </header>
   </div>
 </template>
@@ -68,6 +75,9 @@ export default {
     isSettingsiconPage() {
       const route = this.$route.path.replaceAll('/', '')
       return (route === this.user.userOriginalId)
+    },
+    isTopiconPage() {
+      return this.$route.path.match(/\/arena$/)
     },
     isArenaiconPage() {
       return (
@@ -119,6 +129,10 @@ export default {
     },
     toSettings () {
       this.$router.push("/settings")
+    },
+    toTop() {
+      logEvent('viewTop', undefined)
+      this.$router.push("/")
     },
     toArenaPages() {
       if (this.$route.path.match(/\/$/)) {
