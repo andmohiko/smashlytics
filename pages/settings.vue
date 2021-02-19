@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pt-2">
     <div class="settings">
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">お問い合わせ</h2>

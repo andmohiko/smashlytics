@@ -37,9 +37,9 @@ export default {
 
 <style lang="scss">
 .main {
-  margin-top: 60px;
+  margin-top: 50px;
   margin-bottom: 70px;
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 120px);
   max-width: 100vw;
 }
 

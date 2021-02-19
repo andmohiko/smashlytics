@@ -106,6 +106,9 @@
           <p class="text-lg text-left pl-4">その他</p>
           <Checkbox ref="filterRepeat" :defaultValue="analyticsSettings.filterRepeat" label="連戦を省く" class="pl-4" />
         </div>
+        <div class="flex justify-between text-gray-700 pb-3">
+          <button @click="resetSettings" class="flex items-end ml-4">設定をリセット</button>
+        </div>
       </div>
       <div class="modal-footer border-t pt-2">
         <Button @onClick="save" label="設定を保存する" />
@@ -187,6 +190,18 @@ export default {
         filterRepeat: this.$refs.filterRepeat.get()
       })
       logEvent('saveAnalyticsSettings', undefined)
+      this.$emit('close')
+    },
+    resetSettings() {
+      this.$store.commit('setAnalyticsSettings', {
+        sorting: 'opponentId',
+        period: 30,
+        selectedMyFighter: 'all',
+        groupSimilarFighters: false,
+        stage: 'all',
+        stocks: 'all',
+        filterRepeat: false
+      })
       this.$emit('close')
     },
     onClose() {

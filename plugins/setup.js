@@ -15,6 +15,7 @@ export default async ({ store }) => {
     if (!uid) return
     // console.log('uid', uid)
     store.commit('setUid', uid)
+    store.commit('setChartType', '')
     store.dispatch('isUser', uid)
   } catch (error) {
     console.log('error in setup', error)

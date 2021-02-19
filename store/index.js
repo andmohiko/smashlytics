@@ -30,6 +30,7 @@ const state = {
     stocks: 'all',
     filterRepeat: false
   },
+  chartType: '',
   notice: {
     noticeType: null,
     message: ''
@@ -129,6 +130,9 @@ const mutations = {
   },
   setAnalyticsSettings(state, payload) {
     state.analyticsSettings = payload
+  },
+  setChartType(state, payload) {
+    state.chartType = payload
   },
   setNotice(state, payload) {
     state.notice = payload

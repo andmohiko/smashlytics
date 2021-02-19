@@ -6,11 +6,7 @@
         @close="closeModal"
       />
     </div>
-    <div class="winning-percentage">
-      <div class="flex justify-between text-gray-500 pb-2">
-        <button @click="resetSettings" class="flex items-end ml-6">設定をリセット</button>
-        <nuxt-link to="/arenaAnalyticsBeta">専用部屋の分析(β版)</nuxt-link>
-      </div>
+    <div class="pt-2">
       <Button @onClick="openModal" label="分析の詳細設定" />
       <form class="mb-2 mt-2 px-4">
         <div class="input-radio pb-2">
@@ -209,17 +205,6 @@ export default {
         this.analyticsSettings.groupSimilarFighters &&
         this.fighters[fighterId].child
       )
-    },
-    resetSettings() {
-      this.$store.commit('setAnalyticsSettings', {
-        sorting: 'opponentId',
-        period: 30,
-        selectedMyFighter: 'all',
-        groupSimilarFighters: false,
-        stage: 'all',
-        stocks: 'all',
-        filterRepeat: false
-      })
     },
     openModal() {
       this.isShowModal = true
