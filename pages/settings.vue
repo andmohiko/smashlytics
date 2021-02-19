@@ -28,13 +28,21 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">今後追加予定の機能🚀</h2>
         <ul class="text-left">
-          <li>◎勝率の変化をグラフで表示</li>
+          <li>◎他の人のファイターごとの勝率</li>
           <li>◎過去の戦績を日付を指定して登録</li>
           <li>◎戦闘力帯ごとのファイターの割合</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
+        <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 4.0.0</h3>
+          <ul class="text-sm">
+            <li>◎グラフ機能の追加</li>
+            <li>◎1週間の対戦数・勝ち数をグラフで表示</li>
+            <li>◎1週間の所立の変化をグラフで表示</li>
+          </ul>
+        </div>
         <div class="version text-left mb-4">
           <h3 class="text-base">Ver 3.5.0</h3>
           <ul class="text-sm">

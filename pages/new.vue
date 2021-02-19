@@ -16,10 +16,11 @@
         <ul class="text-left">
           <li>◎戦績の記録</li>
           <li>◎記録した戦績を一覧で確認</li>
+          <li>◎対戦数・勝率の変化をグラフで表示←new!!</li>
           <li>◎ファイターごとの勝率を計算</li>
           <li>◎期間を絞って勝率の変化を分析</li>
           <li>◎プロフィールの公開</li>
-          <li>◎専用部屋の戦績の記録 ←new!!</li>
+          <li>◎専用部屋の戦績の記録と分析</li>
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
