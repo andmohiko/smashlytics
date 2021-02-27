@@ -26,6 +26,17 @@
         </ul>
       </div>
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
+        <h2 class="text-xl mb-4">専用部屋の機能</h2>
+        <ul class="text-left">
+          <li>
+            <nuxt-link to="/arena">戦績の登録</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/arenaAnalyticsBeta">戦績の分析</nuxt-link>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">今後追加予定の機能🚀</h2>
         <ul class="text-left">
           <li>◎他の人のファイターごとの勝率</li>
