@@ -911,5 +911,16 @@
     "number": 78,
     "parent": null,
     "child": null
+  },
+  "79": {
+    "fighterId": "79",
+    "icon": "79_Pyra&Mythra.png",
+    "isDashFighter": false,
+    "name": "ホムラ/ヒカリ",
+    "nickname": "ホムヒカ",
+    "name_en": "Pyra&Mythra",
+    "number": 79,
+    "parent": null,
+    "child": null
   }
 }
