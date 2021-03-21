@@ -58,6 +58,9 @@
         </div>
       </div>
     </div>
+    <div class="pt-2" v-if="!isShowAllRecords">
+      <Button @onClick="showAllRecords" label="戦績をもっと表示する" />
+    </div>
     
     <p class="error text-xl py-2 mb-4 text-red-700">{{ error }}</p>
     <div v-show="error" class="border-b">
@@ -98,6 +101,7 @@ export default {
       headings: ['日付','自分','相手','勝敗','編集'],
       editingRecord: {},
       now: now(),
+      isShowAllRecords: false,
       error: ''
     }
   },
@@ -112,7 +116,10 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      if (this.isShowAllRecords) {
+        return this.$store.state.records.filter(record => record.roomType !== 'arena')
+      }
+      return this.$store.state.records.filter(record => record.roomType !== 'arena').slice(0, 30)
     },
     isLogin() {
       return Boolean(this.$store.state.user.userId)
@@ -132,6 +139,9 @@ export default {
     }
   },
   methods: {
+    showAllRecords() {
+      this.isShowAllRecords = true
+    },
     openAddModal() {
       this.error = ''
       if (!this.isLogin) {
