@@ -61,6 +61,9 @@
         </div>
       </div>
     </div>
+    <div class="pt-2 pb-4" v-if="!isShowAllRecords">
+      <Button @onClick="showAllRecords" label="戦績をもっと表示する" />
+    </div>
   </div>
 </template>
 
@@ -89,7 +92,8 @@ export default {
       isShowAddModal: false,
       isShowEditModal: false,
       editingRecord: {},
-      now: now()
+      now: now(),
+      isShowAllRecords: false,
     }
   },
   computed: {
@@ -97,7 +101,10 @@ export default {
       return this.$store.state.user
     },
     records() {
-      return this.$store.state.records.filter(record => record.roomType === 'arena')
+      if (this.isShowAllRecords) {
+        return this.$store.state.records.filter(record => record.roomType === 'arena')
+      }
+      return this.$store.state.records.filter(record => record.roomType === 'arena').slice(0, 30)
     },
     isLogin() {
       return Boolean(this.$store.state.user.userId)
@@ -123,6 +130,9 @@ export default {
     normalizeAgainstName(name) {
       if (name.length < 6) return name
       return name.slice(0,4) + '...'
+    },
+    showAllRecords() {
+      this.isShowAllRecords = true
     },
     openAddModal() {
       this.isShowAddModal = true
