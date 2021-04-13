@@ -39,7 +39,7 @@
           <StageSelecter ref="stageSelecter" :isShowOptionEmpty="false" />
           <StocksSelecter ref="stocksSelecter" :isShowOptionEmpty="false" />
           <Checkbox ref="isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="lastRecord.isVip" label="VIPマッチ" />
+          <Checkbox ref="isVip" :defaultValue="lastRecord.isVip" label="VIP入りしている" />
         </div>
       </div>
       <div class="modal-footer border-t pt-2">

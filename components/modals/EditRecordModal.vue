@@ -40,7 +40,7 @@
           <StageSelecter ref="stageSelecter" :previousSelect="editingRecord.stage" />
           <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" />
           <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIPマッチ" />
+          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIP入りしている" />
         </div>
       </div>
       <div class="modal-footer border-t pt-2">
