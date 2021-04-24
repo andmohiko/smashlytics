@@ -47,6 +47,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 4.0.3</h3>
+          <ul class="text-sm">
+            <li>◎勝率グラフの縦軸を0-100に固定</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 4.0.2</h3>
           <ul class="text-sm">
             <li>◎デフォルトで表示する戦績数を30件に変更</li>

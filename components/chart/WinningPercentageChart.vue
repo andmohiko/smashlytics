@@ -26,20 +26,20 @@ export default {
         ]
       },
       options: {
-        // scales: {
+        scales: {
         //   xAxes: [{
         //     scaleLabel: {
         //       display: true,
         //       labelString: 'Month'
         //     }
         //   }],
-        //   yAxes: [{
-        //     ticks: {
-        //       beginAtZero: true,
-        //       stepSize: 10,
-        //     }
-        //   }]
-        // }
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 100
+            }
+          }]
+        }
       }
     }
   },
