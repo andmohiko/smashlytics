@@ -11,7 +11,7 @@
         rows="3"
         :placeholder="placeholder"
         type="text"
-        class="form-textarea mt-1 block w-full border py-2 px-3 text-grey-darkest"
+        class="form-textarea mt-2 block w-full border py-2 px-3 text-grey-darkest rounded-lg"
       ></textarea>
     </div>
   </div>

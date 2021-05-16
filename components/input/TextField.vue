@@ -13,7 +13,7 @@
       <input
         v-model="input"
         :placeholder="placeholder"
-        class="border py-2 px-3 text-grey-darkest w-full"
+        class="border py-2 px-3 text-grey-darkest w-full rounded-lg"
         type="text"
       >
       <span v-if="suffix" class="text-lg text-gray-700 pl-1">{{ suffix }}</span>
