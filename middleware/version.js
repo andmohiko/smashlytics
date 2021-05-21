@@ -15,19 +15,13 @@ export default async function({ app, store }) {
       .orderBy('startDate', 'desc')
       .limit(1)
       .get()
-      .then(querySnapshot => {
-        let versionsArray = []
-        querySnapshot.forEach(doc => {
-          versionsArray.push(doc.id)
-        })
-        return versionsArray[0]
-      })
+      .then(querySnapshot => querySnapshot.docs[0].id)
     console.log('now ver', version.versionNumber, 'latest ver', latestVersion)
     store.commit('setVersion', {
       versionNumber: latestVersion,
       refreshedAt: now
     })
-    // 期待するバージョン以上なら何もしない
+    // 期待するバージョンなら何もしない
     if (latestVersion === version.versionNumber) return
     // 反映させるためにスーパーリロードを促す
     window.confirm('新しいバージョンが配信されているため最新バージョンに更新します。')

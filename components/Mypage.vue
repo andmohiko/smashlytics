@@ -108,7 +108,7 @@ export default {
     },
     newestRecordsByFighter() {
       const newestRecords = this.usedFighterIds.map(fighterId => {
-        return this.records.filter(record => record.fighterId === fighterId)[0]
+        return this.records.find(record => record.fighterId === fighterId)
       })
       return newestRecords.sort((a, b) => (a.globalSmashPower > b.globalSmashPower ? -1 : 1))
     },

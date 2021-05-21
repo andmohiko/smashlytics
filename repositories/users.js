@@ -45,13 +45,8 @@ export async function getUserByUserOriginalId(userOriginalId) {
     .where("userOriginalId", "==", userOriginalId)
     .limit(1)
     .get()
-    .then(querySnapshot => {
-      let userArray = []
-      querySnapshot.forEach(doc => {
-        userArray.push(doc.data())
-      })
-      return userArray[0]
-    }).catch(function(error) {
+    .then(querySnapshot => querySnapshot.docs[0].data())
+    .catch(function(error) {
       console.log("Error getting records in usecase:", error);
     })
   if (!user) return
