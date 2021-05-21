@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-full text-left">
-      <div class="profile-icon pb-3">
-        <img v-if="user.profileImg" :src="user.profileImg">
-        <img v-else src="images/default-icon.png">
-      </div>
+      <ProfileIcon :profileImgPath="user.profileImg" />
       <div class="name pb-4">
         <p class="userId text-base pt-2 text-gray-700">非公開</p>
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
@@ -15,9 +12,12 @@
 </template>
 
 <script>
-import { getUser } from '@/repositories/users.js'
+import ProfileIcon from '@/components/parts/ProfileIcon.vue'
 
 export default {
+  components: {
+    ProfileIcon
+  },
   props: {
     user: {
       required: true,
@@ -65,15 +65,6 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
-}
-.profile-icon {
-  display: flex;
-  img {
-    height: 120px;
-    width: 120px;
-    border: solid 4px #579aff;
-    border-radius: 50%;
-  }
 }
 .user-info {
   display: flex;

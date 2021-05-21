@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <div class="bg-white shadow-md rounded px-8 pt-8 pb-6 mb-4 flex flex-col w-full text-left">
-      <div class="profile-icon pb-3">
-        <img v-if="user.profileImg" :src="user.profileImg">
-        <img v-else src="images/default-icon.png">
-      </div>
+      <ProfileIcon :profileImgPath="user.profileImg" />
       <div class="name pb-4">
         <p class="username text-3xl text-gray-800">{{ user.username }}</p>
         <p class="userId text-xl text-gray-700">{{ user.userOriginalId }}</p>
@@ -77,6 +74,7 @@
 
 <script>
 import Button from '@/components/parts/Button.vue'
+import ProfileIcon from '@/components/parts/ProfileIcon.vue'
 import TwitterShareButton from '@/components/parts/TwitterShareButton.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
 import VoiceChat from '@/components/parts/VoiceChat.vue'
@@ -87,6 +85,7 @@ import { logEvent } from '@/utils/analytics.js'
 export default {
   components: {
     Button,
+    ProfileIcon,
     TwitterShareButton,
     FighterIcon,
     VoiceChat
@@ -197,15 +196,6 @@ export default {
   font-size: 24px;
   color: black;
   letter-spacing: 1px;
-}
-.profile-icon {
-  display: flex;
-  img {
-    height: 120px;
-    width: 120px;
-    border: solid 4px #579aff;
-    border-radius: 50%;
-  }
 }
 .user-info {
   display: flex;
