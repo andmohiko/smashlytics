@@ -118,7 +118,9 @@ export default {
     },
     resultsToday() {
       const today = date2string(this.now).split(' ')[0]
-      const recordsToday = this.records.filter(record => record.createdAtString.split(' ')[0] === today)
+      const recordsToday = this.$store.state.records
+        .filter(record => record.roomType === 'arena')
+        .filter(record => record.createdAtString.split(' ')[0] === today)
       const wins = recordsToday.filter(record => record.result).length
       return wins + '勝' + (recordsToday.length - wins) + '敗'
     }
