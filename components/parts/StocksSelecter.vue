@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full pb-4 text-gray-700">
+  <div class="w-full pb-2 text-gray-700">
     <p class="text-lg text-left pb-1">ストック数</p>
     <div>
       <p class="text-base text-left pb-2">試合のルール</p>
