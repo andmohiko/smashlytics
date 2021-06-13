@@ -18,7 +18,7 @@
             :usedFighterIds="usedFighterIds"
             :previouslySelected="editingRecord.fighterId"
             iconSize="44px"
-            :isShowOption="true"
+            :isShowAllOption="true"
             label="自分のファイター"
           />
         </div>

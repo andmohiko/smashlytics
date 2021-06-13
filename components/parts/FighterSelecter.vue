@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <p class="title">{{ label }}</p>
-      <button v-show="isShowOption" @click="showAllFighters" class="option">全ファイターから選ぶ</button>
+      <button v-show="isShowAllOption" @click="showAllFighters" class="option">全ファイターから選ぶ</button>
     </div>
     <div class="fighter-selecter">
       <div v-for="fighterId in fighterIds" :key="fighterId.id" class="fighter-icon">
@@ -33,7 +33,7 @@ export default {
       required: false,
       type: String
     },
-    isShowOption: {
+    isShowAllOption: {
       required: false,
       type: Boolean
     },
