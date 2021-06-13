@@ -87,7 +87,7 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 8px 0;
+  margin: 4px 0 12px 0;
 }
 .header {
   display: flex;

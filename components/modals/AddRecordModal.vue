@@ -1,9 +1,9 @@
 <template>
   <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-6 pb-4 mb-4 flex flex-col overflow-auto">
+    <div class="record-modal bg-white shadow-md rounded px-4 pt-4 pb-3 mb-4 flex flex-col overflow-auto">
       <div class="modal-header">
         <div class="close" @click="onClose">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -32,7 +32,7 @@
           />
         </div>
         
-        <div class="my-6 px-4">
+        <div class="mt-6 px-4">
           <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
           <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
           <TextField ref="globalSmashPower" :allowEmpty="false" label="世界戦闘力(万)" placeholder="504" suffix="万" width="90px" class="pb-2" />

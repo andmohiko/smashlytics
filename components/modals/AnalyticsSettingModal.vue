@@ -1,9 +1,9 @@
 <template>
   <div class="modal-bg">
-    <div class="modal bg-white shadow-md rounded px-4 pt-6 pb-4 mb-4 flex flex-col overflow-auto">
+    <div class="modal bg-white shadow-md rounded px-4 pt-4 pb-3 mb-4 flex flex-col overflow-auto">
       <div class="modal-header">
         <div class="close" @click="onClose">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
