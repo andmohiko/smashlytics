@@ -61,6 +61,7 @@
 
 <script>
 // import { firebase, firestore, serverTimestamp } from '@/plugins/firebase'
+import forbiddenIds from '@/assets/forbiddenIds.json'
 import Button from '@/components/parts/Button.vue'
 import TextField from '@/components/input/TextField.vue'
 import FighterSelecter from '@/components/parts/FighterSelecter.vue'
@@ -120,7 +121,11 @@ export default {
       }
       const nameExp = /^[a-zA-Z0-9_]{5,15}$/
       const numExp = /^[0-9]{5,15}$/
-      if (!nameExp.test(this.user.userId) || this.userIds.includes(this.user.userId)) {
+      if (
+        !nameExp.test(this.user.userId) ||
+        forbiddenIds.forbiddenIds.filter(id => this.user.userId.startsWith(id)).length > 0 ||
+        this.userIds.includes(this.user.userId)
+      ) {
         this.error = '入力されたユーザIDは使用できません'
         return
       }
@@ -131,6 +136,8 @@ export default {
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
         this.user.twitterId = this.user.twitterId.slice(1)
       }
+      this.error = '成功'
+      return
       const db = firebase.firestore()
       try {
         db.collection('authUsers')
@@ -205,10 +212,8 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   text-align: center;
-  // border: solid red 1px;
 }
 .signup {
   display: flex;

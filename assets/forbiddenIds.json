@@ -1,0 +1,26 @@
+{
+  "forbiddenIds": [
+    "analytic",
+    "arena",
+    "arenaAnalyticsBeta",
+    "chart",
+    "favorite",
+    "fighter",
+    "follow",
+    "release",
+    "mypage",
+    "new",
+    "notice",
+    "record",
+    "setting",
+    "share",
+    "signup",
+    "smarepo",
+    "smashbros",
+    "smashlytics",
+    "statistic",
+    "status",
+    "tweet",
+    "update"
+  ]
+}
