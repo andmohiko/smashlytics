@@ -4,7 +4,6 @@
       <h2 class="text-xl py-2 border-b">オンラインの戦績を登録する</h2>
     </div>
     <div class="modal-content pt-2 overflow-auto">
-      <p class="error">{{ error }}</p>
       <div class="fighter-selecter">
         <FighterSelecter
           @select="select"
@@ -38,6 +37,7 @@
     </div>
     <div class="modal-footer border-t pt-2">
       <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-2" />
+      <p class="error">{{ error }}</p>
       <div class="submit">
         <Button @onClick="submit" label="登録する" />
       </div>
@@ -127,6 +127,15 @@ export default {
         this.error = '自分・相手・結果は入力してください'
         return
       }
+      const globalSmashPower = Number(this.record.globalSmashPower)
+      if (this.record.globalSmashPower && !Number.isInteger(globalSmashPower)) {
+        this.error = '世界戦闘力には整数を入力してください'
+        return
+      }
+      if (this.record.globalSmashPower && (globalSmashPower < 1 || globalSmashPower > 2000)) {
+        this.error = '世界戦闘力は1万~1000万の間で入力してください'
+        return
+      }
       const newRecord = {
         createdAt: serverTimestamp,
         updatedAt: serverTimestamp,
@@ -139,7 +148,7 @@ export default {
         opponentId: this.record.opponentId,
         result: this.record.result,
         stage: this.$refs.stageSelecter.stage,
-        globalSmashPower: this.record.globalSmashPower ? Number(this.record.globalSmashPower) * 10000 : null,
+        globalSmashPower: this.record.globalSmashPower ? globalSmashPower * 10000 : null,
         stocks: this.$refs.stocksSelecter.stocks,
         isRepeat: this.$refs.isRepeat.input,
         isVip: this.$refs.isVip.input
@@ -185,4 +194,8 @@ export default {
 </script>
 
 <style lang="scss">
+.error {
+  color: #ff0000;
+  padding-bottom: 4px;
+}
 </style>
