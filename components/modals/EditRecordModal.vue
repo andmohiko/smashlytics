@@ -100,9 +100,11 @@ export default {
       return this.$store.state.records.filter(record => record.roomType !== 'arena')
     },
     usedFighterIds() {
-      const used = this.$store.state.records.map(record => {
-        return record.fighterId
-      })
+      const used = this.$store.state.records
+        .filter(record => record.roomType !== 'arena')
+        .map(record => {
+          return record.fighterId
+        })
       return Array.from(new Set(used)).sort()
     }
   },
