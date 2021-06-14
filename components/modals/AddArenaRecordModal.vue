@@ -1,52 +1,45 @@
 <template>
-  <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-4 pb-3 mb-4 flex flex-col overflow-auto">
-      <div class="modal-header">
-        <div class="close" @click="onClose">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2 class="text-xl py-2 border-b">専用部屋の戦績を登録する</h2>
+  <div class="flex flex-col overflow-auto">
+    <div class="modal-header">
+      <h2 class="text-xl py-2 border-b">専用部屋の戦績を登録する</h2>
+    </div>
+    <div class="modal-content pt-2 overflow-auto">
+      <p class="error">{{ error }}</p>
+      <div class="fighter-selecter">
+        <FighterSelecter
+          @select="select"
+          ref="fighter"
+          :usedFighterIds="usedFighterIds"
+          :previouslySelected="lastRecord.fighterId"
+          iconSize="44px"
+          :isShowAllOption="true"
+          label="自分のファイター"
+        />
       </div>
-      <div class="modal-content pt-2 overflow-auto">
-        <p class="error">{{ error }}</p>
-        <div class="fighter-selecter">
-          <FighterSelecter
-            @select="select"
-            ref="fighter"
-            :usedFighterIds="usedFighterIds"
-            :previouslySelected="lastRecord.fighterId"
-            iconSize="44px"
-            :isShowAllOption="true"
-            label="自分のファイター"
-          />
-        </div>
-        <div class="fighter-selecter">
-          <FighterSelecter
-            @select="select"
-            ref="opponent"
-            :previouslySelected="lastRecord.opponentId"
-            iconSize="44px"
-            label="相手のファイター"
-          />
-        </div>
-        
-        <div class="mt-6 px-4">
-          <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
-          <span class="text-gray-700 text-base">名前を入力する</span>
-          <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4"/>
-          <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" class="pb-4" />
-          <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
-        </div>
+      <div class="fighter-selecter">
+        <FighterSelecter
+          @select="select"
+          ref="opponent"
+          :previouslySelected="lastRecord.opponentId"
+          iconSize="44px"
+          label="相手のファイター"
+        />
       </div>
-      <div class="modal-footer border-t pt-2">
-        <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-2" />
-        <div class="submit">
-          <Button @onClick="submit" label="登録する" />
-        </div>
+      
+      <div class="mt-6 px-4">
+        <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
+        <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+        <AgainstSelecter ref="againstSelect" :fightedPlayers="fightedPlayers" :previousSelect="''" />
+        <span class="text-gray-700 text-base">名前を入力する</span>
+        <TextField ref="againstText" label="対戦相手" :isLabelShow="false" placeholder="はじめて対戦した人なら入力してね" class="pb-4"/>
+        <StageSelecter ref="stageSelecter" :isShowSmamateStages="true" :previousSelect="lastRecord.stage" class="pb-4" />
+        <StocksSelecter ref="stocksSelecter" :defaultValue="lastRecord.stocks" />
+      </div>
+    </div>
+    <div class="modal-footer border-t pt-2">
+      <ResultButton @clickWin="isWin" @clickLose="isLose" class="pb-2" />
+      <div class="submit">
+        <Button @onClick="submit" label="登録する" />
       </div>
     </div>
   </div>
@@ -198,31 +191,4 @@ export default {
 </script>
 
 <style lang="scss">
-.modal-bg {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(21, 28, 56, 0.568);
-  z-index: 20;
-}
-.record-modal {
-  position: relative;
-  height: 90%;
-  max-width: 400px;
-  z-index: 30;
-}
-.close {
-  position: absolute;
-  margin: 8px 8px 0 0;
-  right: 0;
-  top: 0;
-}
-.details {
-  margin: 20px 0 30px 0;
-}
 </style>

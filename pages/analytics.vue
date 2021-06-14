@@ -1,10 +1,12 @@
 <template>
   <div class="container">
     <div v-if="isShowModal">
-      <AnalyticsSettingModal
-        :analyticsSettings="analyticsSettings"
-        @close="closeModal"
-      />
+      <ModalBase @close="closeModal">
+        <AnalyticsSettingModal
+          :analyticsSettings="analyticsSettings"
+          @close="closeModal"
+        />
+      </ModalBase>
     </div>
     <div class="pt-2">
       <Button @onClick="openModal" label="分析の詳細設定" />
@@ -78,6 +80,7 @@
 </template>
 
 <script>
+import ModalBase from '@/components/modals/ModalBase.vue'
 import AnalyticsSettingModal from '@/components/modals/AnalyticsSettingModal.vue'
 import Button from '@/components/parts/Button.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
@@ -88,6 +91,7 @@ import _ from 'lodash'
 
 export default {
   components: {
+    ModalBase,
     AnalyticsSettingModal,
     Button,
     FighterIcon

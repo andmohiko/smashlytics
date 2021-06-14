@@ -2,12 +2,16 @@
   <div class="container">
     <div class="add">
       <template v-if="isShowAddModal">
-        <AddArenaRecordModal :lastRecord="lastRecord" @close="closeModal" />
+        <ModalBase @close="closeModal">
+          <AddArenaRecordModal :lastRecord="lastRecord" @close="closeModal" />
+        </ModalBase>
       </template>
     </div>
     <div class="edit">
       <template v-if="isShowEditModal">
-        <EditArenaRecordModal :editingRecord="editingRecord" @close="closeModal" />
+        <ModalBase @close="closeModal">
+          <EditArenaRecordModal :editingRecord="editingRecord" @close="closeModal" />
+        </ModalBase>
       </template>
     </div>
 
@@ -72,6 +76,7 @@ import firebase from '@/plugins/firebase'
 import { now, date2string } from '@/utils/date.js'
 import Button from '@/components/parts/Button.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import ModalBase from '@/components/modals/ModalBase.vue'
 import AddArenaRecordModal from '@/components/modals/AddArenaRecordModal.vue'
 import EditArenaRecordModal from '@/components/modals/EditArenaRecordModal.vue'
 import fighters from '@/assets/fighters.json'
@@ -81,6 +86,7 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
 export default {
   components: {
     FighterIcon,
+    ModalBase,
     AddArenaRecordModal,
     EditArenaRecordModal,
     Button

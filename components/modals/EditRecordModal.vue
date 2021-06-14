@@ -1,55 +1,48 @@
 <template>
-  <div class="modal-bg">
-    <div class="record-modal bg-white shadow-md rounded px-4 pt-4 pb-3 mb-4 flex flex-col overflow-auto">
-      <div class="modal-header">
-        <div class="close" @click="onClose">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2 class="text-xl py-2 border-b">戦績を更新する</h2>
+  <div class="flex flex-col overflow-auto">
+    <div class="modal-header">
+      <h2 class="text-xl py-2 border-b">戦績を更新する</h2>
+    </div>
+    <div class="modal-content pt-2 overflow-auto">
+      <p class="error">{{ error }}</p>
+      <div class="fighter-selecter">
+        <FighterSelecter
+          @select="select"
+          ref="fighter"
+          :usedFighterIds="usedFighterIds"
+          :previouslySelected="editingRecord.fighterId"
+          iconSize="44px"
+          :isShowAllOption="true"
+          label="自分のファイター"
+        />
       </div>
-      <div class="modal-content pt-2 overflow-auto">
-        <p class="error">{{ error }}</p>
-        <div class="fighter-selecter">
-          <FighterSelecter
-            @select="select"
-            ref="fighter"
-            :usedFighterIds="usedFighterIds"
-            :previouslySelected="editingRecord.fighterId"
-            iconSize="44px"
-            :isShowAllOption="true"
-            label="自分のファイター"
-          />
-        </div>
-        <div class="fighter-selecter">
-          <FighterSelecter
-            @select="select"
-            ref="opponent"
-            :previouslySelected="editingRecord.opponentId"
-            iconSize="44px"
-            label="相手のファイター"
-          />
-        </div>
-        <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
-        
-        <div class="mt-6 px-4">
-          <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
-          <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
-          <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
-          <StageSelecter ref="stageSelecter" :previousSelect="editingRecord.stage" />
-          <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" />
-          <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
-          <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIP入りしている" />
-        </div>
+      <div class="fighter-selecter">
+        <FighterSelecter
+          @select="select"
+          ref="opponent"
+          :previouslySelected="editingRecord.opponentId"
+          iconSize="44px"
+          label="相手のファイター"
+        />
       </div>
-      <div class="modal-footer border-t pt-2">
-        <div class="pb-1">
-          <Button @onClick="updateRecord" label="更新する" buttonType="high" />
-        </div>
-        <div class="pt-1">
-          <Button @onClick="deleteRecord" label="削除する" />
-        </div>
+      <ResultButton :previousResult="editingRecord.result" @clickWin="isWin" @clickLose="isLose" class="pt-4 pb-2" />
+      
+      <div class="mt-6 px-4">
+        <span class="text-gray-700 px-1 pt-3 flex items-center">▼詳しく記録したい人向け</span>
+        <span class="text-gray-600 text-xs px-1 pb-4 flex items-center">入力しておくとあとで詳しく分析できるよ！</span>
+        <!-- <TextField ref="globalSmashPower" :allowEmpty="false" :defaultValue="String(editingRecord.globalSmashPower/10000)" label="世界戦闘力(万)" placeholder="例: 678万くらい → 678" /> -->
+        <StageSelecter ref="stageSelecter" :previousSelect="editingRecord.stage" />
+        <StocksSelecter ref="stocksSelecter" :defaultValue="editingRecord.stocks" />
+        <Checkbox ref="isRepeat" :defaultValue="editingRecord.isRepeat" label="連戦だった" />
+        <Checkbox ref="isVip" :defaultValue="editingRecord.isVip" label="VIP入りしている" />
+      </div>
+    </div>
+    <div class="modal-footer border-t pt-2">
+      <div class="pb-1">
+        <Button @onClick="updateRecord" label="更新する" buttonType="high" />
+      </div>
+      <div class="pt-1">
+        <Button @onClick="deleteRecord" label="削除する" />
       </div>
     </div>
   </div>

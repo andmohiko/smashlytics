@@ -2,12 +2,16 @@
   <div class="container">
     <div class="add">
       <template v-if="isShowAddModal">
-        <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
+        <ModalBase @close="closeModal">
+          <AddRecordModal :lastRecord="lastRecord" @close="closeModal" />
+        </ModalBase>
       </template>
     </div>
     <div class="edit">
       <template v-if="isShowEditModal">
-        <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
+        <ModalBase @close="closeModal">
+          <EditRecordModal :editingRecord="editingRecord" @close="closeModal" />
+        </ModalBase>
       </template>
     </div>
 
@@ -82,6 +86,7 @@ import { now, date2string } from '@/utils/date.js'
 import Button from '@/components/parts/Button.vue'
 import Records from '@/components/Records.vue'
 import FighterIcon from '@/components/parts/FighterIcon.vue'
+import ModalBase from '@/components/modals/ModalBase.vue'
 import AddRecordModal from '@/components/modals/AddRecordModal.vue'
 import EditRecordModal from '@/components/modals/EditRecordModal.vue'
 // import Cookies from "universal-cookie"
@@ -89,6 +94,7 @@ import EditRecordModal from '@/components/modals/EditRecordModal.vue'
 export default {
   components: {
     Records,
+    ModalBase,
     AddRecordModal,
     EditRecordModal,
     FighterIcon,
