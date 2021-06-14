@@ -50,7 +50,7 @@
       </div>
       <div class="modal-footer border-t pt-2">
         <div class="pb-1">
-          <Button @onClick="updateRecord" label="更新する" />
+          <Button @onClick="updateRecord" label="更新する" buttonType="high" />
         </div>
         <div class="pt-1">
           <Button @onClick="deleteRecord" label="削除する" />

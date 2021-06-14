@@ -3,7 +3,7 @@
     :class="[{ disable: isDisable }, buttonType]"
     :style="[widthStyle]"
     :disabled="isDisable"
-    class="uppercase px-8 py-2 rounded-full max-w-max shadow-sm hover:shadow-md button"
+    class="button uppercase px-8 py-2 max-w-max shadow hover:shadow-md"
     @click="$emit('onClick')"
   >
     {{ label }}
@@ -51,7 +51,7 @@ export default {
 .button {
   margin: 0 auto;
   display: block;
-  border-radius: 50px;
+  border-radius: 100px;
   border: solid 1px #69a5ff;
   color: #69a5ff;
   padding: 15px 0;
@@ -61,21 +61,19 @@ export default {
   width: 240px;
 
   &.high {
-    // background: $primary-dark;
-    // color: $text-white;
+    background: #69a5ff;
+    color: #ffffff;
     border: none;
   }
 
   &.low {
-    // background: $bg-gray;
-    // color: $text-purple;
-    border: none;
+    color: #a0c4f9;
+    border: solid 1px #a0c4f9;
   }
 
   &.disable {
-    // background: $disable-button;
-    // color: $text-white;
-    border: none;
+    color: #98a0ac;
+    border: solid 1px #98a0ac;
   }
 }
 </style>
