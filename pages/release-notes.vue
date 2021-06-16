@@ -4,6 +4,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 4.0.7</h3>
+          <ul class="text-sm">
+            <li>◎ユーザ登録できない不具合を修正しました</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 4.0.6</h3>
           <ul class="text-sm">
             <li>◎リリースノートを別ページにまとめました</li>
