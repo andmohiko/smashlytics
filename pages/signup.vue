@@ -136,8 +136,6 @@ export default {
       if (this.user.twitterId && this.user.twitterId.slice(0,1) === '@') {
         this.user.twitterId = this.user.twitterId.slice(1)
       }
-      this.error = '成功'
-      return
       const db = firebase.firestore()
       try {
         db.collection('authUsers')
