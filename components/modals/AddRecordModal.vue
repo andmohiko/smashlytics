@@ -133,7 +133,7 @@ export default {
         return
       }
       if (this.record.globalSmashPower && (globalSmashPower < 1 || globalSmashPower > 2000)) {
-        this.error = '世界戦闘力は1万~1000万の間で入力してください'
+        this.error = '世界戦闘力は1万~2000万の間で入力してください'
         return
       }
       const newRecord = {
