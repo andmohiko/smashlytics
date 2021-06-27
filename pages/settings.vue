@@ -47,6 +47,12 @@
       <div class="bg-white shadow-md rounded px-8 pt-2 pb-6 mb-4 flex flex-col">
         <h2 class="text-xl mb-4">Release notes</h2>
         <div class="version text-left mb-4">
+          <h3 class="text-base">Ver 4.0.8</h3>
+          <ul class="text-sm">
+            <li>◎モーダル表示時に背景を固定するようにしました</li>
+          </ul>
+        </div>
+        <div class="version text-left mb-4">
           <h3 class="text-base">Ver 4.0.7</h3>
           <ul class="text-sm">
             <li>◎ユーザ登録できない不具合を修正しました</li>
@@ -103,11 +109,11 @@
       </div>
       <Button @onClick="logout" label="ログアウト" />
       <div class="flex justify-end text-sm text-gray-500 pt-6 pr-2">
-        Version 4.0.7
+        Version 4.0.8
       </div>
       <div class="copyright">
         <p>
-          <small>© 2020 andmohiko</small>
+          <small>© 2021 andmohiko</small>
         </p>
       </div>
     </div>
