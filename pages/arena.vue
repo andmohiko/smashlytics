@@ -144,14 +144,17 @@ export default {
     },
     openAddModal() {
       this.isShowAddModal = true
+      this.$store.dispatch('setIsShowModal', true)
     },
     openEditModal(record) {
       this.isShowEditModal = true
       this.editingRecord = record
+      this.$store.dispatch('setIsShowModal', true)
     },
     closeModal() {
       this.isShowAddModal = false
       this.isShowEditModal = false
+      this.$store.dispatch('setIsShowModal', false)
     }
   }
 }

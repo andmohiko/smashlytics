@@ -35,6 +35,7 @@ const state = {
     noticeType: null,
     message: ''
   },
+  isShowModal: false,
   version: {
     versionNumber: 0,
     refreshedAt: null
@@ -107,6 +108,9 @@ const actions = {
       ...updateUserDto
     })
   },
+  setIsShowModal ({ commit }, isShowModal) {
+    commit('setIsShowModal', isShowModal)
+  },
   setNotice ({ commit }, notice) {
     commit('setNotice', notice)
   }
@@ -136,6 +140,9 @@ const mutations = {
   },
   setNotice(state, payload) {
     state.notice = payload
+  },
+  setIsShowModal(state, payload) {
+    state.isShowModal = payload
   },
   setVersion(state, payload) {
     state.version = payload

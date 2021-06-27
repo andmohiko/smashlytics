@@ -212,9 +212,11 @@ export default {
     },
     openModal() {
       this.isShowModal = true
+      this.$store.dispatch('setIsShowModal', true)
     },
     closeModal() {
       this.isShowModal = false
+      this.$store.dispatch('setIsShowModal', false)
     },
   }
 }

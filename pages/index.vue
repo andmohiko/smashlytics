@@ -157,6 +157,7 @@ export default {
         return
       }
       this.isShowAddModal = true
+      this.$store.dispatch('setIsShowModal', true)
     },
     openEditModal(record) {
       this.error = ''
@@ -166,10 +167,12 @@ export default {
       }
       this.isShowEditModal = true
       this.editingRecord = record
+      this.$store.dispatch('setIsShowModal', true)
     },
     closeModal() {
       this.isShowAddModal = false
       this.isShowEditModal = false
+      this.$store.dispatch('setIsShowModal', false)
     },
     toNew() {
       this.$router.push("/new")
