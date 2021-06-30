@@ -922,5 +922,16 @@
     "number": 79,
     "parent": null,
     "child": null
+  },
+  "80": {
+    "fighterId": "80",
+    "icon": "80_Kazuya.png",
+    "isDashFighter": false,
+    "name": "カズヤ",
+    "nickname": "カズヤ",
+    "name_en": "Kazuya",
+    "number": 80,
+    "parent": null,
+    "child": null
   }
 }
