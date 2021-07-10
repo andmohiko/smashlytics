@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail -o posix
+
+echo "Runnning ESLint and Prettier."
+
+for FILE in `git diff --staged --name-only --diff-filter=AMRT "*.js"`; do
+    yarn run eslint --fix $FILE
+    git add $FILE
+done
