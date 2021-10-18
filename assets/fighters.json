@@ -933,5 +933,16 @@
     "number": 80,
     "parent": null,
     "child": null
+  },
+  "81": {
+    "fighterId": "81",
+    "icon": "81_Sora.png",
+    "isDashFighter": false,
+    "name": "ソラ",
+    "nickname": "ソラ",
+    "name_en": "Sora",
+    "number": 81,
+    "parent": null,
+    "child": null
   }
 }
