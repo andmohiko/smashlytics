@@ -17,6 +17,10 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+
+# set up pre-commit hook script
+$ chmod +x .githooks
+$ git config core.hooksPath .githooks
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
